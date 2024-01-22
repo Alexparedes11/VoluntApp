@@ -1,2 +1,2 @@
 # VoluntApp
-Proyecto de la creación de una aplicación web de voluntariado sin punto
+Proyecto de la creación de una aplicación web de voluntariado.
