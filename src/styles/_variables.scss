@@ -1,0 +1,56 @@
+$purple: #7D4E99;
+$purple-light: #966DAF;
+$purple-dark: #523066;
+
+$green: #6A994E;
+$green-light: #A4C957;
+$green-dark: #386641;
+
+$black: #202020;
+$black-light: #343434;
+$black-dark: #000000;
+
+$white: #F8FCF8;
+$white-light: #FFFFFF;
+$white-dark: #E1E1E1;
+
+$error: #FF0000;
+$error-light: #FF5050;
+$error-dark: #890101;
+
+$warning: #F18420;
+$warning-light: #E79E5B;
+$warning-dark: #C76002;
+
+$success: #3BEB4C;
+$success-light: #8FFF9B;
+$success-dark: #149521;
+
+$primary: $purple;
+$secondary: $green;
+
+$custom-colors: (
+    "primary-light": $purple-light,
+    "primary-dark": $purple-dark,
+    "secondary-light": $green-light,
+    "secondary-dark": $green-dark,
+    "black-light": $black-light,
+    "black-dark": $black-dark,
+    "white-light": $white-light,
+    "white-dark": $white-dark,
+    "error-light": $error-light,
+    "error-dark": $error-dark,
+    "warning-light": $warning-light,
+    "warning-dark": $warning-dark,
+    "success-light": $success-light,
+    "success-dark": $success-dark
+);
+
+$border-radius: .6rem;
+$border-radius-sm: .65rem;
+$border-radius-lg: .7rem;
+$border-radius-xl: .75rem;
+$border-radius-xxl: .8rem;
+$border-radius-pill: .85rem;
+
+$min-contrast-ratio: 2.5;
