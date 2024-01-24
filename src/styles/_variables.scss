@@ -27,7 +27,12 @@ $success-light: #8FFF9B;
 $success-dark: #149521;
 
 $primary: $purple;
+$primary-light: $purple-light;
+$primary-dark: $purple-dark;
+
 $secondary: $green;
+$secondary-light: $green-light;
+$secondary-dark: $green-dark;
 
 $custom-colors: (
     "primary-light": $purple-light,
@@ -46,11 +51,11 @@ $custom-colors: (
     "success-dark": $success-dark
 );
 
-$border-radius: .6rem;
-$border-radius-sm: .65rem;
-$border-radius-lg: .7rem;
-$border-radius-xl: .75rem;
-$border-radius-xxl: .8rem;
-$border-radius-pill: .85rem;
+$border-radius: 5px;
+$border-radius-sm: 3px;
+$border-radius-lg: 8px;
+$border-radius-xl: 10px;
+$border-radius-xxl: 12px;
+$border-radius-pill: 15px;
 
 $min-contrast-ratio: 2.5;
