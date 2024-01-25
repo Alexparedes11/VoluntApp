@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+
+.enlace{
+    transition: 0.3s linear;
+    color: $black-light;
+    &:hover{
+        color: $primary;
+    }
+}
+
+.marca{
+    cursor: default;
+}
