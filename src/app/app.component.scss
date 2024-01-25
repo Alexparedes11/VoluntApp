@@ -1,0 +1,14 @@
+@import '../styles/variables.scss';
+
+.grid {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+
+    header {
+        background-color: $white;
+    }
+
+    footer {
+        background-color: $white;
+    }
+}
