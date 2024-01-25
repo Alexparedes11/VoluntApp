@@ -5,6 +5,7 @@
     flex-direction: column;
     gap: 2rem;
     width: 25rem;
+    height: 25rem;
     border-radius: $border-radius-xl;
     background-color: $white-light;
     padding: 2rem 4rem;
@@ -23,7 +24,31 @@
     .form {
         display: flex;
         flex-direction: column;
+        height: 100%;
         gap: 0.5rem;
+
+        .paginas {
+            display: flex;
+            gap: .75rem;
+            list-style: none;
+
+            li {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid $primary;
+                border-radius: 50%;
+                width: 1.5rem;
+                height: 1.5rem;
+                font-size: smaller;
+                color: $primary-light;
+            }
+
+            .actual {
+                background-color: $primary;
+                color: $white-light;
+            }
+        }
 
         h1 {
             font-size: 20px;
@@ -68,10 +93,9 @@
         button {
            border: none;
            border-radius: $border-radius;
-           background-color: $purple;
+           background-color: $primary;
            padding: .5rem 0rem;
            color: $white-light;
-           margin-top: 1.5rem;
         }
     }
 }

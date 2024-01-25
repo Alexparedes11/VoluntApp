@@ -4,23 +4,70 @@
             <img src="/assets/banner.png" alt="VoluntApp banner">
         </div>
         <div class="form">
-            <h1>Registro</h1>
 
-            <select name="Tipo user" id="user" (change)="cambiarform(opcion.value);" #opcion>
-                <option value="Default">Tipo de usuario</option>
-                <option value="Voluntario">Registro como voluntario</option>
-                <option value="institucion" >Registro como institucion</option>
+            @if (pagina === 1) {
+            <header class="d-flex justify-content-between">
+                <h1>Regístrate</h1>
+                <ul class="paginas">
+                    <li class="actual">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </ul>
+            </header>
+            <select (change)="cambiarform(opcion.value)" #opcion>
+                <option value="voluntario" [selected]="!institucion">Voluntario</option>
+                <option value="institucion" [selected]="institucion">Institucion</option>
             </select>
 
-            @if (institucion == true) {
-                <input type="text" placeholder="Nombre de la institucion" id="nombreInstitucion">
-                <input type="text" placeholder="Nombre de persona al cargo" id="nombrePersona">
+            @if (institucion === true) {
+            <input type="text" placeholder="Nombre a mostrar">
+            <input type="text" placeholder="Nombre legal">
             } @else {
-                <input type="text" placeholder="Nombre" id="nombre">
-                <input type="text" placeholder="Apellidos" id="apellidos">
+            <input type="text" placeholder="Nombre">
+            <input type="text" placeholder="Apellidos">
             }
-            
-            <button>Siguiente</button>
+            <button (click)="siguientePagina()" class="mt-auto">Siguiente</button>
+            }
+
+            @if (pagina === 2) {
+            <header class="d-flex justify-content-between">
+                <h1>Regístrate</h1>
+                <ul class="paginas">
+                    <li>1</li>
+                    <li class="actual">2</li>
+                    <li>3</li>
+                </ul>
+            </header>
+            @if (institucion === true) {
+            <input type="text" placeholder="Nombre de la persona a cargo">
+            <input type="text" placeholder="Teléfono de la persona a cargo">
+            } @else {
+            <input type="text" placeholder="Teléfono">
+            <input type="text" placeholder="Dirección">
+            }
+            <div class="d-flex gap-2 mt-auto">
+                <button class="px-4 btn btn-outline-primary" (click)="anteriorPagina()">←</button>
+                <button class="w-100" (click)="siguientePagina()">Siguiente</button>
+            </div>
+
+            }
+            @if (pagina === 3) {
+            <header class="d-flex justify-content-between">
+                <h1>Regístrate</h1>
+                <ul class="paginas">
+                    <li>1</li>
+                    <li>2</li>
+                    <li class="actual">3</li>
+                </ul>
+            </header>
+            <input type="text" placeholder="Correo electrónico">
+            <input type="password" placeholder="Contraseña">
+            <input type="password" placeholder="Repetir contraseña">
+            <div class="d-flex gap-2 mt-auto">
+                <button class="px-4 btn btn-outline-primary" (click)="anteriorPagina()">←</button>
+                <button class="w-100">Registrarse</button>
+            </div>
+            }
         </div>
     </div>
 </main>

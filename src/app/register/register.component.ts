@@ -9,17 +9,23 @@ import { Component } from '@angular/core';
 })
 export class RegisterComponent {
   institucion: boolean = false;
+  pagina: 1 | 2 | 3 = 1;
+  
+  siguientePagina() {
+    this.pagina++;
+  }
+
+  anteriorPagina() {
+    this.pagina--;
+  }
 
   cambiarform(opcion: string) {
     this.institucion = true;
-    console.log(this.institucion);
-    console.log(opcion);
 
     if (opcion === 'institucion') {
       this.institucion = true;
     } else {
       this.institucion = false;
     }
-    
   }
 }
