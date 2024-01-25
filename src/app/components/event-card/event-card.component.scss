@@ -2,7 +2,7 @@
 
 .tarjeta {
 
-    width: 20rem;
+    width: 25rem;
     height: 15rem;
     overflow: hidden;
     border-radius: $border-radius;
@@ -14,13 +14,27 @@
     }
 
     section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         padding: 1rem;
         background-color: $white;
-        height: 100%;
 
         h1 {
             font-weight: 600;
             font-size: 1.2rem;
+        }
+
+        span {
+            font-size: 0.8rem;
+            color: $black-light;
+            display: block;
+        }
+
+        button {
+            font-size: 0.8rem;
+            background-color: $secondary;
+            border: none;
         }
     }
 }
