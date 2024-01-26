@@ -1,0 +1,13 @@
+<div class="carousel">
+    <div class="carousel-inner rounded">
+        <div class="carousel-item active">
+            <img [src]="imagesPath + images[currentImage] + '.jpg'" alt="Slide 1">
+        </div>
+    </div>
+    <button (click)="prevImage()" class="carousel-control-prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button (click)="nextImage()" class="carousel-control-next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
