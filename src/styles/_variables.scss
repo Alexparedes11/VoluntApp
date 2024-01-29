@@ -58,4 +58,8 @@ $border-radius-xl: 10px;
 $border-radius-xxl: 12px;
 $border-radius-pill: 15px;
 
+$carousel-control-icon-width: 3rem;
+$carousel-control-next-icon-bg: url("data:image/svg+xml,<svg width='56' height='57' viewBox='0 0 56 57' fill='none' xmlns='http://www.w3.org/2000/svg'> <circle cx='27.9999' cy='28.5' r='21.5833' transform='rotate(-180 27.9999 28.5)' fill='black'/> <path fill-rule='evenodd' clip-rule='evenodd' d='M23.2253 39.0325C22.5631 38.3286 22.5968 37.221 23.3008 36.5588C27.9446 32.1897 27.9446 24.8103 23.3008 20.4412C22.5968 19.779 22.5631 18.6714 23.2253 17.9675C23.8876 17.2636 24.9951 17.2298 25.6991 17.8921L34.6173 26.2826C35.9052 27.4943 35.9052 29.5057 34.6173 30.7174L25.6991 39.1079C24.9951 39.7702 23.8876 39.7364 23.2253 39.0325Z' fill='#A4C957'/> </svg>");
+$carousel-control-prev-icon-bg: url("data:image/svg+xml,<svg width='56' height='57' viewBox='0 0 56 57' fill='none' xmlns='http://www.w3.org/2000/svg'> <circle cx='28' cy='28.5' r='21.5833' fill='black'/> <path fill-rule='evenodd' clip-rule='evenodd' d='M32.7745 17.9675C33.4368 18.6714 33.403 19.779 32.6991 20.4412C28.0553 24.8103 28.0553 32.1897 32.6991 36.5588C33.403 37.221 33.4368 38.3286 32.7745 39.0325C32.1123 39.7364 31.0047 39.7702 30.3008 39.1079L21.3826 30.7174C20.0947 29.5057 20.0946 27.4943 21.3826 26.2826L30.3008 17.8921C31.0047 17.2298 32.1123 17.2636 32.7745 17.9675Z' fill='#A4C957'/> </svg>");
+
 $min-contrast-ratio: 2.5;
