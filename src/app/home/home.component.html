@@ -1,23 +1,24 @@
-<div class="grid">
-    <app-header></app-header>
-    <main>
-        <form>
-        <div class="input-group rounded">
-            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-            <span class="input-group-text border-0" id="search-addon">
-              <i class="fas fa-search"></i>
-            </span>
-          </div>
-        </form>
-        <div class="card-container">
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-            <app-event-card></app-event-card>
-        </div>
-    </main>
-    <app-footer></app-footer>
-</div>
+<app-header></app-header>
+<main class="container my-5">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="col">
+      <app-event-card></app-event-card>
+    </div>
+    <div class="col">
+      <app-event-card></app-event-card>
+    </div>
+    <div class="col">
+      <app-event-card></app-event-card>
+    </div>
+    <div class="col">
+      <app-event-card></app-event-card>
+    </div>
+    <div class="col">
+      <app-event-card></app-event-card>
+    </div>
+    <div class="col">
+      <app-event-card></app-event-card>
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>
