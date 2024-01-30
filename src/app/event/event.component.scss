@@ -1,0 +1,30 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    grid-template-rows: 50% 50%;
+    gap: 1rem 1rem;
+    grid-template-areas:
+        "area1 area3"
+        "area2 area3";
+}
+
+.area1 {
+    grid-area: area1;
+
+    img {
+        height: 200px;
+        object-fit: cover;
+    }
+}
+
+.area2 {
+    grid-area: area2;
+}
+
+.area3 {
+    grid-area: area3;
+}
+
+p {
+    margin: 0;
+}
