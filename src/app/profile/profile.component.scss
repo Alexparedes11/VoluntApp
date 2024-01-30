@@ -11,3 +11,11 @@
     height: 180px;
     border: 10px solid $black-light;
 }
+
+.sombras{
+    text-shadow: $sombras;
+}
+
+main{
+    cursor: default;
+}

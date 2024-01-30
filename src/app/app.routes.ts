@@ -6,6 +6,7 @@ import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { NewsComponent } from './news/news.component';
 import { EventComponent } from './event/event.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -15,5 +16,5 @@ export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'news', component: NewsComponent },
     { path: 'event/:id', component: EventComponent},
-    { path: '**', redirectTo: "/" }
+    { path: 'profile', component: ProfileComponent}
 ];
