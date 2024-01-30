@@ -13,3 +13,26 @@
     width: 40px;
     height: 40px;
 }
+
+.profile{
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+nav{
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.6);
+}
+
+.menuperfil{
+    border-radius: 0px 0px 10px 10px;
+    position: absolute;
+    top: 60px;
+}
+
+.seleccionado{
+    &:hover{
+        background-color: $white-dark;
+        color: $black;
+    }
+}
