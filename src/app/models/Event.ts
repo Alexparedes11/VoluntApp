@@ -8,5 +8,7 @@ export interface Event {
     endDate: Date;
     location: string;
     volunteers: number;
+    maxVolunteers: number;
+    volunteersList: User[];
     createdBy: User;
 }

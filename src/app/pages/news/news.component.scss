@@ -1,0 +1,15 @@
+@import '../../../styles/variables';
+
+main {
+    margin-top: 5rem;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+.noticia-img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}

@@ -1,15 +1,14 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { TermsComponent } from './terms/terms.component';
-import { AboutComponent } from './about/about.component';
-import { HomeComponent } from './home/home.component';
-import { NewsComponent } from './news/news.component';
-import { EventComponent } from './event/event.component';
-import { ProfileComponent } from './profile/profile.component';
-import { EventManagmentComponent } from './event-managment/event-managment.component';
-import { EventCardComponent } from './components/event-card/event-card.component';
-import { ContactComponent } from './contact/contact.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { TermsComponent } from './pages/terms/terms.component';
+import { AboutComponent } from './pages/about/about.component';
+import { HomeComponent } from './pages/home/home.component';
+import { NewsComponent } from './pages/news/news.component';
+import { EventComponent } from './pages/event/event.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { EventManagementComponent } from './pages/event-management/event-management.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -20,6 +19,6 @@ export const routes: Routes = [
     { path: 'news', component: NewsComponent },
     { path: 'event/:id', component: EventComponent},
     { path: 'profile', component: ProfileComponent},
-    { path: 'myevents', component: EventManagmentComponent},
+    { path: 'myevents', component: EventManagementComponent},
     { path: 'contact', component: ContactComponent}
 ];

@@ -1,0 +1,17 @@
+<app-header></app-header>
+<main class="container text-white py-4">
+    <h1 class="fw-bold">Mis eventos</h1>
+
+    <div class="d-flex justify-content-around gap-4"> <!-- Solo si el usuario tiene eventos  -->
+        <div class="row row-cols-1 row-cols-sm-2 g-3">
+            @for (event of events; track event.id) {
+            <div class="col">
+                <app-event-card [management]="true" [image]="event.image" [title]="event.title"
+                    [startDate]="event.startDate" [endDate]="event.endDate" [location]="event.location"
+                    [volunteers]="event.volunteers" [createdBy]="event.createdBy"></app-event-card>
+            </div>
+            }
+        </div>
+    </div>
+</main>
+<app-footer></app-footer>
