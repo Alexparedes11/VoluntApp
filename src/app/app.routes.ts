@@ -9,6 +9,7 @@ import { EventComponent } from './event/event.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EventManagmentComponent } from './event-managment/event-managment.component';
 import { EventCardComponent } from './components/event-card/event-card.component';
+import { ContactComponent } from './contact/contact.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -20,4 +21,5 @@ export const routes: Routes = [
     { path: 'event/:id', component: EventComponent},
     { path: 'profile', component: ProfileComponent},
     { path: 'myevents', component: EventManagmentComponent},
+    { path: 'contact', component: ContactComponent}
 ];
