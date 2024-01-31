@@ -11,4 +11,10 @@ import { FooterComponent } from '../components/footer/footer.component';
 })
 export class ProfileComponent {
 
+  editarperfil: boolean = false;
+
+  mostrarContenedor() {
+    this.editarperfil = true;
+  }
+
 }
