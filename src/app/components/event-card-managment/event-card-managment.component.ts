@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './event-card-managment.component.scss'
 })
 export class EventCardManagmentComponent {
-
+  eventoCreado: boolean = false;
 }
