@@ -1,12 +1,11 @@
 main {
-    margin-top: 5rem;
+    min-height: auto;
 }
 
 .grid-container {
-    height: 100%;
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 50% 50%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: 1rem 1rem;
     grid-template-areas:
         "area1 area3"

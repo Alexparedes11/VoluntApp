@@ -14,7 +14,7 @@ export class ProfileComponent {
   editarperfil: boolean = false;
 
   mostrarContenedor() {
-    this.editarperfil = true;
+    this.editarperfil = !this.editarperfil;
   }
 
 }

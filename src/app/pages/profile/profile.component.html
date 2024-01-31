@@ -1,26 +1,17 @@
 <app-header></app-header>
-
 <main class="text-white">
   <div class="d-flex flex-column align-items-center">
-    <img
-      src="/assets/images/bannerprofile.jpg"
-      class="img-fluid imagenbanner"
-      alt="VoluntApp banner"
-    />
+    <img src="/assets/images/bannerprofile.jpg" class="img-fluid imagenbanner" alt="VoluntApp banner" />
     <div class="editarperfil text-center d-flex align-items-center flex-column">
-      <img
-        src="/assets/images/montana.jpg"
-        class="rounded-circle img-perfil"
-        style="position: absolute; transform: translateY(-70%);"
-        alt="Imagen de perfil"
-      />
+      <img src="/assets/images/montana.jpg" class="rounded-circle img-perfil"
+        style="position: absolute; transform: translateY(-70%);" alt="Imagen de perfil" />
       <p class="overlay">✏️</p>
     </div>
   </div>
-  <div class="align-items-center d-flex flex-column text-white gap-2 mt-5">
-    <h1 class="text-center sombras fw-bold">Roberto Carlos Martinez</h1>
+  <div class="align-items-center d-flex flex-column text-white gap-3 margen">
+    <h1 class="text-center sombras fw-bold">Roberto Carlos Martínez</h1>
     <h4 class="text-center">📌 Alicante, España</h4>
-    <div class="d-flex">
+    <div class="d-flex w-25">
       <div class="col">
         <h5 class="text-center text-primary fw-bold">0</h5>
         <h5 class="text-center">Eventos creados</h5>
@@ -34,80 +25,42 @@
       Editar perfil
     </button>
   </div>
-  @if (editarperfil == true) {
+  @if (editarperfil) {
   <div class="container py-5">
     <form class="row g-3">
       <div class="col-lg-6">
         <label for="inputEmail4" class="form-label">Nombre</label>
-        <input
-          type="email"
-          class="form-control"
-          id="inputEmail4"
-          placeholder="Roberto"
-        />
+        <input type="email" class="form-control" id="inputEmail4" placeholder="Roberto" />
       </div>
       <div class="col-lg-6">
         <label for="inputPassword4" class="form-label">Apellidos</label>
-        <input
-          type="password"
-          class="form-control"
-          id="inputPassword4"
-          placeholder="Carlos Martinez"
-        />
+        <input type="password" class="form-control" id="inputPassword4" placeholder="Carlos Martinez" />
       </div>
       <div class="col-lg-6">
-        <label for="inputAddress" class="form-label">Correo</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputAddress"
-          placeholder="Roberto.CM@gmail.com"
-        />
+        <label for="inputAddress" class="form-label">Correo electrónico</label>
+        <input type="text" class="form-control" id="inputAddress" placeholder="Roberto.CM@gmail.com" />
       </div>
       <div class="col-lg-6">
-        <label for="inputAddress" class="form-label">Direccion</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputAddress"
-          placeholder="Avenida Alfonso el sabio 16"
-        />
+        <label for="inputAddress" class="form-label">Dirección</label>
+        <input type="text" class="form-control" id="inputAddress" placeholder="Avenida Alfonso el sabio 16" />
       </div>
       <div class="col-lg-4">
-        <label for="inputAddress2" class="form-label">Telefono</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputAddress2"
-          placeholder="+34 666 66 66 66"
-        />
+        <label for="inputAddress2" class="form-label">Teléfono</label>
+        <input type="text" class="form-control" id="inputAddress2" placeholder="+34 666 66 66 66" />
       </div>
       <div class="col-lg-4">
         <label for="inputAddress2" class="form-label">Ciudad</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputAddress2"
-          placeholder="Alicante"
-        />
+        <input type="text" class="form-control" id="inputAddress2" placeholder="Alicante" />
       </div>
       <div class="col-lg-4">
-        <label for="inputAddress2" class="form-label">Pais</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputAddress2"
-          placeholder="España"
-        />
+        <label for="inputAddress2" class="form-label">País</label>
+        <input type="text" class="form-control" id="inputAddress2" placeholder="España" />
       </div>
       <div class="col-12">
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <button type="submit" class="btn btn-primary w-100">Guardar cambios</button>
       </div>
     </form>
   </div>
-  } @else {
-  <div class="mb-5"></div>
   }
 </main>
-
 <app-footer></app-footer>

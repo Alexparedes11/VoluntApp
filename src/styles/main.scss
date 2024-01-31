@@ -70,6 +70,11 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 body {
     font-family: 'Montserrat', sans-serif;
     color: $black-dark;
-    min-height: 100vh;
     background-image: linear-gradient(to top, $background-bottom 0%, $background-top 100%);
+
+    main {
+        margin-top: 7rem;
+        margin-bottom: 2rem;
+        min-height: 100vh;
+    }
 }

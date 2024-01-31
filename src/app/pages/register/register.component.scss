@@ -1,5 +1,10 @@
 @import '../../../styles/variables';
 
+main {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .login-card {
     display: flex;
     flex-direction: column;
