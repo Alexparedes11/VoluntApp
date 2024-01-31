@@ -2,7 +2,7 @@
 
 .imagenbanner{
     width: 100%;
-    height: 350px;
+    height: 300px;
     object-fit: cover;
 }
 
@@ -10,6 +10,7 @@
     width: 180px;
     height: 180px;
     border: 10px solid $black-light;
+    background-color: $black-light;
 }
 
 .sombras{
@@ -19,3 +20,28 @@
 main{
     cursor: default;
 }
+
+.editarperfil:hover .img-perfil {
+    opacity: 0.8;
+    filter: blur(1px);
+    cursor: pointer;
+    transition: all 0.1s linear;
+    transform: translateX(-20%);
+ }
+ 
+ /* Aqui cuando le pasas el raton por encima se sube la opacidad del texto */
+ 
+ .overlay {
+    opacity: 0;
+    position: absolute;
+    transition: all .1s linear;
+    transform: translateY(-110%);
+    font-size: 3rem;
+}
+
+ .editarperfil:hover p{
+     opacity: 1;
+     cursor: pointer;
+     font-weight: bold;
+     transition: all 0.1s linear
+ }
