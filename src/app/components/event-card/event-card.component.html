@@ -8,7 +8,18 @@
                 <span>📌 {{location}}</span>
                 <span>👤 {{volunteers}}</span>
             </div>
-            <button class="btn btn-secondary h-50">Apúntate</button>
+            @if (management) {
+                <button class="btn btn-secondary h-50">Ver más</button>
+<!--                 @if (event.volunteers.includes(user.id)) {
+                    <button class="btn btn-primary h-50">Desapuntarse</button>
+                } @else {
+                    <button class="btn btn-secondary h-50">Apúntate</button>
+                } -->
+                <button class="btn btn-primary h-50">Desapuntarse</button>
+            } @else {
+                <button class="btn btn-secondary h-50">Apúntate</button>
+            }
+
         </div>
     </section>
 </article>
