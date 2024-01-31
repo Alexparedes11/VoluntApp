@@ -19,6 +19,13 @@
           >Noticias</a
         >
       </li>
+      @if (estaLogueado === true) {
+        <li>
+          <a href="/myevents" class="nav-link px-3 text-black fw-bold encimaEventos"
+            >Mis eventos</a
+          >
+        </li>
+      }
     </ul>
 
     @if (estaLogueado === false) {
