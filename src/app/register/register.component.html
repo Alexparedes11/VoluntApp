@@ -39,9 +39,11 @@
                 </ul>
             </header>
             @if (institucion === true) {
+            <input type="text" placeholder="CIF institución">
             <input type="text" placeholder="Nombre de la persona a cargo">
             <input type="text" placeholder="Teléfono de la persona a cargo">
             } @else {
+            <input type="text" placeholder="DNI">
             <input type="text" placeholder="Teléfono">
             <input type="text" placeholder="Dirección">
             }

@@ -3,7 +3,6 @@ import { HeaderComponent } from '../components/header/header.component';
 import { FooterComponent } from '../components/footer/footer.component';
 import { EventCardComponent } from '../components/event-card/event-card.component';
 import { EventFiltersComponent } from '../components/event-filters/event-filters.component';
-import { FiltersBarComponent } from '../components/filters-bar/filters-bar.component';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +12,20 @@ import { FiltersBarComponent } from '../components/filters-bar/filters-bar.compo
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  events = [
+
+  userExample: User = {
+    id: 1,
+    name: "Pedro",
+    surname: "Martínez",
+    dni: "48776243X",
+    address: "Calle de la piruleta, 69",
+    email: "paco@gmail.com",
+    password: "paco",
+    profileImage: "/assets/images/bosque.jpg",
+    rol: "user"
+  };
+
+  events: Event[] = [
     {
       id: 1,
       image: '/assets/images/mayores.jpg',
@@ -21,7 +33,8 @@ export class HomeComponent {
       startDate: new Date(),
       endDate: new Date(),
       location: 'Alicante',
-      volunteers: 15
+      volunteers: 15,
+      createdBy: this.userExample
     },
     {
       id: 2,
@@ -30,7 +43,8 @@ export class HomeComponent {
       startDate: new Date(),
       endDate: new Date(),
       location: 'Playa San Juan',
-      volunteers: 50
+      volunteers: 50,
+      createdBy: this.userExample
     },
     {
       id: 3,
@@ -39,7 +53,8 @@ export class HomeComponent {
       startDate: new Date(),
       endDate: new Date(),
       location: 'La font roja',
-      volunteers: 5
+      volunteers: 5,
+      createdBy: this.userExample
     },
     {
       id: 4,
@@ -48,7 +63,8 @@ export class HomeComponent {
       startDate: new Date(),
       endDate: new Date(),
       location: 'Alicante',
-      volunteers: 500
+      volunteers: 500,
+      createdBy: this.userExample
     },
     {
       id: 5,
@@ -57,7 +73,8 @@ export class HomeComponent {
       startDate: new Date(),
       endDate: new Date(),
       location: 'Alfaz del pi',
-      volunteers: 100
+      volunteers: 100,
+      createdBy: this.userExample
     },
     {
       id: 6,
@@ -66,7 +83,8 @@ export class HomeComponent {
       startDate: new Date(),
       endDate: new Date(),
       location: 'Hospital de Alicante',
-      volunteers: 25
+      volunteers: 25,
+      createdBy: this.userExample
     }
   ];
 }
