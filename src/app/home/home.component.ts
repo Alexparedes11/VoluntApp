@@ -15,57 +15,57 @@ export class HomeComponent {
   events = [
     {
       id: 1,
-      image: '/assets/images/bosque.jpg',
-      title: 'Evento 1',
+      image: '/assets/images/mayores.jpg',
+      title: 'Informatica para mayores',
       startDate: new Date(),
       endDate: new Date(),
-      location: 'São Paulo',
-      volunteers: 5
+      location: 'Alicante',
+      volunteers: 15
     },
     {
       id: 2,
-      image: '/assets/images/cascada.jpg',
-      title: 'Evento 2',
+      image: '/assets/images/pellets.jpg',
+      title: 'Limpiar pellets',
       startDate: new Date(),
       endDate: new Date(),
-      location: 'São Paulo',
-      volunteers: 5
+      location: 'Playa San Juan',
+      volunteers: 50
     },
     {
       id: 3,
-      image: '/assets/images/montana.jpg',
-      title: 'Evento 3',
+      image: '/assets/images/limpiarbosque.jpg',
+      title: 'Limpiar bosque',
       startDate: new Date(),
       endDate: new Date(),
-      location: 'São Paulo',
+      location: 'La font roja',
       volunteers: 5
     },
     {
       id: 4,
-      image: '/assets/images/rio.jpg',
-      title: 'Evento 4',
+      image: '/assets/images/recogidaalimentos.jpg',
+      title: 'Recogida de alimentos',
       startDate: new Date(),
       endDate: new Date(),
-      location: 'São Paulo',
-      volunteers: 5
+      location: 'Alicante',
+      volunteers: 500
     },
     {
       id: 5,
-      image: '/assets/images/bosque.jpg',
-      title: 'Evento 5',
+      image: '/assets/images/inundacion.jpg',
+      title: 'Limpieza de inundacion',
       startDate: new Date(),
       endDate: new Date(),
-      location: 'São Paulo',
-      volunteers: 5
+      location: 'Alfaz del pi',
+      volunteers: 100
     },
     {
       id: 6,
-      image: '/assets/images/bannerprofile.jpg',
-      title: 'Evento 6',
+      image: '/assets/images/sonrisas.jpg',
+      title: 'Sonrisas para los nenes',
       startDate: new Date(),
       endDate: new Date(),
-      location: 'São Paulo',
-      volunteers: 5
+      location: 'Hospital de Alicante',
+      volunteers: 25
     }
   ];
 }
