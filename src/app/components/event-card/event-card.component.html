@@ -10,12 +10,11 @@
             </div>
             @if (management) {
                 <button class="btn btn-secondary h-50">Ver más</button>
-<!--                 @if (event.volunteers.includes(user.id)) {
-                    <button class="btn btn-primary h-50">Desapuntarse</button>
+                @if (createdBy?.id == 1) { <!-- Aquí debería ir user?.id cuando se pueda obtener el objeto del usuario logueado -->
+                    <button class="btn btn-primary h-50">Eliminar</button>
                 } @else {
-                    <button class="btn btn-secondary h-50">Apúntate</button>
-                } -->
-                <button class="btn btn-primary h-50">Desapuntarse</button>
+                    <button class="btn btn-primary h-50">Desapuntarse</button>
+                }
             } @else {
                 <button class="btn btn-secondary h-50">Apúntate</button>
             }
