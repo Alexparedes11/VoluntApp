@@ -15,7 +15,7 @@ export class EventCardComponent {
   @Input() startDate: Date | null = null;
   @Input() endDate: Date | null = null;
   @Input() location: string | null = null;
-  @Input({transform: numberAttribute}) volunteers: Number = 1;
+  @Input({ transform: numberAttribute }) volunteers: Number = 1;
   @Input() createdBy: User | null = null;
 
   @Input() management: boolean = false;
