@@ -3,8 +3,7 @@
         <div class="top">
             <img src="/assets/banner.png" alt="VoluntApp banner">
         </div>
-        <div class="form">
-
+        <form [formGroup]="form" class="form" (submit)="crearUsuario()">
             @if (pagina === 1) {
             <header class="d-flex justify-content-between">
                 <h1>Regístrate</h1>
@@ -23,8 +22,8 @@
             <input type="text" placeholder="Nombre a mostrar">
             <input type="text" placeholder="Nombre legal">
             } @else {
-            <input type="text" placeholder="Nombre">
-            <input type="text" placeholder="Apellidos">
+            <input type="text" formControlName="nombre" placeholder="Nombre">
+            <input type="text" formControlName="apellidos" placeholder="Apellidos">
             }
             <button (click)="siguientePagina()" class="mt-auto">Siguiente</button>
             }
@@ -43,9 +42,9 @@
             <input type="text" placeholder="Nombre de la persona a cargo">
             <input type="text" placeholder="Teléfono de la persona a cargo">
             } @else {
-            <input type="text" placeholder="DNI">
-            <input type="text" placeholder="Teléfono">
-            <input type="text" placeholder="Dirección">
+            <input type="text" formControlName="dni" placeholder="DNI">
+            <input type="text" formControlName="telefono" placeholder="Teléfono">
+            <input type="text" formControlName="direccion" placeholder="Dirección">
             }
             <div class="d-flex gap-2 mt-auto">
                 <button class="px-4 btn btn-outline-primary" (click)="anteriorPagina()">←</button>
@@ -62,14 +61,14 @@
                     <li class="actual">3</li>
                 </ul>
             </header>
-            <input type="text" placeholder="Correo electrónico">
-            <input type="password" placeholder="Contraseña">
+            <input type="text" formControlName="email" placeholder="Correo electrónico">
+            <input type="password" formControlName="contraseña" placeholder="Contraseña">
             <input type="password" placeholder="Repetir contraseña">
             <div class="d-flex gap-2 mt-auto">
                 <button class="px-4 btn btn-outline-primary" (click)="anteriorPagina()">←</button>
-                <button class="w-100">Registrarse</button>
+                <button class="w-100" type="submit">Registrarse</button>
             </div>
             }
-        </div>
+        </form>
     </div>
 </main>
