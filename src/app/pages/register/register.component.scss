@@ -101,6 +101,11 @@ main {
            background-color: $primary;
            padding: .5rem 0rem;
            color: $white-light;
+           transition: all 0.2s linear;
+
+              &:hover {
+                background-color: $primary-dark;
+              }	
         }
     }
 }
