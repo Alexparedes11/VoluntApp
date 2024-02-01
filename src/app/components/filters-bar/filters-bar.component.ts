@@ -9,10 +9,10 @@ import { Component } from '@angular/core';
 })
 export class FiltersBarComponent {
 
-  filtrar: boolean = false;
+  muestraFiltros: boolean = false;
 
   mostrarContenedor() {
-    this.filtrar = !this.filtrar;
+    this.muestraFiltros = !this.muestraFiltros;
   }
 
 }
