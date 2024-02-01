@@ -6,6 +6,7 @@ import { EventFiltersComponent } from '../../components/event-filters/event-filt
 import { FiltersBarComponent } from '../../components/filters-bar/filters-bar.component';
 import { exampleEvents } from '../../data/exampleEventList';
 import { Event } from "../../models/Event";
+import { Maria, Paco, Pedro } from '../../data/exampleUsers';
 
 @Component({
   selector: 'app-home',
