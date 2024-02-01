@@ -1,0 +1,13 @@
+@import '../../../styles/variables';
+
+.animacion{
+    transition: transform 0.3s ease 0s;
+}
+
+.animacioncontenedor{
+    transition: all 30s ease;
+}
+
+.despuescontenedor{
+    background: linear-gradient(to bottom, $background-top, #312f31);
+}
