@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class MainService {
 
-  private baseUrl: String = 'http://10.100.24.1:9000';
+  private baseUrl: String = 'http://localhost:9000';
 
   constructor(private http: HttpClient) { }
 
