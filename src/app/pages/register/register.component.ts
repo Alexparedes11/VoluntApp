@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MainService } from '../../services/main.service';
 import { HttpClientModule } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,11 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class RegisterComponent {
 
-  constructor(private mainService: MainService) {}
+  constructor(private mainService: MainService, private location: Location) {}
+
+  back() {
+    this.location.back();
+  }
 
   form = new FormGroup({
     nombre: new FormControl(''),
@@ -34,6 +39,18 @@ export class RegisterComponent {
 
   anteriorPagina() {
     this.pagina--;
+  }
+
+  primeraPagina() {
+    this.pagina = 1;
+  }
+
+  segundaPagina() {
+    this.pagina = 2;
+  }
+
+  terceraPagina() {
+    this.pagina = 3;
   }
 
   cambiarform(opcion: string) {

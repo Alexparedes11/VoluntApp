@@ -8,9 +8,9 @@
             <header class="d-flex justify-content-between">
                 <h1>Regístrate</h1>
                 <ul class="paginas">
-                    <li class="actual">1</li>
-                    <li>2</li>
-                    <li>3</li>
+                    <a class="select" (click)="primeraPagina()">1</a>
+                    <a (click)="segundaPagina()">2</a>
+                    <a (click)="terceraPagina()">3</a>
                 </ul>
             </header>
             <select (change)="cambiarform(opcion.value)" #opcion>
@@ -19,22 +19,25 @@
             </select>
 
             @if (institucion === true) {
-            <input type="text" placeholder="Nombre a mostrar">
-            <input type="text" placeholder="Nombre legal">
+            <input type="text" placeholder="Nombre a mostrar" required>
+            <input type="text" placeholder="Nombre legal" required>
             } @else {
-            <input type="text" formControlName="nombre" placeholder="Nombre">
-            <input type="text" formControlName="apellidos" placeholder="Apellidos">
+            <input type="text" formControlName="nombre" placeholder="Nombre" required>
+            <input type="text" formControlName="apellidos" placeholder="Apellidos" required>
             }
-            <button (click)="siguientePagina()" class="mt-auto">Siguiente</button>
+            <div class="d-flex gap-2 mt-auto">
+                <button class="px-4 btn btn-outline-primary" (click)="back()">←</button>
+                <button class="w-100" (click)="siguientePagina()">Siguiente</button>
+            </div>
             }
 
             @if (pagina === 2) {
             <header class="d-flex justify-content-between">
                 <h1>Regístrate</h1>
                 <ul class="paginas">
-                    <li>1</li>
-                    <li class="actual">2</li>
-                    <li>3</li>
+                    <a (click)="primeraPagina()">1</a>
+                    <a class="select" (click)="segundaPagina()">2</a>
+                    <a (click)="terceraPagina()">3</a>
                 </ul>
             </header>
             @if (institucion === true) {
@@ -56,9 +59,9 @@
             <header class="d-flex justify-content-between">
                 <h1>Regístrate</h1>
                 <ul class="paginas">
-                    <li>1</li>
-                    <li>2</li>
-                    <li class="actual">3</li>
+                    <a (click)="primeraPagina()">1</a>
+                    <a (click)="segundaPagina()">2</a>
+                    <a class="select" (click)="terceraPagina()">3</a>
                 </ul>
             </header>
             <input type="text" formControlName="email" placeholder="Correo electrónico">
