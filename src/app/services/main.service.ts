@@ -13,4 +13,8 @@ export class MainService {
   createUser(data: any) {
     return this.http.post(`${this.baseUrl}/usuarios`, data)
   }
+
+  searchUser(data: any) {
+    return this.http.get(`${this.baseUrl}/usuarios`, data)
+  }
 }
