@@ -3,6 +3,7 @@ import { MainService } from '../../services/main.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -21,16 +22,21 @@ export class LoginComponent {
     }
   );
 
-  constructor(private mainService: MainService, private cookieService: CookieService) { }
+  constructor(private mainService: MainService, private cookieService: CookieService, private location: Location) { }
+
+  back() {
+    this.location.back();
+  }
 
   loguearUsuario(): void {
     this.mainService.logUser(this.form.value).subscribe(
       (data: any) => {
         this.cookieService.set('token', data.token);
-      },
-      (error) => {
-        console.error('Error fetching data:', error);
       }
     );
+
+    if (this.cookieService.get('token') != null ) {
+      this.location.go('/');
+    }
   }
 }

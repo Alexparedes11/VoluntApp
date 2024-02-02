@@ -7,7 +7,7 @@ import { map } from 'rxjs';
 })
 export class MainService {
 
-  private baseUrl: String = 'http://10.100.21.1:9000';
+  private baseUrl: String = 'http://10.100.24.1:9000';
 
   constructor(private http: HttpClient) { }
 

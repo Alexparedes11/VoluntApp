@@ -9,7 +9,10 @@
             <input type="password" placeholder="Contraseña" formControlName="password" required>
             <a href="/register">¿No tienes una cuenta?</a>
             <a href="">¿Has olvidado tu contraseña?</a>
-            <button type="submit">Entrar</button>
+            <div class="d-flex gap-2 mt-auto">
+                <button class="px-4 btn btn-outline-primary" (click)="back()">←</button>
+                <button class="w-100" type="submit">Entrar</button>
+            </div>
         </form>
     </div>
 </main>
