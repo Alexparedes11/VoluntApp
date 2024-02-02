@@ -6,19 +6,19 @@
             <div class="d-flex flex-column">
                 <span>📅 {{startDate | date: 'dd/MM/yyyy'}} - {{endDate | date: 'dd/MM/yyyy'}}</span>
                 <span>📌 {{location}}</span>
-                <span>👤 {{volunteers}}</span>
+                <span>👤 {{volunteersList.length}}</span>
             </div>
             <div class="d-flex gap-2">
                 @if (management) {
                 <button class="btn btn-secondary h-50">Ver más</button>
-                @if (createdBy?.id == 1) {
+                @if (createdBy?.id == userLogged.id) {
                 <!-- Donde va el 1 debería ir user?.id cuando se pueda obtener el objeto del usuario logueado -->
                 <button class="btn btn-primary h-50">Eliminar</button>
                 } @else {
                 <button class="btn btn-primary h-50">Desapuntarse</button>
                 }
                 } @else {
-                @if (createdBy?.id == 2) {
+                @if (createdBy?.id == userLogged.id) {
                 <!-- Donde va el 1 debería ir user?.id cuando se pueda obtener el objeto del usuario logueado -->
                 <button class="btn btn-primary h-50">Eliminar</button>
                 } @else if (volunteersList.includes(userLogged)) {
@@ -26,7 +26,8 @@
                 <button class="btn btn-primary h-50">Desapuntarse</button>
 
                 } @else {
-                <button class="btn btn-secondary h-50">Apúntate</button>
+                <button class="btn btn-secondary h-50"><a [href]="'/event/' + id"
+                        class="text-white">Apúntate</a></button>
                 }
                 }
             </div>

@@ -6,9 +6,9 @@
         <div class="row row-cols-1 row-cols-sm-2 g-3">
             @for (event of events; track event.id) {
             <div class="col">
-                <app-event-card [management]="true" [image]="event.image" [title]="event.title"
+                <app-event-card [management]="true" [id]="event.id" [image]="event.image" [title]="event.title"
                     [startDate]="event.startDate" [endDate]="event.endDate" [location]="event.location"
-                    [volunteers]="event.volunteers" [createdBy]="event.createdBy"></app-event-card>
+                    [volunteersList]="event.volunteersList" [createdBy]="event.createdBy"></app-event-card>
             </div>
             }
         </div>

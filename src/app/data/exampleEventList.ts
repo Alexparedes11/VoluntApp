@@ -11,7 +11,7 @@ export const exampleEvents: Event[] = [
         location: 'Alicante',
         volunteers: 15,
         maxVolunteers: 300,
-        volunteersList: [Paco, Maria],
+        volunteersList: [Paco],
         createdBy: Pedro
     },
     {
@@ -23,7 +23,7 @@ export const exampleEvents: Event[] = [
         location: 'Playa San Juan',
         volunteers: 50,
         maxVolunteers: 300,
-        volunteersList: [Paco, Maria],
+        volunteersList: [Paco],
         createdBy: Pedro
     },
     {
@@ -35,7 +35,7 @@ export const exampleEvents: Event[] = [
         location: 'La font roja',
         volunteers: 5,
         maxVolunteers: 300,
-        volunteersList: [Paco, Maria],
+        volunteersList: [Paco],
         createdBy: Pedro
     },
     {
@@ -47,7 +47,7 @@ export const exampleEvents: Event[] = [
         location: 'Alicante',
         volunteers: 500,
         maxVolunteers: 300,
-        volunteersList: [Paco, Maria],
+        volunteersList: [Paco],
         createdBy: Pedro
     },
     {
@@ -59,7 +59,7 @@ export const exampleEvents: Event[] = [
         location: 'Alfaz del pi',
         volunteers: 100,
         maxVolunteers: 300,
-        volunteersList: [Paco, Maria],
+        volunteersList: [Paco],
         createdBy: Pedro
     },
     {
@@ -71,7 +71,7 @@ export const exampleEvents: Event[] = [
         location: 'Hospital de Alicante',
         volunteers: 25,
         maxVolunteers: 300,
-        volunteersList: [Paco, Maria],
+        volunteersList: [Paco],
         createdBy: Pedro
     }
 ];
