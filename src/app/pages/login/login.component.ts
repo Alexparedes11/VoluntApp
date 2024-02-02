@@ -2,31 +2,35 @@ import { Component } from '@angular/core';
 import { MainService } from '../../services/main.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [HttpClientModule, ReactiveFormsModule],
-  providers: [MainService],
+  providers: [MainService, CookieService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   institucion: string = "";
 
-  datos = new FormGroup (
-    { correo: new FormControl('') ,
-     contraseña: new FormControl('') }
+  form = new FormGroup(
+    {
+      username: new FormControl(''),
+      password: new FormControl('')
+    }
   );
 
-  constructor(private mainService: MainService) {}
+  constructor(private mainService: MainService, private cookieService: CookieService) { }
 
-  login() {
-    console.log(this.datos.value);
-  }
-
-  searchUsuario() {
-    this.mainService.searchUser(this.datos.value).subscribe();
+  loguearUsuario(): void {
+    this.mainService.logUser(this.form.value).subscribe(
+      (data: any) => {
+        this.cookieService.set('token', data.token);
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    );
   }
 }
-
-
