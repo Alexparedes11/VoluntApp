@@ -17,7 +17,10 @@ export class EventCardComponent {
   @Input() startDate: Date | null = null;
   @Input() endDate: Date | null = null;
   @Input() location: string | null = null;
-  @Input() volunteersList: User[] = [];
+  @Input() volunteersList: User[] | null = null;
+  @Input() numVolunteers: number | null = null;
+  @Input() createdByUser: string | null = null;
+  @Input() createdByInstitution: string | null = null;
   @Input() createdBy: User | null = null;
   @Input() management: boolean = false;
 
