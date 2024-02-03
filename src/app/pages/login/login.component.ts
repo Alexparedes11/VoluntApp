@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { MainService } from '../../services/main.service';
-import { HttpClientModule } from '@angular/common/http';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
 import { Location } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { MainService } from '../../services/main.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,7 +15,6 @@ import { Location } from '@angular/common';
 })
 export class LoginComponent {
   institucion: string = "";
-
   form = new FormGroup(
     {
       username: new FormControl(''),
@@ -22,7 +22,7 @@ export class LoginComponent {
     }
   );
 
-  constructor(private mainService: MainService, private cookieService: CookieService, private location: Location) { }
+  constructor(private mainService: MainService, private cookieService: CookieService, private location: Location, private router: Router) { }
 
   back() {
     this.location.back();
@@ -36,7 +36,7 @@ export class LoginComponent {
     );
 
     if (this.cookieService.get('token') != null ) {
-      this.location.go('/');
+      this.router.navigate(['/']);
     }
   }
 }
