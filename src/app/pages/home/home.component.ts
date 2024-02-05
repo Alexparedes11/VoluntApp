@@ -6,7 +6,7 @@ import { FiltersBarComponent } from '../../components/filters-bar/filters-bar.co
 import { MainService } from '../../services/main.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EventCardDTO } from '../../models/dto/EventCardDTO';
-import { Event } from '../../models/Event';
+import { Event } from '../../models/Event'; 
 import { exampleEvents } from '../../data/exampleEventList';
 
 @Component({

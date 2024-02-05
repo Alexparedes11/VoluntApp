@@ -26,4 +26,12 @@ export class MainService {
       })
     );
   }
+
+  getNews() {
+    return this.http.get(`${this.baseUrl}/noticias`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 }
