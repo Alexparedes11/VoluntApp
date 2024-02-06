@@ -18,4 +18,14 @@ export class UserService {
     }
     return -1;
   }
+
+  isAdmin(): boolean {
+    const token = this.cookieService.get('token');
+    if (token) {
+      const jwtHelper = new JwtHelperService();
+      const decodedToken = jwtHelper.decodeToken(token);
+      return decodedToken.Rol === 'Admin';
+    }
+    return false;
+  }
 }

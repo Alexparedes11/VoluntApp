@@ -21,8 +21,10 @@
                 </section>
                 <section>
                     <h2 class="fw-semibold">Información</h2>
-                    <span class="d-block">📅 Inicia el <b>{{event.finicio}}</b> a las <b>17:00</b></span>
-                    <span class="d-block">📅 Acaba el <b>{{event.finicio}}</b> a las <b>19:00</b></span>
+                    <span class="d-block">📅 Inicia el <b>{{event.finicio | date: 'dd/MM/yyyy'}}</b> a las
+                        <b>17:00</b></span>
+                    <span class="d-block">📅 Acaba el <b>{{event.finicio | date: 'dd/MM/yyyy'}}</b> a las
+                        <b>19:00</b></span>
                     <span class="d-block">🙌 Se necesitan <b>{{event.maxVoluntarios}} voluntarios</b></span>
                 </section>
                 <section>
@@ -34,10 +36,17 @@
                     <span class="d-block">📍 {{event.ubicacion}}</span>
                 </section>
             </article>
+            @if (isAdmin) {
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn bg-success-dark text-white w-50">Aprobar</button>
+                    <button class="btn bg-error-dark text-white w-50">Rechazar</button>
+                </div>
+            } @else {
             @if (isUserInEvent) {
             <button class="btn bg-primary text-white w-100">Desapuntarse</button>
             } @else {
             <button class="btn bg-primary text-white w-100">Apúntate</button>
+            }
             }
         </div>
     </section>

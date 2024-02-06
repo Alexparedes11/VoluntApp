@@ -5,12 +5,13 @@ import { EventService } from '../../services/event.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EventDTO } from '../../models/dto/EventDTO';
 import { UserService } from '../../services/user.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-event',
   standalone: true,
   providers: [EventService, UserService],
-  imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent, HttpClientModule],
+  imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent, HttpClientModule, DatePipe],
   templateUrl: './event.component.html',
   styleUrl: './event.component.scss'
 })
@@ -21,6 +22,7 @@ export class EventComponent {
   @Input("id") eventId: number = -1;
   userId: number = -1;
   isUserInEvent: boolean = false;
+  isAdmin: boolean = false;
 
   event: EventDTO = {} as EventDTO;
 
@@ -48,5 +50,7 @@ export class EventComponent {
         console.error('Error fetching events:', error);
       }
     );
+
+    this.isAdmin = this.userService.isAdmin();
   }
 }
