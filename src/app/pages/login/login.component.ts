@@ -1,5 +1,4 @@
 import { Location } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,7 +7,7 @@ import { EventService } from '../../services/event.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HttpClientModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   providers: [EventService, CookieService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

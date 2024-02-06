@@ -1,14 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EventService } from '../../services/event.service';
-import { HttpClientModule } from '@angular/common/http';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   providers: [EventService],
-  imports: [ReactiveFormsModule, HttpClientModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
