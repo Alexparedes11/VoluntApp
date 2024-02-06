@@ -5,12 +5,13 @@ import { EventService } from '../../services/event.service';
 import { EventDTO } from '../../models/dto/EventDTO';
 import { UserService } from '../../services/user.service';
 import { DatePipe } from '@angular/common';
+import { MapComponent } from '../../components/map/map.component';
 
 @Component({
   selector: 'app-event',
   standalone: true,
   providers: [EventService, UserService],
-  imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent, DatePipe],
+  imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent, DatePipe, MapComponent],
   templateUrl: './event.component.html',
   styleUrl: './event.component.scss'
 })
@@ -26,7 +27,27 @@ export class EventComponent {
   event: EventDTO = {} as EventDTO;
 
   addUserToEvent() {
+    this.eventService.addUserToEvent(this.userId, this.eventId).subscribe(
+      (data) => {
+        return data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+    this.isUserInEvent = true;
+  }
 
+  removeUserFromEvent() {
+    this.eventService.removeUserFromEvent(this.userId, this.eventId).subscribe(
+      (data) => {
+        return data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+    this.isUserInEvent = false;
   }
 
   ngOnInit(): void {
@@ -41,6 +62,7 @@ export class EventComponent {
       }
     );
 
+    if (this.userId === -1) return;
     this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
       (data) => {
         this.isUserInEvent = data;
@@ -49,7 +71,6 @@ export class EventComponent {
         console.error('Error fetching events:', error);
       }
     );
-
     this.isAdmin = this.userService.isAdmin();
   }
 }

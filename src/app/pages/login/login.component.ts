@@ -28,7 +28,7 @@ export class LoginComponent {
   }
 
   loguearUsuario(): void {
-    this.eventService.logUser(this.form.value).subscribe(
+    this.eventService.login(this.form.value).subscribe(
       (data: any) => {
         this.cookieService.set('token', data.token);
       }
