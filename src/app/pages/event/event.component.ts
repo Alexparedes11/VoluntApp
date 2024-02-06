@@ -18,16 +18,20 @@ export class EventComponent {
 
   constructor(private eventService: EventService, private userService: UserService) { }
 
-  @Input("id") eventId: number | null = null;
-  userId: number | null = null;
+  @Input("id") eventId: number = -1;
+  userId: number = -1;
   isUserInEvent: boolean = false;
 
   event: EventDTO = {} as EventDTO;
 
+  addUserToEvent() {
+
+  }
+
   ngOnInit(): void {
     this.userId = this.userService.getUserIdFromToken();
 
-    this.eventService.getEventById(this.eventId ?? -1).subscribe(
+    this.eventService.getEventById(this.eventId).subscribe(
       (data) => {
         this.event = data;
       },
@@ -36,7 +40,7 @@ export class EventComponent {
       }
     );
 
-    this.eventService.isUserInEvent(this.userId ?? -1, this.eventId ?? -1).subscribe(
+    this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
       (data) => {
         this.isUserInEvent = data;
       },

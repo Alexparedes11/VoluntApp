@@ -9,13 +9,13 @@ export class UserService {
 
   constructor(private cookieService: CookieService) { }
 
-  getUserIdFromToken(): number | null {
+  getUserIdFromToken(): number {
     const token = this.cookieService.get('token');
     if (token) {
       const jwtHelper = new JwtHelperService();
       const decodedToken = jwtHelper.decodeToken(token);
       return decodedToken.sub;
     }
-    return null;
+    return -1;
   }
 }
