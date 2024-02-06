@@ -3,21 +3,21 @@ import { HeaderComponent } from "../../components/header/header.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { New } from '../../models/New';
 import { DatePipe } from '@angular/common';
-import { EventService } from '../../services/event.service';
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-news',
   standalone: true,
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
-  providers: [EventService],
+  providers: [NewsService],
   imports: [HeaderComponent, FooterComponent, DatePipe]
 })
 export class NewsComponent {
-  constructor(private eventService: EventService) { }
+  constructor(private newsService: NewsService) { }
   news: New[] = [];
   ngOnInit(): void {
-    this.eventService.getNews().subscribe(
+    this.newsService.getNews().subscribe(
       (data) => {
         this.news = data.content;
       },
@@ -27,3 +27,4 @@ export class NewsComponent {
     );
   }
 }
+

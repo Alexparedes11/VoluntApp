@@ -1,8 +1,8 @@
 export interface New {
     id: Number,
-    title: String,
-    content: String,
-    date : Date,
-    author: String,
-    image: String
+    titulo: String,
+    contenido: String,
+    fecha : Date,
+    autor: String,
+    imagen: String
 }
