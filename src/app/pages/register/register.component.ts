@@ -1,20 +1,20 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MainService } from '../../services/main.service';
+import { EventService } from '../../services/event.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  providers: [MainService],
+  providers: [EventService],
   imports: [ReactiveFormsModule, HttpClientModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
 
-  constructor(private mainService: MainService, private location: Location) {}
+  constructor(private eventService: EventService, private location: Location) { }
 
   back() {
     this.location.back();
@@ -32,7 +32,7 @@ export class RegisterComponent {
 
   institucion: boolean = false;
   pagina: 1 | 2 | 3 = 1;
-  
+
   siguientePagina() {
     this.pagina++;
   }
@@ -64,6 +64,6 @@ export class RegisterComponent {
   }
 
   crearUsuario() {
-    this.mainService.createUser(this.form.value).subscribe();
+    this.eventService.createUser(this.form.value).subscribe();
   }
 }
