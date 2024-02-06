@@ -4,14 +4,13 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { EventCardComponent } from '../../components/event-card/event-card.component';
 import { FiltersBarComponent } from '../../components/filters-bar/filters-bar.component';
 import { EventService } from '../../services/event.service';
-import { HttpClientModule } from '@angular/common/http';
 import { EventDTO } from '../../models/dto/EventDTO';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   providers: [EventService],
-  imports: [HeaderComponent, FooterComponent, EventCardComponent, FiltersBarComponent, HttpClientModule],
+  imports: [HeaderComponent, FooterComponent, EventCardComponent, FiltersBarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

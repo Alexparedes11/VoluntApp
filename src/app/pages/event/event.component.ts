@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { EventService } from '../../services/event.service';
-import { HttpClientModule } from '@angular/common/http';
 import { EventDTO } from '../../models/dto/EventDTO';
 import { UserService } from '../../services/user.service';
 import { DatePipe } from '@angular/common';
@@ -11,7 +10,7 @@ import { DatePipe } from '@angular/common';
   selector: 'app-event',
   standalone: true,
   providers: [EventService, UserService],
-  imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent, HttpClientModule, DatePipe],
+  imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent, DatePipe],
   templateUrl: './event.component.html',
   styleUrl: './event.component.scss'
 })
