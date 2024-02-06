@@ -5,17 +5,17 @@ import { EventService } from '../../../services/event.service';
 import { EventDTO } from '../../../models/dto/EventDTO';
 import { UserService } from '../../../services/user.service';
 import { DatePipe } from '@angular/common';
-import { MapComponent } from '../../components/map/map.component';
+import { MapComponent } from '../../../components/map/map.component';
 
 @Component({
-  selector: 'app-event',
+  selector: 'app-event-details',
   standalone: true,
   providers: [EventService, UserService],
   imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent, DatePipe, MapComponent],
-  templateUrl: './event.component.html',
-  styleUrl: './event.component.scss'
+  templateUrl: './event-details.component.html',
+  styleUrl: './event-details.component.scss'
 })
-export class EventComponent {
+export class EventDetailsComponent {
 
   constructor(private eventService: EventService, private userService: UserService) { }
 

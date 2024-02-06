@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 import { FooterComponent } from "../../../components/footer/footer.component";
 import { HeaderComponent } from "../../../components/header/header.component";
 import { EventCardComponent } from '../../../components/event-card/event-card.component';
-import { exampleEvents } from '../../../data/exampleEventList';
-import { Event } from "../../../models/Event";
+import { EventDTO } from '../../../models/dto/EventDTO';
 
 @Component({
   selector: 'app-event-management',
@@ -14,5 +13,5 @@ import { Event } from "../../../models/Event";
   imports: [FooterComponent, HeaderComponent, EventCardComponent]
 })
 export class EventManagementComponent {
-  events: Event[] = exampleEvents;
+  events: EventDTO[] = [];
 }
