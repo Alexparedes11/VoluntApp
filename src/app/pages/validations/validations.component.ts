@@ -9,6 +9,7 @@ import { EventDTO } from '../../models/dto/EventDTO';
 @Component({
   selector: 'app-validations',
   standalone: true,
+  providers: [EventService],
   imports: [HeaderComponent, FooterComponent, EventCardComponent, HttpClientModule],
   templateUrl: './validations.component.html',
   styleUrl: './validations.component.scss'
