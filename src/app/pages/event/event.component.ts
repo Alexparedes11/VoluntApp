@@ -1,17 +1,48 @@
 import { Component, Input } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { Event } from '../../models/Event';
-import { User } from '../../models/User';
+import { EventService } from '../../services/event.service';
+import { HttpClientModule } from '@angular/common/http';
+import { EventDTO } from '../../models/dto/EventDTO';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-event',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent],
+  providers: [EventService, UserService],
+  imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent, HttpClientModule],
   templateUrl: './event.component.html',
   styleUrl: './event.component.scss'
 })
 export class EventComponent {
 
-  @Input("id") eventId: Number | null = null;
+  constructor(private eventService: EventService, private userService: UserService) { }
+
+  @Input("id") eventId: number | null = null;
+  userId: number | null = null;
+  isUserInEvent: boolean = false;
+
+  event: EventDTO = {} as EventDTO;
+
+  ngOnInit(): void {
+    this.userId = this.userService.getUserIdFromToken();
+
+    this.eventService.getEventById(this.eventId ?? -1).subscribe(
+      (data) => {
+        this.event = data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+
+    this.eventService.isUserInEvent(this.userId ?? -1, this.eventId ?? -1).subscribe(
+      (data) => {
+        this.isUserInEvent = data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+  }
 }

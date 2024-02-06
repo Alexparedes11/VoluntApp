@@ -1,4 +1,4 @@
-export interface EventCardDTO {
+export interface EventDTO {
     id: number;
     titulo: string;
     creadoPorInstitucion: null;

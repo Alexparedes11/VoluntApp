@@ -1,10 +1,11 @@
 <app-header></app-header>
 <main class="container p-4 text-white">
-    <h1 class="fw-bold d-flex align-items-center gap-3">Limpieza exhaustiva (id: {{eventId}})<span
-            class="badge bg-secondary-dark fs-5">182 🙋‍♂️</span></h1>
+    <h1 class="fw-bold d-flex align-items-center gap-3">{{event.titulo}}<span
+            class="badge bg-secondary-dark fs-5">{{event.numVoluntarios}}
+            🙋‍♂️</span></h1>
     <section class="grid-container">
         <div class="area1">
-            <img class="rounded w-100" src="/assets/images/rio.jpg" alt="">
+            <img class="rounded w-100" [src]="event.imagen" alt="">
         </div>
         <div class="area2">
             <iframe
@@ -16,27 +17,28 @@
             <article class="d-flex flex-column gap-3">
                 <section>
                     <h2 class="fw-semibold">Descripción</h2>
-                    <p>¡Únete a nosotros para marcar la diferencia y contribuir a la preservación de nuestros océanos!
-                        Te
-                        invitamos cordialmente a participar en nuestro evento de limpieza de playas, una iniciativa
-                        comprometida con la salud de nuestros mares y la conservación de la vida marina.</p>
+                    <p>{{event.descripcion}}</p>
                 </section>
                 <section>
                     <h2 class="fw-semibold">Información</h2>
-                    <span class="d-block">📅 Inicia el <b>30/01/2024</b> a las <b>17:00</b></span>
-                    <span class="d-block">📅 Acaba el <b>02/02/2024</b> a las <b>19:00</b></span>
-                    <span class="d-block">🙌 Se necesitan <b>300 voluntarios</b></span>
+                    <span class="d-block">📅 Inicia el <b>{{event.finicio}}</b> a las <b>17:00</b></span>
+                    <span class="d-block">📅 Acaba el <b>{{event.finicio}}</b> a las <b>19:00</b></span>
+                    <span class="d-block">🙌 Se necesitan <b>{{event.maxVoluntarios}} voluntarios</b></span>
                 </section>
                 <section>
                     <h2 class="fw-semibold">Organizador</h2>
-                    <span class="d-block">👤 Leo Messi Cutticini</span>
+                    <span class="d-block">👤 {{event.creadoPorUsuario || event.creadoPorInstitucion}}</span>
                 </section>
                 <section>
                     <h2 class="fw-semibold">Ubicación</h2>
-                    <span class="d-block">📍 Madrid, España</span>
+                    <span class="d-block">📍 {{event.ubicacion}}</span>
                 </section>
             </article>
+            @if (isUserInEvent) {
+            <button class="btn bg-primary text-white w-100">Desapuntarse</button>
+            } @else {
             <button class="btn bg-primary text-white w-100">Apúntate</button>
+            }
         </div>
     </section>
 </main>

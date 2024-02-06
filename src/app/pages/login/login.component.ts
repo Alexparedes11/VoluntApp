@@ -4,12 +4,12 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { MainService } from '../../services/main.service';
+import { EventService } from '../../services/event.service';
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [HttpClientModule, ReactiveFormsModule],
-  providers: [MainService, CookieService],
+  providers: [EventService, CookieService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -22,21 +22,19 @@ export class LoginComponent {
     }
   );
 
-  constructor(private mainService: MainService, private cookieService: CookieService, private location: Location, private router: Router) { }
+  constructor(private eventService: EventService, private cookieService: CookieService, private location: Location, private router: Router) { }
 
   back() {
     this.location.back();
   }
 
   loguearUsuario(): void {
-    this.mainService.logUser(this.form.value).subscribe(
+    this.eventService.logUser(this.form.value).subscribe(
       (data: any) => {
         this.cookieService.set('token', data.token);
       }
     );
 
-    if (this.cookieService.get('token') != null ) {
-      this.router.navigate(['/']);
-    }
+    // Aquí hay que hacer que si se loguea le mande para /
   }
 }
