@@ -16,6 +16,7 @@ import { EventDTO } from '../../models/dto/EventDTO';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
+  
   constructor(private eventService: EventService) { }
   events: EventDTO[] = [];
 
