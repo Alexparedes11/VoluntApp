@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  estaLogueado: boolean = true;
+  estaLogueado: boolean = false;
+  admin: boolean = true;
   
 }
