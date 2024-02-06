@@ -17,10 +17,13 @@ export class HeaderComponent {
   isLogged: boolean = false;
   isAdmin: boolean = false;
 
-  ngOnInit(): void {
-  this.isAdmin = this.userService.isAdmin();
-
-  this.isLogged = this.userService.isLogged();
+  logout() {
+    this.userService.logout();
   }
-  
+
+  ngOnInit(): void {
+    this.isAdmin = this.userService.isAdmin();
+    this.isLogged = this.userService.isLogged();
+  }
+
 }
