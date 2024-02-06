@@ -5,12 +5,13 @@ import { TermsComponent } from './pages/terms/terms.component';
 import { AboutComponent } from './pages/about/about.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NewsComponent } from './pages/news/news.component';
-import { EventComponent } from './pages/event/event.component';
+import { EventComponent } from './pages/events/event/event.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { EventManagementComponent } from './pages/event-management/event-management.component';
+import { EventManagementComponent } from './pages/events/event-management/event-management.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ValidationsComponent } from './pages/validations/validations.component';
 import { CreatenoticeComponent } from './pages/createnotice/createnotice.component';
+import { EventCreateComponent } from './pages/events/event-create/event-create.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -24,5 +25,6 @@ export const routes: Routes = [
     { path: 'myevents', component: EventManagementComponent},
     { path: 'contact', component: ContactComponent},
     { path: 'validations', component: ValidationsComponent},
-    { path: 'createnotice', component: CreatenoticeComponent}
+    { path: 'createnotice', component: CreatenoticeComponent},
+    { path: 'event-create', component: EventCreateComponent }
 ];

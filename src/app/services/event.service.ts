@@ -7,7 +7,7 @@ import { map } from 'rxjs';
 })
 export class EventService {
 
-  private baseUrl: String = 'http://10.100.24.1:9000';
+  private baseUrl: String = 'http://localhost:9000';
 
   constructor(private http: HttpClient) { }
 
@@ -29,14 +29,6 @@ export class EventService {
 
   getEventById(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/${id}`).pipe(
-      map((data: any) => {
-        return data;
-      })
-    );
-  }
-
-  getNews() {
-    return this.http.get(`${this.baseUrl}/noticias`).pipe(
       map((data: any) => {
         return data;
       })
