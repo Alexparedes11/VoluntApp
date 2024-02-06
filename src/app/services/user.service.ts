@@ -28,4 +28,14 @@ export class UserService {
     }
     return false;
   }
+
+  isLogged(): boolean {
+    const token = this.cookieService.get('token');
+    if (token) {
+      const jwtHelper = new JwtHelperService();
+      const decodedToken = jwtHelper.decodeToken(token);
+      return !jwtHelper.isTokenExpired(token) && decodedToken.sub !== undefined;
+    }
+    return false;
+  }
 }
