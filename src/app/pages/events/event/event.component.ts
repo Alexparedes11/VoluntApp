@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { HeaderComponent } from '../../components/header/header.component';
-import { FooterComponent } from '../../components/footer/footer.component';
-import { EventService } from '../../services/event.service';
-import { EventDTO } from '../../models/dto/EventDTO';
-import { UserService } from '../../services/user.service';
+import { HeaderComponent } from '../../../components/header/header.component';
+import { FooterComponent } from '../../../components/footer/footer.component';
+import { EventService } from '../../../services/event.service';
+import { EventDTO } from '../../../models/dto/EventDTO';
+import { UserService } from '../../../services/user.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
