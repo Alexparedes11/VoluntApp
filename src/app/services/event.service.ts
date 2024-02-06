@@ -7,7 +7,7 @@ import { map } from 'rxjs';
 })
 export class EventService {
 
-  private baseUrl: String = 'http://localhost:9000';
+  private baseUrl: String = 'http://10.100.24.1:9000';
 
   constructor(private http: HttpClient) { }
 
