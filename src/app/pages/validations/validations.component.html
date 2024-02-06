@@ -1,1 +1,16 @@
-<p>validations works!</p>
+<app-header></app-header>
+
+<main class="container py-4 d-flex flex-column justify-content-center align-items-center">
+    <div>
+      <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        @for (event of events; track event.id) {
+          <div class="col">
+            <app-event-card [image]="event.imagen" [id]="event.id" [title]="event.titulo" [startDate]="event.finicio" [endDate]="event.ffin" [location]="event.ubicacion" [numVolunteers]="event.numVoluntarios" [createdByUser]="event.creadoPorUsuario" [createdByInstitution]="event.creadoPorInstitucion"></app-event-card>
+          </div>
+        }
+      </section>
+    </div>
+  </main>
+
+<app-footer></app-footer>
+
