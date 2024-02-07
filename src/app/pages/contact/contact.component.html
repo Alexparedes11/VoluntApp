@@ -11,26 +11,25 @@
         </div>
         <h2 class="fw-bold mt-4  text-center mb-4">Rellena el formulario para realizar tu consulta</h2>
         <div class="w-100">
-            <form>
-            <div class="form-floating mb-4 text-black ">
-                <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
-                <label for="email">Correo electrónico</label>
-            </div>
-            <div class="form-floating mb-4 text-black">
-                <input type="text" class="form-control" placeholder="Nombre" id="nombre" required>
-                <label for="nombre">Nombre</label>
-            </div>
-            <div class="form-floating mb-4 text-black">
-                <input type="text" class="form-control" placeholder="Apellidos" id="apellidos">
-                <label for="apellidos">Apellidos</label>
-            </div>
-            <div class="form-floating mb-4 text-black">
-                <textarea class="form-control" placeholder="Deja aquí tu consulta" id="consulta"
-                    style="min-height: 125px"></textarea>
-                <label for="consulta">Escribe aquí tu consulta</label>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Enviar</button>
-        </form>
+            <form [formGroup]="contactForm" class="form" (ngSubmit)="hacerConsulta()">
+                <div class="form-floating mb-4 text-black">
+                    <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com" required>
+                    <label for="email">Correo electrónico</label>
+                </div>
+                <div class="form-floating mb-4 text-black">
+                    <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre" required>
+                    <label for="nombre">Nombre</label>
+                </div>
+                <div class="form-floating mb-4 text-black">
+                    <input type="text" class="form-control" id="apellidos" formControlName="apellidos" placeholder="Apellidos">
+                    <label for="apellidos">Apellidos</label>
+                </div>
+                <div class="form-floating mb-4 text-black">
+                    <textarea class="form-control" id="mensaje" formControlName="mensaje" placeholder="Deja aquí tu consulta" style="min-height: 125px"></textarea>
+                    <label for="consulta">Escribe aquí tu consulta</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Enviar</button>
+            </form>
         </div>
     </div>
 
