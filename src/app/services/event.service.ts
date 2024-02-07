@@ -15,6 +15,10 @@ export class EventService {
     return this.http.post(`${this.baseUrl}/usuarios`, data)
   }
 
+  createEvent(data: any) {
+    return this.http.post(`${this.baseUrl}/eventos`, data)
+  }
+
   login(data: any) {
     return this.http.post(`${this.baseUrl}/login`, data)
   }
