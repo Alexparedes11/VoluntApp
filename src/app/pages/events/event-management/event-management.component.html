@@ -7,7 +7,7 @@
             @for (event of events; track event.id) {
             <div class="col">
                 <app-event-card [management]="true" [id]="event.id" [image]="event.imagen" [title]="event.titulo"
-                    [startDate]="event.finicio" [endDate]="event.ffin" [location]="event.ubicacion"
+                    [startDate]="event.finicio" [endDate]="event.ffin" [location]="event.ubicacion.nombre"
                     [createdByUser]="event.creadoPorUsuario"></app-event-card>
             </div>
             }

@@ -8,8 +8,7 @@
             <img class="rounded w-100" [src]="event.imagen" alt="">
         </div>
         <div class="area2">
-            <!-- Mapa -->
-            <app-map></app-map>
+            <app-map [lat]="event.ubicacion.lat" [lon]="event.ubicacion.lon"></app-map>
         </div>
         <div class="area3 d-flex flex-column justify-content-between">
             <article class="d-flex flex-column gap-3">
@@ -31,7 +30,7 @@
                 </section>
                 <section>
                     <h2 class="fw-semibold">Ubicación</h2>
-                    <span class="d-block">📍 {{event.ubicacion}}</span>
+                    <span class="d-block">📍 {{event.ubicacion.nombre}}</span>
                 </section>
             </article>
             @if (isAdmin) {

@@ -9,5 +9,9 @@ export interface EventDTO {
     imagen: string;
     maxVoluntarios: number;
     numVoluntarios: number;
-    ubicacion: string;
+    ubicacion: {
+        nombre: string;
+        lat: number;
+        lon: number;
+    };
 }

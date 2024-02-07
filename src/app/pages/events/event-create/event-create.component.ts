@@ -6,12 +6,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angul
 import { EventService } from '../../../services/event.service';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/User';
+import { InputLocationComponent } from '../../../components/input-location/input-location.component';
 
 @Component({
   selector: 'app-event-create',
   standalone: true,
   providers: [ EventService, UserService ],
-  imports: [ HeaderComponent, FooterComponent, ReactiveFormsModule ],
+  imports: [ HeaderComponent, FooterComponent, ReactiveFormsModule, InputLocationComponent ],
   templateUrl: './event-create.component.html',
   styleUrl: './event-create.component.scss'
 })

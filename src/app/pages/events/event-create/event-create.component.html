@@ -1,11 +1,11 @@
 <app-header></app-header>
-<main class="container-fluid">
+<main class="container">
     <div class="card w-50 mx-auto">
         <div class="card-header">
             <h1 class="text-primary">Añadir evento</h1>
         </div>
         <form [formGroup]="form" class="form" (submit)="addEvent()">
-            <div class="card-body">
+            <div class="card-body p-5">
                 <div class="d-grid">
                     <label for="titulo">Nombre del evento: </label>
                     <input type="text" placeholder=" Titulo" name="titulo"  formControlName="titulo" class="rounded" required>
@@ -13,6 +13,10 @@
                 <div class="d-grid">
                     <label for="descripcion">Descripción del evento: </label>
                     <textarea rows="6" cols="30" placeholder=" Descripción..." name="descripcion"  formControlName="descripcion" class="rounded" required></textarea>
+                </div>
+                <div class="d-grid">
+                    <label for="ubicación">Ubicación del evento: </label>
+                    <app-input-location></app-input-location>
                 </div>
                 <div class="d-flex">
                     <div class="d-grid w-100">

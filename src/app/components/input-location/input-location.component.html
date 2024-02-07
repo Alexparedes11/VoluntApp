@@ -1,16 +1,8 @@
-<app-header></app-header>
-<main class="container-fluid">
-    <form class="form">
-        <h1 class="text-primary">Añadir evento</h1>
-        <input type="text" placeholder=" Titulo" name="titulo" class="rounded">
-        <input type="text" (input)="search($event)" [value]="selectedAddress">
-        @if (addresses.length > 0) {
-        <ul>
-            @for (address of addresses; track $index) {
-            <li (click)="onSelect(address.place_name)">{{address.place_name}}</li>
-            }
-        </ul>
-        }
-    </form>
-</main>
-<app-footer></app-footer>
+<input class="w-100" type="text" (input)="search($event)" [value]="selectedAddress">
+@if (addresses.length > 0) {
+<ul>
+    @for (address of addresses; track $index) {
+    <li (click)="onSelect(address.place_name)">{{address.place_name}}</li>
+    }
+</ul>
+}
