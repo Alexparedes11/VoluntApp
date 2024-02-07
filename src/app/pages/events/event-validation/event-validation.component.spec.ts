@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ValidationsComponent } from './validations.component';
+import { EventValidationComponent } from './event-validation.component';
 
-describe('ValidationsComponent', () => {
-  let component: ValidationsComponent;
-  let fixture: ComponentFixture<ValidationsComponent>;
+describe('EventValidationComponent', () => {
+  let component: EventValidationComponent;
+  let fixture: ComponentFixture<EventValidationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ValidationsComponent]
+      imports: [EventValidationComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ValidationsComponent);
+    fixture = TestBed.createComponent(EventValidationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

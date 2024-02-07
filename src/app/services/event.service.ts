@@ -19,7 +19,7 @@ export class EventService {
     return this.http.post(`${this.baseUrl}/eventos`, data)
   }
 
-  logUser(data: any) {
+  login(data: any) {
     return this.http.post(`${this.baseUrl}/login`, data)
   }
 
@@ -39,19 +39,31 @@ export class EventService {
     );
   }
 
-  getNews() {
-    return this.http.get(`${this.baseUrl}/noticias`).pipe(
+  isUserInEvent(idUser: number, idEvent: number) {
+    const body = {
+      id_usuario: idUser,
+      id_evento: idEvent
+    };
+    return this.http.post(`${this.baseUrl}/eventos/isUserInEvento`, body).pipe(
       map((data: any) => {
         return data;
       })
     );
   }
 
-  isUserInEvent(idUser: number, idEvent: number) {
-    return this.http.get(`${this.baseUrl}/eventos/isUserInEvento?id_usuario=${idUser}&id_evento=${idEvent}`).pipe(
-      map((data: any) => {
-        return data;
-      })
-    );
+  addUserToEvent(idUser: number, idEvent: number) {
+    const body = {
+      id_usuario: idUser,
+      id_evento: idEvent
+    };
+    return this.http.post(`${this.baseUrl}/eventos/apuntar-usuario`, body);
+  }
+
+  removeUserFromEvent(idUser: number, idEvent: number) {
+    const body = {
+      id_usuario: idUser,
+      id_evento: idEvent
+    };
+    return this.http.post(`${this.baseUrl}/eventos/desapuntar-usuario`, body);
   }
 }

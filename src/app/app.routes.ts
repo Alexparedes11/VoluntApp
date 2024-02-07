@@ -4,13 +4,13 @@ import { RegisterComponent } from './pages/register/register.component';
 import { TermsComponent } from './pages/terms/terms.component';
 import { AboutComponent } from './pages/about/about.component';
 import { HomeComponent } from './pages/home/home.component';
-import { NewsComponent } from './pages/news/news.component';
-import { EventComponent } from './pages/events/event/event.component';
+import { NewsListComponent } from './pages/news/news-list/news-list.component';
+import { EventDetailsComponent } from './pages/events/event-details/event-details.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EventManagementComponent } from './pages/events/event-management/event-management.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { ValidationsComponent } from './pages/validations/validations.component';
-import { CreatenoticeComponent } from './pages/createnotice/createnotice.component';
+import { EventValidationComponent } from './pages/events/event-validation/event-validation.component';
+import { NewCreateComponent } from './pages/news/new-create/new-create.component';
 import { EventCreateComponent } from './pages/events/event-create/event-create.component';
 
 export const routes: Routes = [
@@ -19,12 +19,12 @@ export const routes: Routes = [
     { path: 'terms', component: TermsComponent },
     { path: 'about', component: AboutComponent },
     { path: '', component: HomeComponent },
-    { path: 'news', component: NewsComponent },
-    { path: 'event/:id', component: EventComponent},
+    { path: 'news', component: NewsListComponent },
+    { path: 'event/:id', component: EventDetailsComponent},
     { path: 'profile', component: ProfileComponent},
     { path: 'myevents', component: EventManagementComponent},
     { path: 'contact', component: ContactComponent},
-    { path: 'validations', component: ValidationsComponent},
-    { path: 'createnotice', component: CreatenoticeComponent},
+    { path: 'validations', component: EventValidationComponent},
+    { path: 'createnotice', component: NewCreateComponent},
     { path: 'event-create', component: EventCreateComponent }
 ];
