@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environments';
 import * as mapboxgl from 'mapbox-gl';
 
