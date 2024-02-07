@@ -6,15 +6,32 @@
         </div>
         <form [formGroup]="form" class="form" (submit)="addEvent()">
             <div class="card-body">
-                <input type="text" placeholder=" Titulo" name="titulo"  formControlName="titulo" class="rounded">
-                <input type="text" placeholder=" Descripción" name="descripcion"  formControlName="descripcion" class="rounded">
-                <input type="date" name="finicio"  formControlName="finicio" class="rounded">
-                <input type="date" name="ffin" name="ffin"  formControlName="ffin" class="rounded">
-                <input type="text" placeholder=" Nombre del creador" name="creadoPorUsuarios"  formControlName="creadoPorUsuarios" class="rounded">
-                <div>
-                    <label>Máximo de Voluntarios: </label>
-                    <input type="number" min="10" name="maxVoluntarios"  formControlName="maxVoluntarios" class="rounded">
+                <div class="d-grid">
+                    <label for="titulo">Nombre del evento: </label>
+                    <input type="text" placeholder=" Titulo" name="titulo"  formControlName="titulo" class="rounded" required>
                 </div>
+                <div class="d-grid">
+                    <label for="descripcion">Descripción del evento: </label>
+                    <textarea rows="6" cols="30" placeholder=" Descripción..." name="descripcion"  formControlName="descripcion" class="rounded" required></textarea>
+                </div>
+                <div class="d-flex">
+                    <div class="d-grid w-100">
+                        <label for="finicio">Fecha de Inicio: </label>
+                        <input type="date" name="finicio" formControlName="finicio" class="rounded" required>
+                    </div>
+                    <div class="d-grid w-100">
+                        <label for="ffin">Fecha de Fin: </label>
+                        <input type="date" name="ffin" formControlName="ffin" class="rounded" required>
+                    </div>
+                </div>
+                
+                <div class="d-grid">
+                    <label>Máximo de Voluntarios: </label>
+                    <input type="number" min="10" name="maxVoluntarios"  formControlName="maxVoluntarios" class="rounded" required>
+                </div>
+                
+                <input type="hidden" placeholder=" Nombre del creador" name="estado"  formControlName="estado" class="rounded">
+
             </div>
             <div class="card-footer text-end">
                 <button class="btn btn-secondary">Crear</button>
@@ -23,4 +40,3 @@
     </div>
 </main>
 <app-footer></app-footer>
-
