@@ -14,7 +14,7 @@
       </li>
       @if (isLogged === true && isAdmin !== true) {
       <li>
-        <a href="/myevents" class="nav-link px-3 text-black fw-bold encimaEventos">Mis eventos</a>
+        <a href="/myevents" class="nav-link px-3 text-black fw-bold encimaEventos">Gestión de eventos</a>
       </li>
       }
     </ul>
@@ -45,6 +45,9 @@
 
     @else {
 
+    <div class="text-end me-2">
+        <a href="/event-create" class="btn btn-primary me-3 btn-izquierda">Crear evento</a>
+    </div>
     <div class="dropdown gap-2 profile me-2">
       <a href="#" class="d-flex justify-content-center align-items-center gap-1" role="button" data-bs-toggle="dropdown"
         aria-expanded="false">

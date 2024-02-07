@@ -1,9 +1,26 @@
 <app-header></app-header>
 <main class="container-fluid">
-    <form class="form">
-        <h1 class="text-primary">Añadir evento</h1>
-        <input type="text" placeholder=" Titulo" name="titulo" class="rounded">
-    </form>    
-
+    <div class="card w-50 mx-auto">
+        <div class="card-header">
+            <h1 class="text-primary">Añadir evento</h1>
+        </div>
+        <form [formGroup]="form" class="form" (submit)="addEvent()">
+            <div class="card-body">
+                <input type="text" placeholder=" Titulo" name="titulo"  formControlName="titulo" class="rounded">
+                <input type="text" placeholder=" Descripción" name="descripcion"  formControlName="descripcion" class="rounded">
+                <input type="date" name="finicio"  formControlName="finicio" class="rounded">
+                <input type="date" name="ffin" name="ffin"  formControlName="ffin" class="rounded">
+                <input type="text" placeholder=" Nombre del creador" name="creadoPorUsuarios"  formControlName="creadoPorUsuarios" class="rounded">
+                <div>
+                    <label>Máximo de Voluntarios: </label>
+                    <input type="number" min="10" name="maxVoluntarios"  formControlName="maxVoluntarios" class="rounded">
+                </div>
+            </div>
+            <div class="card-footer text-end">
+                <button class="btn btn-secondary">Crear</button>
+            </div>
+        </form>
+    </div>
 </main>
 <app-footer></app-footer>
+

@@ -26,4 +26,6 @@ export class HeaderComponent {
     this.isLogged = this.userService.isLogged();
   }
 
+  
+
 }
