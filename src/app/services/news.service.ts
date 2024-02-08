@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
+import { environment } from '../../environments/environments';
 @Injectable({
     providedIn: 'root'
   })
   export class NewsService {
-    private baseUrl: String = 'http://localhost:9000';
+    private baseUrl = environment.server.ip + ':' + environment.server.port;
     constructor(private http: HttpClient) { }
     getNews() {
       return this.http.get(`${this.baseUrl}/noticias`).pipe(

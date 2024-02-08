@@ -20,5 +20,4 @@ export class EventCardComponent {
   @Input() numVolunteers: number | null = null;
   @Input() createdByUser: string | null = null;
   @Input() createdByInstitution: string | null = null;
-  @Input() management: boolean = false;
 }

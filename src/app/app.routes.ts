@@ -25,6 +25,6 @@ export const routes: Routes = [
     { path: 'myevents', component: EventManagementComponent},
     { path: 'contact', component: ContactComponent},
     { path: 'validations', component: EventValidationComponent},
-    { path: 'createnotice', component: NewCreateComponent},
-    { path: 'event-create', component: EventCreateComponent }
+    { path: 'create-new', component: NewCreateComponent},
+    { path: 'create-event', component: EventCreateComponent }
 ];

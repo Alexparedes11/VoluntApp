@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environments';
 import * as mapboxgl from 'mapbox-gl';
 
@@ -16,13 +16,15 @@ export class MapComponent implements OnInit {
   @Input() lon: number = -3.7038;
 
   ngOnInit() {
-    this.map = new mapboxgl.Map({
-      accessToken: environment.mapbox.accessToken,
-      container: 'map',
-      style: this.style,
-      zoom: 13,
-      center: [this.lat, this.lon],
-      attributionControl: false
-    });
+    setTimeout(() => {
+      this.map = new mapboxgl.Map({
+        accessToken: environment.mapbox.accessToken,
+        container: 'map',
+        style: this.style,
+        zoom: 15,
+        center: [this.lat, this.lon],
+        attributionControl: false,
+      });
+    }, 50)
   }
 }
