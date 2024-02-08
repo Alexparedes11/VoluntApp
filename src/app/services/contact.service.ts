@@ -11,7 +11,7 @@ export class ContactService {
     constructor(private http: HttpClient) { }
 
     enviarConsulta(consulta: any): Observable<any> {
-        const url = `${this.baseUrl}/enviarCorreo`;
+        const url = `${this.baseUrl}/contacto/enviarCorreo`;
         return this.http.post(url, consulta);
     }
 }
