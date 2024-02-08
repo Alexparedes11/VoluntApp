@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { CookieService } from 'ngx-cookie-service';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environments';
+import { User } from '../models/User';
 import { EventDTO } from '../models/dto/EventDTO';
 
 @Injectable({
@@ -60,6 +61,14 @@ export class UserService {
   getUserById(id: number) {
     return this.http.get<EventDTO>(`${this.baseUrl}/usuarios/${id}`).pipe(
       map((data: EventDTO) => {
+        return data;
+      })
+    );
+  }
+
+  getUserByIdforAddEvent(id: number) {
+    return this.http.get<User>(`${this.baseUrl}/usuarios/${id}`).pipe(
+      map((data: User) => {
         return data;
       })
     );
