@@ -1,7 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EventService } from '../../services/event.service';
 import { Location } from '@angular/common';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ import { Location } from '@angular/common';
 })
 export class RegisterComponent {
 
-  constructor(private eventService: EventService, private location: Location) { }
+  constructor(private userService: UserService, private location: Location) { }
 
   back() {
     this.location.back();
@@ -63,6 +64,6 @@ export class RegisterComponent {
   }
 
   crearUsuario() {
-    this.eventService.createUser(this.form.value).subscribe();
+    this.userService.register(this.form.value).subscribe();
   }
 }
