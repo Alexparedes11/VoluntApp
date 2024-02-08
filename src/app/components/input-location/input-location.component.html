@@ -1,4 +1,4 @@
-<input class="w-100" type="text" (input)="search($event)" [value]="selectedAddress">
+<input class="w-100 rounded form-control" type="text" (input)="search($event)" placeholder="Introduzca la dirección del evento" [value]="selectedAddress">
 @if (addresses.length > 0) {
 <ul>
     @for (address of addresses; track $index) {
