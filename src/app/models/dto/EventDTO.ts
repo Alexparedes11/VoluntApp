@@ -1,3 +1,5 @@
+import { Location } from "./Location";
+
 export interface EventDTO {
     id: number;
     titulo: string;
@@ -7,11 +9,8 @@ export interface EventDTO {
     finicio: Date;
     ffin: Date;
     imagen: string;
+    estado: string;
     maxVoluntarios: number;
     numVoluntarios: number;
-    ubicacion: {
-        nombre: string;
-        lat: number;
-        lon: number;
-    };
+    ubicacion: Location;
 }

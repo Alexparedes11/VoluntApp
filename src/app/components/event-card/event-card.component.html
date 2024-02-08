@@ -9,11 +9,7 @@
                 <span>👤 {{numVolunteers}}</span>
             </div>
             <div class="d-flex gap-2">
-                @if (management) {
-                <a class="text-white btn btn-secondary h-50">Ver más</a>
-                } @else {
                 <a [href]="'/event/' + id" class="text-white btn btn-secondary h-50">Ver más</a>
-                }
             </div>
         </div>
     </section>

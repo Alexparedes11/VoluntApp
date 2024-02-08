@@ -3,13 +3,12 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { EventService } from '../../services/event.service';
 import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule],
-  providers: [EventService, CookieService],
+  providers: [UserService, CookieService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

@@ -24,6 +24,14 @@ export class EventService {
     );
   }
 
+  getEventsByUser(id: number) {
+    return this.http.get(`${this.baseUrl}/eventos/usuario/${id}`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   getEventById(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/${id}`).pipe(
       map((data: any) => {

@@ -8,7 +8,9 @@
             <img class="rounded w-100" [src]="event.imagen" alt="">
         </div>
         <div class="area2">
-            <app-map [lat]="event.ubicacion.lat" [lon]="event.ubicacion.lon"></app-map>
+            @if (event.ubicacion) {
+                <app-map [lat]="event.ubicacion.lat" [lon]="event.ubicacion.lon"></app-map>
+            }
         </div>
         <div class="area3 d-flex flex-column justify-content-between">
             <article class="d-flex flex-column gap-3">
@@ -30,10 +32,12 @@
                 </section>
                 <section>
                     <h2 class="fw-semibold">Ubicación</h2>
-                    <span class="d-block">📍 {{event.ubicacion.nombre}}</span>
+                    @if (event.ubicacion) {
+                        <span class="d-block">📍 {{event.ubicacion.nombre}}</span>
+                    }
                 </section>
             </article>
-            @if (isAdmin) {
+            @if (isAdmin && event.estado === 'Revisión') {
             <div class="d-flex align-items-center gap-2">
                 <button class="btn bg-success-dark text-white w-50">Aprobar</button>
                 <button class="btn bg-error-dark text-white w-50">Rechazar</button>

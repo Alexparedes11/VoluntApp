@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { FooterComponent } from '../../../components/footer/footer.component';
 import { EventService } from '../../../services/event.service';
@@ -15,13 +15,14 @@ import { MapComponent } from '../../../components/map/map.component';
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.scss'
 })
-export class EventDetailsComponent {
+export class EventDetailsComponent implements OnInit {
 
   constructor(private eventService: EventService, private userService: UserService) { }
 
   @Input("id") eventId: number = -1;
   userId: number = -1;
   isUserInEvent: boolean = false;
+  isLogged: boolean = false;
   isAdmin: boolean = false;
 
   event: EventDTO = {} as EventDTO;
@@ -51,8 +52,6 @@ export class EventDetailsComponent {
   }
 
   ngOnInit(): void {
-    this.userId = this.userService.getUserIdFromToken();
-
     this.eventService.getEventById(this.eventId).subscribe(
       (data) => {
         this.event = data;
@@ -62,15 +61,21 @@ export class EventDetailsComponent {
       }
     );
 
-    if (this.userId === -1) return;
-    this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
-      (data) => {
-        this.isUserInEvent = data;
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
+    this.isLogged = this.userService.isLogged();
+    if (this.isLogged) {
+      this.isAdmin = this.userService.isAdmin();
+
+      if (!this.isAdmin) {
+        this.userId = this.userService.getUserIdFromToken();
+        this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
+          (data) => {
+            this.isUserInEvent = data;
+          },
+          (error) => {
+            console.error('Error fetching events:', error);
+          }
+        );
       }
-    );
-    this.isAdmin = this.userService.isAdmin();
+    }
   }
 }
