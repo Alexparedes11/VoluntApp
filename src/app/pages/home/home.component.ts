@@ -15,14 +15,20 @@ import { EventDTO } from '../../models/dto/EventDTO';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  
+
   constructor(private eventService: EventService) { }
   events: EventDTO[] = [];
+  pages: Array<Number> = [];
+  currentPage: number = 0;
 
   ngOnInit(): void {
     this.eventService.getEvents().subscribe(
       (data) => {
         this.events = data.content;
+        for (let i = 0; i < data.totalPages; i++) {
+          this.pages.push(i + 1);
+        }
+        this.currentPage = data.pageable.pageNumber;
       },
       (error) => {
         console.error('Error fetching events:', error);

@@ -4,11 +4,27 @@
     <app-filters-bar></app-filters-bar>
     <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       @for (event of events; track event.id) {
-        <div class="col">
-          <app-event-card [image]="event.imagen" [id]="event.id" [title]="event.titulo" [startDate]="event.finicio" [endDate]="event.ffin" [location]="event.ubicacion.nombre" [numVolunteers]="event.numVoluntarios" [createdByUser]="event.creadoPorUsuario" [createdByInstitution]="event.creadoPorInstitucion"></app-event-card>
-        </div>
+      <div class="col">
+        <app-event-card [image]="event.imagen" [id]="event.id" [title]="event.titulo" [startDate]="event.finicio"
+          [endDate]="event.ffin" [location]="event.ubicacion.nombre" [numVolunteers]="event.numVoluntarios"
+          [createdByUser]="event.creadoPorUsuario" [createdByInstitution]="event.creadoPorInstitucion"></app-event-card>
+      </div>
       }
     </section>
   </div>
 </main>
+<nav class="d-flex justify-content-center" aria-label="...">
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <a class="page-link">Anterior</a>
+    </li>
+    @for (page of pages; track $index) {
+    <li class="page-item"><a class="page-link" href="#">{{page}}</a></li> 
+    <!-- poner clase active cuando sea necesario -->
+    }
+    <li class="page-item">
+      <a class="page-link" href="#">Siguiente</a>
+    </li>
+  </ul>
+</nav>
 <app-footer></app-footer>
