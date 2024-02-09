@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environments';
@@ -16,13 +16,18 @@ export class EventService {
     return this.http.post(`${this.baseUrl}/eventos`, data)
   }
 
-  getEvents() {
-    return this.http.get(`${this.baseUrl}/eventos`).pipe(
+  getEvents(page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos`, { params }).pipe(
       map((data: any) => {
         return data;
       })
     );
   }
+
 
   getEventsByUser(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/usuario/${id}`).pipe(
