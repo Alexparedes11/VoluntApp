@@ -54,6 +54,9 @@ export class EventDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.isAdmin = this.userService.isAdmin();
+    this.userId = this.userService.getUserIdFromToken();
+
     this.eventService.getEventById(this.eventId).subscribe(
       (data) => {
         this.event = data;
@@ -65,10 +68,9 @@ export class EventDetailsComponent implements OnInit {
 
     this.isLogged = this.userService.isLogged();
     if (this.isLogged) {
-      this.isAdmin = this.userService.isAdmin();
-
+    
       if (!this.isAdmin) {
-        this.userId = this.userService.getUserIdFromToken();
+      
         this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
           (data) => {
             this.isUserInEvent = data;
@@ -76,18 +78,18 @@ export class EventDetailsComponent implements OnInit {
           (error) => {
             console.error('Error fetching events:', error);
           }
+        
         );
-        this.eventService.isUserCreator(this.userId, this.eventId).subscribe(
-          (data) => {
-            this.isUserCreator = data;
-          },
-          (error) => {
-            console.error('Error fetching events:', error);
-          }
-        );
+        
+        if (this.userId.toString() == this.event.creadoPorUsuario) {
+          this.isUserCreator = true;
+        } 
+        
+        
+         
+
+          
       }
-    } 
-
-
+    }
   }
 }
