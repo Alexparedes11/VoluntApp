@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit{
 
       this.userId = this.userService.getUserIdFromToken();
 
-      this.userService.getUserById(this.userId).subscribe(
+      this.userService.getUserDTOById(this.userId).subscribe(
         (data) => {
           console.log(data);
         },
