@@ -53,6 +53,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
 
+
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
     this.userId = this.userService.getUserIdFromToken();
@@ -74,6 +75,9 @@ export class EventDetailsComponent implements OnInit {
         this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
           (data) => {
             this.isUserInEvent = data;
+
+            this.eventService.isUserCreator(this.userId, this.eventId).subscribe(
+            );
           },
           (error) => {
             console.error('Error fetching events:', error);
