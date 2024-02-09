@@ -58,7 +58,7 @@ export class UserService {
     return false;
   }
   
-  getUserById(id: number) {
+  getUserDTOById(id: number) {
     return this.http.get<EventDTO>(`${this.baseUrl}/usuarios/${id}`).pipe(
       map((data: EventDTO) => {
         return data;
@@ -66,7 +66,7 @@ export class UserService {
     );
   }
 
-  getUserByIdforAddEvent(id: number) {
+  getUserById(id: number) {
     return this.http.get<User>(`${this.baseUrl}/usuarios/${id}`).pipe(
       map((data: User) => {
         return data;

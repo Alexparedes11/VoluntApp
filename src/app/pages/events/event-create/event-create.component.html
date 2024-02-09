@@ -41,7 +41,7 @@
                 <div class="d-flex">
                     <div class="d-grid w-100">
                         <label for="finicio">Fecha de Inicio: </label>
-                        <input type="date" name="finicio" formControlName="finicio" class="rounded form-control"
+                        <input type="datetime-local" name="finicio" formControlName="finicio" class="rounded form-control"
                         [min]="obtenerFechaActual()"
                         [ngClass]="{'is-invalid': eventForm.get('finicio')?.invalid && (eventForm.get('finicio')?.touched || eventForm.get('finicio')?.dirty)}">
                         <div *ngIf="eventForm.get('finicio')?.invalid && (eventForm.get('finicio')?.touched || eventForm.get('finicio')?.dirty)" class="invalid-feedback">
@@ -50,7 +50,7 @@
                     </div>
                     <div class="d-grid w-100">
                         <label for="ffin">Fecha de Fin: </label>
-                        <input type="date" name="ffin" formControlName="ffin" class="rounded form-control"
+                        <input type="datetime-local" name="ffin" formControlName="ffin" class="rounded form-control"
                         [ngClass]="{'is-invalid': eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)}">
                         <div *ngIf="eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)" class="invalid-feedback">
                             Es necesario establecer la fecha de finalización del evento.

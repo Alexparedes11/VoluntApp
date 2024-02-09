@@ -67,7 +67,7 @@ export class EventCreateComponent {
   ngOnInit(): void {
     this.userId = this.userService.getUserIdFromToken();
 
-    this.userService.getUserByIdforAddEvent(this.userId).subscribe(
+    this.userService.getUserById(this.userId).subscribe(
       (data) => {
         this.user = data;
       },
