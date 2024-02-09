@@ -9,7 +9,7 @@
         </div>
         <div class="area2">
             @if (event.ubicacion) {
-                <app-map [lat]="event.ubicacion.lat" [lon]="event.ubicacion.lon"></app-map>
+            <app-map [lat]="event.ubicacion.lat" [lon]="event.ubicacion.lon"></app-map>
             }
         </div>
         <div class="area3 d-flex flex-column justify-content-between">
@@ -33,7 +33,7 @@
                 <section>
                     <h2 class="fw-semibold">Ubicación</h2>
                     @if (event.ubicacion) {
-                        <span class="d-block">📍 {{event.ubicacion.nombre}}</span>
+                    <span class="d-block">📍 {{event.ubicacion.nombre}}</span>
                     }
                 </section>
             </article>
@@ -44,7 +44,11 @@
             </div>
             } @else {
             @if (isUserInEvent) {
-            <button (click)="removeUserFromEvent()" class="btn bg-error-light text-white w-100">Desapuntarse</button>
+                @if (isUserCreator) {
+                <button class="btn bg-error-dark text-white w-100">Eliminar evento</button>
+            }   @else {
+                <button (click)="removeUserFromEvent()" class="btn bg-error-light text-white w-100">Desapuntarse</button>
+                }
             } @else {
             <button (click)="addUserToEvent()" class="btn bg-secondary text-white w-100">Apúntate</button>
             }
