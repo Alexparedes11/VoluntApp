@@ -29,7 +29,7 @@ export class EventCreateComponent {
   userId: number = -1;
   evento: EventDTO = {} as EventDTO;
   user: User = {} as User;
-  eventForm: FormGroup;
+  eventForm!: FormGroup;
   private inputFecha: HTMLInputElement | null;
   selectedImage: any;
   addresses: AdressInfo[] = [];
@@ -51,17 +51,7 @@ export class EventCreateComponent {
         });
     }
         
-    this.eventForm = this.fb.group({
-      titulo: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      finicio: ['', Validators.required],
-      ffin: ['', Validators.required],
-      maxVoluntarios: ['', Validators.required],
-      estado: ['En Revisión'],
-      creadoPorUsuarios: [this.obtenerUsuario()],
-      ubicacion: ['', Validators.required],
-      imagen: [null, Validators.required]
-    },  { validator: this.validarFechas });
+  
   }
 
   // Obtenemos el usuario
@@ -167,6 +157,7 @@ export class EventCreateComponent {
       alert('El siguiente evento pasará por un proceso de validación antes de ser públicado, se le notificara de este en caso de haber pasado la revisión.');
       //this.eventService.createEvent(this.eventForm.value).subscribe();
       this.eventForm.reset();
+      this.initializeForm();
     }
   }
   
