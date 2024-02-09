@@ -51,9 +51,10 @@
                     <div class="d-grid w-100">
                         <label for="ffin">Fecha de Fin: </label>
                         <input type="datetime-local" name="ffin" formControlName="ffin" class="rounded form-control"
-                        [ngClass]="{'is-invalid': eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)}">
+                        [ngClass]="{'is-invalid': eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)}"
+                        [min]="eventForm.get('finicio')?.value">
                         <div *ngIf="eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)" class="invalid-feedback">
-                            Es necesario establecer la fecha de finalización del evento.
+                            Es necesario establecer la fecha posterior a la fecha de inicio del evento.
                         </div>
                     </div>
                 </div>

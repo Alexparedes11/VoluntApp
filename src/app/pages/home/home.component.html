@@ -1,7 +1,122 @@
 <app-header></app-header>
 <main class="container py-4 d-flex flex-column justify-content-center align-items-center">
+
   <div>
-    <app-filters-bar></app-filters-bar>
+    <nav class="bg-top d-flex flex-wrap justify-content-between py-3 rounded-top animacion">
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Reciente
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Popular</a></li>
+          <li><a class="dropdown-item" href="#">Mas antiguo</a></li>
+        </ul>
+      </div>
+      <div class="input-group w-50">
+        <input #seachInput class="p-1 form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
+          aria-describedby="btn-buscar" />
+        <button class="btn btn-primary" type="button" id="btn-buscar" (click)="filterEventsBySearch(seachInput.value)">🔎</button>
+      </div>
+
+      <button type="button" (click)="showFilters()" class="btn btn-primary">Filtros</button>
+    </nav>
+
+    @if (muestraFiltros) {
+
+    <section class="p-4 mb-3 rounded-bottom despuescontenedor text-white">
+      <div class="row align-items-start">
+        <div class="col border-end p-2 me-1">
+          <h4 class="fw-bold">Categorias</h4>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> Ayuda humanitaria </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> Deportiva </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> Ambiental </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> Cultural </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> Educativa </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> Social </label>
+          </div>
+
+        </div>
+
+        <div class="col p-2 mx-1">
+          <h4 class="fw-bold">Instituciones</h4>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> UNICEF </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> CRUZ ROJA </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> ACHALAY </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> CARITAS </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> SAVE THE CHILDREN </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+            <label class="form-check-label" for="flexCheckDefault"> ACNUR </label>
+          </div>
+        </div>
+
+        <div class="col border-start ms-1">
+          <h4 class="fw-bold">Fechas</h4>
+
+          <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Desde</label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="staticEmail" value="email@example.com">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Hasta</label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="staticEmail" value="email@example.com">
+            </div>
+          </div>
+
+          <h4 class="fw-bold">Ubicacion</h4>
+          <input class="form-control" type="search" placeholder="Buscar ubicacion" />
+        </div>
+      </div>
+    </section>
+
+    }
     <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       @for (event of events; track event.id) {
       <div class="col">
@@ -12,19 +127,34 @@
       }
     </section>
   </div>
+  <nav class="d-flex justify-content-center mt-5" aria-label="...">
+    <ul class="pagination">
+      @if (currentPage === 0) {
+      <li class="page-item disabled">
+        <a class="page-link">Anterior</a>
+      </li>
+      } @else {
+      <li class="page-item">
+        <a (click)="goToPage(currentPage - 1)" class="page-link" href="#">Anterior</a>
+      </li>
+      }
+      @for (page of pages; track $index) {
+      @if ($index === currentPage) {
+      <li class="page-item active"><a class="page-link" href="#">{{page}}</a></li>
+      } @else {
+      <li (click)="goToPage(page - 1)" class="page-item"><a class="page-link" href="#">{{page}}</a></li>
+      }
+      }
+      @if (currentPage === pages.length - 1) {
+      <li class="page-item disabled">
+        <a class="page-link">Siguiente</a>
+      </li>
+      } @else {
+      <li class="page-item">
+        <a (click)="goToPage(currentPage + 1)" class="page-link" href="#">Siguiente</a>
+      </li>
+      }
+    </ul>
+  </nav>
 </main>
-<nav class="d-flex justify-content-center" aria-label="...">
-  <ul class="pagination">
-    <li class="page-item disabled">
-      <a class="page-link">Anterior</a>
-    </li>
-    @for (page of pages; track $index) {
-    <li class="page-item"><a class="page-link" href="#">{{page}}</a></li> 
-    <!-- poner clase active cuando sea necesario -->
-    }
-    <li class="page-item">
-      <a class="page-link" href="#">Siguiente</a>
-    </li>
-  </ul>
-</nav>
 <app-footer></app-footer>

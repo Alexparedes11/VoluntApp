@@ -29,7 +29,7 @@ export class EventCreateComponent {
   userId: number = -1;
   evento: EventDTO = {} as EventDTO;
   user: User = {} as User;
-  eventForm: FormGroup;
+  eventForm!: FormGroup;
   private inputFecha: HTMLInputElement | null;
   selectedImage: any;
   addresses: AdressInfo[] = [];
@@ -41,35 +41,28 @@ export class EventCreateComponent {
     // Prevenir que se pueda escribir en el calendario
     this.inputFecha = document.getElementById('finicio') as HTMLInputElement;
 
-        if (this.inputFecha) {
-            this.inputFecha.addEventListener('keydown', (e: KeyboardEvent) => {
-                e.preventDefault();
-            });
+    if (this.inputFecha) {
+        this.inputFecha.addEventListener('keydown', (e: KeyboardEvent) => {
+            e.preventDefault();
+        });
 
-            this.inputFecha.addEventListener('mousedown', (e: MouseEvent) => {
-                e.preventDefault();
-            });
-        }
-
-    this.eventForm = this.fb.group({
-      titulo: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      finicio: ['', Validators.required],
-      ffin: ['', Validators.required],
-      maxVoluntarios: ['', Validators.required],
-      estado: ['En Revisión'],
-      creadoPorUsuarios: [this.user],
-      ubicacion: ['', Validators.required],
-      imagen: [null, Validators.required]
-    });
+        this.inputFecha.addEventListener('mousedown', (e: MouseEvent) => {
+            e.preventDefault();
+        });
+    }
+        
+  
   }
 
+  // Obtenemos el usuario
   ngOnInit(): void {
     this.userId = this.userService.getUserIdFromToken();
 
     this.userService.getUserById(this.userId).subscribe(
       (data) => {
         this.user = data;
+        console.log(this.user);
+        this.initializeForm();
       },
       (error) => {
         console.error('Error fetching events:', error);
@@ -77,13 +70,52 @@ export class EventCreateComponent {
     );
   }
 
+  initializeForm(): void {
+    this.eventForm = this.fb.group({
+      titulo: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      finicio: ['', Validators.required],
+      ffin: ['', Validators.required],
+      maxVoluntarios: ['', Validators.required],
+      estado: ['En Revisión'],
+      creadoPorUsuarios: [this.user], // Establece el usuario obtenido aquí
+      ubicacion: ['', Validators.required],
+      imagen: [null, Validators.required]
+    },  { validator: this.validarFechas });
+  }
+
+  obtenerUsuario(): User {
+    console.log(this.user);
+    return this.user;
+  }
+
   obtenerFechaActual(): string {
     const hoy = new Date();
     const mes = hoy.getMonth() + 1;
     const dia = hoy.getDate();
+    const horas = hoy.getHours();
+    const minutos = hoy.getMinutes();
     const formatoMes = mes < 10 ? `0${mes}` : mes;
     const formatoDia = dia < 10 ? `0${dia}` : dia;
-    return `${hoy.getFullYear()}-${formatoMes}-${formatoDia}`;
+    const formatoHoras = horas < 10 ? `0${horas}` : horas;
+    const formatoMinutos = minutos < 10 ? `0${minutos}` : minutos;
+    return `${hoy.getFullYear()}-${formatoMes}-${formatoDia}T${formatoHoras}:${formatoMinutos}`;
+  }
+
+  validarFechas(group: FormGroup) {
+    const finicio = group.get('finicio');
+    const ffin = group.get('ffin');
+  
+    if (finicio && ffin && finicio.value && ffin.value) {
+      const fechaInicio = new Date(finicio.value);
+      const fechaFin = new Date(ffin.value);
+  
+      if (fechaFin < fechaInicio) {
+        ffin.setErrors({ 'fechaInvalida': true });
+      } else {
+        ffin.setErrors(null);
+      }
+    }
   }
 
   // Mostrar la imagen en por pantalla
@@ -125,6 +157,7 @@ export class EventCreateComponent {
       alert('El siguiente evento pasará por un proceso de validación antes de ser públicado, se le notificara de este en caso de haber pasado la revisión.');
       //this.eventService.createEvent(this.eventForm.value).subscribe();
       this.eventForm.reset();
+      this.initializeForm();
     }
   }
   
