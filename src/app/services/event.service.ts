@@ -75,4 +75,16 @@ export class EventService {
     };
     return this.http.post(`${this.baseUrl}/eventos/desapuntar-usuario`, body);
   }
+  isUserCreator(idUser: number, idEvent: number) {
+    const body = {
+      id_usuario: idUser,
+      id_evento: idEvent
+    };
+    return this.http.post(`${this.baseUrl}/eventos/creadoPorUsuario/${idUser}/${idEvent}`, body).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
 }
