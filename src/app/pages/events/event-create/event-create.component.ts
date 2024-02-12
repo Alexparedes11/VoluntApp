@@ -82,7 +82,7 @@ export class EventCreateComponent {
       lat: [''],
       lon: [''],
       imagen: [null, Validators.required],
-      estado: ['En Revisión'],
+      estado: [''],
       usuarioNombre: [this.user.nombre],
       usuarioId: [this.user.id],
       maxVoluntarios: ['', Validators.required],

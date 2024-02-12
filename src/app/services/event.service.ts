@@ -28,6 +28,18 @@ export class EventService {
     );
   }
 
+  getEventsByState(state: string, page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/buscaporestado/${state}`, { params }).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
 
   getEventsByUser(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/usuario/${id}`).pipe(

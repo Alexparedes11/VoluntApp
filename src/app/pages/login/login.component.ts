@@ -20,7 +20,7 @@ export class LoginComponent {
 
   form = new FormGroup(
     {
-      username: new FormControl('', Validators.required),
+      username: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       password: new FormControl('', Validators.required)
     }
   );
@@ -40,7 +40,7 @@ export class LoginComponent {
       (error: any) => {
         console.error('Error al iniciar sesión:', error);
         this.errorMensaje = 'Error al iniciar sesión. Por favor, verifica tus credenciales.';
-    }
+      }
     );
   }
 }

@@ -20,7 +20,7 @@ export class EventValidationComponent implements OnInit {
   events: EventDTO[] = [];
 
   ngOnInit(): void {
-    this.eventService.getEvents().subscribe(
+    this.eventService.getEventsByState("revision").subscribe(
       (data) => {
         this.events = data.content;
       },
