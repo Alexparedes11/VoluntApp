@@ -13,7 +13,7 @@ export class EventService {
   constructor(private http: HttpClient) { }
 
   createEvent(data: any) {
-    return this.http.post(`${this.baseUrl}/eventos`, data)
+    return this.http.post(`${this.baseUrl}/eventos`, data);
   }
 
   getEvents(page?: number) {
