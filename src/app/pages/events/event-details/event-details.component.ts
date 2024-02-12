@@ -91,13 +91,26 @@ export class EventDetailsComponent implements OnInit {
     confirmButton.addEventListener("click", () => {
       // Guarda los motivos en la variable
       const motivosEliminacion = motivosInput.value;
-  
-      // Aquí puedes hacer lo que necesites con la variable
-      console.log("Motivos de eliminación:", motivosEliminacion);
-  
-      // Cierra el alert
+
+  // Aquí puedes hacer lo que necesites con la variable
+  console.log(motivosEliminacion);
+
+  // Actualizar el estado a "revision"
+  this.eventService.updateEventState(this.eventId, "revision").subscribe(
+    () => {
+      // Cierra el alert después de que la actualización sea exitosa
       document.body.removeChild(alertContainer);
-    });
+    },
+    (error) => {
+      console.error('Error al actualizar el estado del evento:', error);
+
+      // Manejar el error aquí si es necesario
+
+      // Cierra el alert incluso si hay un error
+      document.body.removeChild(alertContainer);
+    }
+  );
+});
     alertContainer.appendChild(confirmButton);
   
     // Crea un botón de cancelar
@@ -118,7 +131,7 @@ export class EventDetailsComponent implements OnInit {
     // Agrega el contenedor al cuerpo del documento
     document.body.appendChild(alertContainer);
   }
-  
+
   
 
   ngOnInit(): void {
