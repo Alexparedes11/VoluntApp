@@ -16,7 +16,7 @@
                 </div>
                 <div class="d-grid mb-3">
                     <label for="descripcion">Descripción del evento: </label>
-                    <textarea rows="6" cols="30" placeholder="Descripción..." name="descripcion"  formControlName="descripcion" class="rounded form-control"
+                    <textarea rows="6" cols="30" placeholder="Descripción" name="descripcion"  formControlName="descripcion" class="rounded form-control"
                     [ngClass]="{'is-invalid': eventForm.get('descripcion')?.invalid && (eventForm.get('descripcion')?.touched || eventForm.get('descripcion')?.dirty)}">
                     </textarea>
                     <div *ngIf="eventForm.get('descripcion')?.invalid && (eventForm.get('descripcion')?.touched || eventForm.get('descripcion')?.dirty)" class="invalid-feedback">

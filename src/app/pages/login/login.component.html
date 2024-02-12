@@ -5,14 +5,18 @@
         </div>
         <form [formGroup]="form" class="form" (submit)="loguearUsuario()">
             <h1>Iniciar sesión</h1>
-            <input type="email" placeholder="Correo electrónico" formControlName="username" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" 
-            [ngClass]="{'is-invalid': form.get('username')?.invalid && (form.get('username')?.touched || form.get('username')?.dirty)}">
-            <span *ngIf="form.get('username')?.invalid && (form.get('username')?.touched || form.get('username')?.dirty)" class="invalid-feedback">
+            <input type="email" placeholder="Correo electrónico" formControlName="username"
+                [ngClass]="{'is-invalid': form.get('username')?.invalid && (form.get('username')?.touched || form.get('username')?.dirty)}">
+            <span
+                *ngIf="form.get('username')?.invalid && (form.get('username')?.touched || form.get('username')?.dirty)"
+                class="invalid-feedback">
                 Introduce un correo electrónico válido.
             </span>
-            <input type="password" placeholder="Contraseña" formControlName="password" 
-            [ngClass]="{'is-invalid': form.get('password')?.invalid && (form.get('password')?.touched || form.get('password')?.dirty)}">
-            <span *ngIf="form.get('password')?.invalid && (form.get('password')?.touched || form.get('password')?.dirty)" class="invalid-feedback">
+            <input type="password" placeholder="Contraseña" formControlName="password"
+                [ngClass]="{'is-invalid': form.get('password')?.invalid && (form.get('password')?.touched || form.get('password')?.dirty)}">
+            <span
+                *ngIf="form.get('password')?.invalid && (form.get('password')?.touched || form.get('password')?.dirty)"
+                class="invalid-feedback">
                 Introduce la contraseña.
             </span>
             <span class="error-message" *ngIf="errorMensaje">{{ errorMensaje }}</span>
@@ -20,7 +24,8 @@
             <a href="">¿Has olvidado tu contraseña?</a>
             <div class="d-flex gap-2 mt-auto">
                 <button type="button" class="px-4 btn btn-outline-primary" (click)="back()">←</button>
-                <button class="w-100" type="submit" [disabled]="form.invalid" class="btn btn-secondary derecha">Entrar</button>
+                <button class="w-100" type="submit" [disabled]="form.invalid"
+                    class="btn btn-secondary derecha">Entrar</button>
             </div>
         </form>
     </div>

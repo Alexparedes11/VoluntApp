@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToPage(page: number) {
-    this.eventService.getEvents(page).subscribe(
+    this.eventService.getEventsByState("disponible", page).subscribe(
       (data) => {
         this.events = data.content;
         this.currentPage = data.pageable.pageNumber;
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.eventService.getEvents().subscribe(
+    this.eventService.getEventsByState("disponible").subscribe(
       (data) => {
         this.events = data.content;
         for (let i = 0; i < data.totalPages; i++) {

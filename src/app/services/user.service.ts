@@ -6,6 +6,7 @@ import { map } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { User } from '../models/User';
 import { EventDTO } from '../models/dto/EventDTO';
+import { UserDTO } from '../models/dto/UserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -67,8 +68,8 @@ export class UserService {
   }
 
   getUserById(id: number) {
-    return this.http.get<User>(`${this.baseUrl}/usuarios/${id}`).pipe(
-      map((data: User) => {
+    return this.http.get<UserDTO>(`${this.baseUrl}/usuarios/${id}`).pipe(
+      map((data: UserDTO) => {
         return data;
       })
     );
