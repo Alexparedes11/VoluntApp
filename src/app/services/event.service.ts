@@ -40,6 +40,11 @@ export class EventService {
     );
   }
 
+  updateEventState(id: number, newState: string) {
+    const body = newState ;
+    return this.http.put(`${this.baseUrl}/eventos/${id}/estado`, body);
+  }
+
 
   getEventsByUser(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/usuario/${id}`).pipe(
