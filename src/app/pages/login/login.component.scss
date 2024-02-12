@@ -63,6 +63,26 @@ main {
             padding: .5rem 0rem;
             color: $white-light;
             margin-top: 1.5rem;
-         }
+        }
+
+        .derecha {
+            width: 100%;
+        }
+        
+        span {
+            color: red;
+            font-size: 12px;
+        }
+        
      }
+     
  }
+
+is-invalid {
+    border: 1px solid red;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+}

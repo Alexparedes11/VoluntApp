@@ -57,12 +57,12 @@ export class EventCreateComponent {
 
   // Obtenemos el usuario
   ngOnInit(): void {
+    this.initializeForm();
     this.userId = this.userService.getUserIdFromToken();
 
     this.userService.getUserById(this.userId).subscribe(
       (data) => {
         this.user = data;
-        console.log('User:', this.user);
         this.initializeForm();
       },
       (error) => {
@@ -71,13 +71,14 @@ export class EventCreateComponent {
     );
   }
 
+  // Inicializamos el formulario
   initializeForm(): void {
     this.eventForm = this.fb.group({
       finicio: ['', Validators.required],
       ffin: ['', Validators.required],
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
-      nombreUbicacion: [''],
+      nombreUbicacion: ['', Validators.required],
       lat: [''],
       lon: [''],
       imagen: [null, Validators.required],
