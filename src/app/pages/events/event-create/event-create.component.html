@@ -25,9 +25,9 @@
                 </div>
                 <div class="d-grid">
                     <label for="ubicación">Ubicación del evento: </label>
-                    <input class="w-100 rounded form-control" type="text" (input)="search($event)" placeholder="Introduzca la dirección del evento" [value]="selectedAddressName"
-                    [ngClass]="{'is-invalid': eventForm.get('ubicacion')?.invalid && (eventForm.get('ubicacion')?.touched || eventForm.get('ubicacion')?.dirty)}">
-                    <div *ngIf="eventForm.get('ubicacion')?.invalid && (eventForm.get('ubicacion')?.touched || eventForm.get('ubicacion')?.dirty)" class="invalid-feedback">
+                    <input class="w-100 rounded form-control" type="text" (input)="search($event)" placeholder="Introduzca la dirección del evento" formControlName="nombreUbicacion" [value]="selectedAddressName"
+                    [ngClass]="{'is-invalid': eventForm.get('nombreUbicacion')?.invalid && (eventForm.get('nombreUbicacion')?.touched || eventForm.get('nombreUbicacion')?.dirty)}">
+                    <div *ngIf="eventForm.get('nombreUbicacion')?.invalid && (eventForm.get('nombreUbicacion')?.touched || eventForm.get('nombreUbicacion')?.dirty)" class="invalid-feedback">
                         Se necesita una ubicación para el evento.
                     </div>
                         @if (addresses.length > 0) {
