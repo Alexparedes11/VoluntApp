@@ -24,7 +24,7 @@ export class EventDetailsComponent implements OnInit {
   isUserInEvent: boolean = false;
   isLogged: boolean = false;
   isAdmin: boolean = false;
-  isUserCreator: boolean = false;
+  isCreator: boolean = false;
 
   event: EventDTO = {} as EventDTO;
 
@@ -75,23 +75,23 @@ export class EventDetailsComponent implements OnInit {
         this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
           (data) => {
             this.isUserInEvent = data;
-
-            this.eventService.isUserCreator(this.userId, this.eventId).subscribe(
-            );
           },
           (error) => {
             console.error('Error fetching events:', error);
           }
         
         );
-        
-        if (this.userId.toString() == this.event.creadoPorUsuario) {
-          this.isUserCreator = true;
-        } 
-        
-        
-         
 
+        this.eventService.isUserCreator(this.userId, this.eventId).subscribe(
+          (boolean) => {
+            if (boolean == true){
+                this.isCreator = true;
+            }
+          },
+          (error) => {
+            console.error('Error fetching events:', error);
+          }
+        )
           
       }
     }

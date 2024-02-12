@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environments';
 
 @Injectable({
@@ -81,18 +81,8 @@ export class EventService {
     return this.http.post(`${this.baseUrl}/eventos/desapuntar-usuario`, body);
   }
   
-  isUserCreator(idUser: number, idEvent: number) {
-    const body = {
-      id_usuario: idUser,
-      id_evento: idEvent
-      // Hay que comparar id del usuario con el id del creador del evento
-      
-    };
-    return this.http.post(`${this.baseUrl}/eventos/creadoPorUsuario/${idUser}/${idEvent}`, body).pipe(
-      map((data: any) => {
-        return data;
-      })
-    );
+  isUserCreator(idUser: number, idEvent: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/eventos/esCreador/${idUser}/${idEvent}`);
   }
 
 }

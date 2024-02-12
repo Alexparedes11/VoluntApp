@@ -71,13 +71,14 @@ export class EventCreateComponent {
     );
   }
 
+  // Inicializamos el formulario
   initializeForm(): void {
     this.eventForm = this.fb.group({
       finicio: ['', Validators.required],
       ffin: ['', Validators.required],
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
-      nombreUbicacion: [''],
+      nombreUbicacion: ['', Validators.required],
       lat: [''],
       lon: [''],
       imagen: [null, Validators.required],
