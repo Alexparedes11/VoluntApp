@@ -24,6 +24,7 @@ export class EventDetailsComponent implements OnInit {
   isUserInEvent: boolean = false;
   isLogged: boolean = false;
   isAdmin: boolean = false;
+  isUserCreator: boolean = false;
 
   event: EventDTO = {} as EventDTO;
 
@@ -51,7 +52,12 @@ export class EventDetailsComponent implements OnInit {
     this.isUserInEvent = false;
   }
 
+
+
   ngOnInit(): void {
+    this.isAdmin = this.userService.isAdmin();
+    this.userId = this.userService.getUserIdFromToken();
+
     this.eventService.getEventById(this.eventId).subscribe(
       (data) => {
         this.event = data;
@@ -63,18 +69,30 @@ export class EventDetailsComponent implements OnInit {
 
     this.isLogged = this.userService.isLogged();
     if (this.isLogged) {
-      this.isAdmin = this.userService.isAdmin();
-
+    
       if (!this.isAdmin) {
-        this.userId = this.userService.getUserIdFromToken();
+      
         this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
           (data) => {
             this.isUserInEvent = data;
+
+            this.eventService.isUserCreator(this.userId, this.eventId).subscribe(
+            );
           },
           (error) => {
             console.error('Error fetching events:', error);
           }
+        
         );
+        
+        if (this.userId.toString() == this.event.creadoPorUsuario) {
+          this.isUserCreator = true;
+        } 
+        
+        
+         
+
+          
       }
     }
   }
