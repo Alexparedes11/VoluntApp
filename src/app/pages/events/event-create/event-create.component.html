@@ -1,12 +1,12 @@
 <app-header></app-header>
 <main class="container">
-    <div class="card w-50 mx-auto">
+    <div class="card mx-auto p-4">
         <div class="card-header">
-            <h1 class="text-primary">Añadir evento</h1>
+            <h1 class="fw-bold">Crea tu evento</h1>
         </div>
         <form [formGroup]="eventForm" class="form" (submit)="submitEvent()">
-            <div class="card-body p-5">
-                <div class="d-grid">
+            <div class="card-body">
+                <div class="d-grid mb-3 mb-3">
                     <label for="titulo">Nombre del evento: </label>
                     <input type="text" placeholder="Titulo" name="titulo"  formControlName="titulo" class="rounded form-control"
                     [ngClass]="{'is-invalid': eventForm.get('titulo')?.invalid && (eventForm.get('titulo')?.touched || eventForm.get('titulo')?.dirty)}">
@@ -14,7 +14,7 @@
                         El nombre es requerido y debe tener al menos 5 carácteres.
                     </div>
                 </div>
-                <div class="d-grid">
+                <div class="d-grid mb-3">
                     <label for="descripcion">Descripción del evento: </label>
                     <textarea rows="6" cols="30" placeholder="Descripción..." name="descripcion"  formControlName="descripcion" class="rounded form-control"
                     [ngClass]="{'is-invalid': eventForm.get('descripcion')?.invalid && (eventForm.get('descripcion')?.touched || eventForm.get('descripcion')?.dirty)}">
@@ -23,7 +23,7 @@
                         Se requiere de una breve descripción del evento.
                     </div>
                 </div>
-                <div class="d-grid">
+                <div class="d-grid mb-3">
                     <label for="ubicación">Ubicación del evento: </label>
                     <input class="w-100 rounded form-control" type="text" (input)="search($event)" placeholder="Introduzca la dirección del evento" [value]="selectedAddressName"
                     [ngClass]="{'is-invalid': eventForm.get('ubicacion')?.invalid && (eventForm.get('ubicacion')?.touched || eventForm.get('ubicacion')?.dirty)}">
@@ -39,8 +39,8 @@
                         }
                 </div>
                 <div class="d-flex">
-                    <div class="d-grid w-100">
-                        <label for="finicio">Fecha de Inicio: </label>
+                    <div class="d-grid mb-3 w-100">
+                        <label for="finicio">Fecha de inicio: </label>
                         <input type="datetime-local" name="finicio" formControlName="finicio" class="rounded form-control"
                         [min]="obtenerFechaActual()"
                         [ngClass]="{'is-invalid': eventForm.get('finicio')?.invalid && (eventForm.get('finicio')?.touched || eventForm.get('finicio')?.dirty)}">
@@ -48,8 +48,8 @@
                             Es necesario establecer la fecha de inicio del evento.
                         </div>
                     </div>
-                    <div class="d-grid w-100">
-                        <label for="ffin">Fecha de Fin: </label>
+                    <div class="d-grid mb-3 w-100">
+                        <label for="ffin">Fecha de fin: </label>
                         <input type="datetime-local" name="ffin" formControlName="ffin" class="rounded form-control"
                         [ngClass]="{'is-invalid': eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)}"
                         [min]="eventForm.get('finicio')?.value">
@@ -58,15 +58,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-grid">
-                    <label for="maxVoluntarios">Máximo de Voluntarios: </label>
+                <div class="d-grid mb-3">
+                    <label for="maxVoluntarios">Máximo de voluntarios: </label>
                     <input type="number" min="10" name="maxVoluntarios" formControlName="maxVoluntarios" class="rounded form-control"
                     [ngClass]="{'is-invalid': eventForm.get('maxVoluntarios')?.invalid && (eventForm.get('maxVoluntarios')?.touched || eventForm.get('maxVoluntarios')?.dirty)}">
                     <div *ngIf="eventForm.get('maxVoluntarios')?.invalid && (eventForm.get('maxVoluntarios')?.touched || eventForm.get('maxVoluntarios')?.dirty)" class="invalid-feedback">
                         Se requiere establecer un límite de voluntarios, no puede ser negativo ni menor de 10.
                     </div>
                 </div>
-                <div class="d-grid">
+                <div class="d-grid mb-3">
                     <label for="imagen">Introduzca la imagen del evento:</label>
                     <input type="file" name="imagen" formControlName="imagen" (change)="onFileSelected($event)"
                     [ngClass]="{'is-invalid': eventForm.get('imagen')?.invalid && (eventForm.get('imagen')?.touched || eventForm.get('imagen')?.dirty)}">
@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="card-footer text-end">
-                <button class="btn btn-secondary" [disabled]="eventForm.invalid">Crear</button>
+                <button class="btn btn-secondary mt-4" [disabled]="eventForm.invalid">Crear</button>
             </div>
         </form>
     </div>

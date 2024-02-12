@@ -19,7 +19,17 @@ export class RegisterComponent {
     this.location.back();
   }
 
-  form = new FormGroup({
+  formUsuario = new FormGroup({
+    nombre: new FormControl(''),
+    apellidos: new FormControl(''),
+    dni: new FormControl(''),
+    telefono: new FormControl(''),
+    direccion: new FormControl(''),
+    email: new FormControl(''),
+    contraseña: new FormControl(''),
+  });
+
+  formInstitucion = new FormGroup({
     nombre: new FormControl(''),
     apellidos: new FormControl(''),
     dni: new FormControl(''),
@@ -63,6 +73,6 @@ export class RegisterComponent {
   }
 
   crearUsuario() {
-    this.userService.register(this.form.value).subscribe();
+    this.userService.register(this.formUsuario.value).subscribe();
   }
 }

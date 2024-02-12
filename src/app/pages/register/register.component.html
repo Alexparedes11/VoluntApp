@@ -3,7 +3,7 @@
         <div class="top">
             <img src="/assets/banner.png" alt="VoluntApp banner">
         </div>
-        <form [formGroup]="form" class="form" (submit)="crearUsuario()">
+        <form [formGroup]="institucion ? formInstitucion : formUsuario" class="form" (submit)="crearUsuario()">
             @if (pagina === 1) {
             <header class="d-flex justify-content-between">
                 <h1>Regístrate</h1>

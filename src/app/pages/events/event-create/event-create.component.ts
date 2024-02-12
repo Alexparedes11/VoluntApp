@@ -57,12 +57,12 @@ export class EventCreateComponent {
 
   // Obtenemos el usuario
   ngOnInit(): void {
+    this.initializeForm();
     this.userId = this.userService.getUserIdFromToken();
 
     this.userService.getUserById(this.userId).subscribe(
       (data) => {
         this.user = data;
-        console.log('User:', this.user);
         this.initializeForm();
       },
       (error) => {
