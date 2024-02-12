@@ -31,9 +31,11 @@ export class LoginComponent {
     this.userService.login(this.form.value).subscribe(
       (data: any) => {
         this.cookieService.set('token', data.token);
+        this.router.navigate(['/']);
       }
     );
 
     // Aquí hay que hacer que si se loguea le mande para /
+
   }
 }
