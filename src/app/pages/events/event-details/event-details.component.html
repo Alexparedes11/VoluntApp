@@ -45,7 +45,7 @@
             } @else {
             @if (isUserInEvent) {
                 @if (isCreator) {
-                <button class="btn bg-error-dark text-white w-100">Solicitar eliminación</button>
+                <button (click)="deleteEvent()" class="btn bg-error-dark text-white w-100">Solicitar eliminación</button>
             }   @else {
                 <button (click)="removeUserFromEvent()" class="btn bg-error-light text-white w-100">Desapuntarse</button>
                 }
