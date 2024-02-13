@@ -45,7 +45,7 @@ export class RegisterComponent {
     cif: new FormControl('', [Validators.required, Validators.pattern(this.cifPattern)]),
     personaCargo: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
-    contraseña: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
     telefono: new FormControl('', Validators.required),
     nombreLegal: new FormControl('', Validators.required),
   });
@@ -85,15 +85,33 @@ export class RegisterComponent {
     }
   }
 
-  validarConfirmacion() {
-    const contraseña = this.formInstitucion.get('contraseña')?.value;
-    const confirmacionContrasena = (document.querySelector('[placeholder="Confirmar contraseña"]') as HTMLInputElement).value;
+  convertirAMayusculas(event: any): void {
+    event.target.value = event.target.value.toUpperCase();
+  }
 
-    if (contraseña !== confirmacionContrasena) {
-      this.contrasenaConfirmadaInvalida = true;
+  validarConfirmacion() {
+    if (this.institucion) {
+      const contraseña = this.formInstitucion.get('password')?.value;
+
+      const confirmacionContrasena = (document.querySelector('[placeholder="Confirmar contraseña"]') as HTMLInputElement).value;
+
+      if (contraseña !== confirmacionContrasena) {
+        this.contrasenaConfirmadaInvalida = true;
+      } else {
+        this.contrasenaConfirmadaInvalida = false;
+      }
     } else {
-      this.contrasenaConfirmadaInvalida = false;
+      const contraseña = this.formUsuario.get('contraseña')?.value;
+
+      const confirmacionContrasena = (document.querySelector('[placeholder="Confirmar contraseña"]') as HTMLInputElement).value;
+
+      if (contraseña !== confirmacionContrasena) {
+        this.contrasenaConfirmadaInvalida = true;
+      } else {
+        this.contrasenaConfirmadaInvalida = false;
+      }
     }
+    
   }
 
   handleSubmit() {
@@ -111,6 +129,7 @@ export class RegisterComponent {
   }
 
   crearInstitucion() {
+    console.log(this.formInstitucion.value);
     this.institucionService.register(this.formInstitucion.value).subscribe();
   }
 }
