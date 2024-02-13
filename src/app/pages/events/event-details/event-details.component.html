@@ -37,18 +37,21 @@
                     }
                 </section>
             </article>
-            @if (isAdmin && event.estado === 'Revisión') {
+            @if (isAdmin) {
+            @if (event.estado === 'revision') {
             <div class="d-flex align-items-center gap-2">
                 <button class="btn bg-success-dark text-white w-50">Aprobar</button>
                 <button class="btn bg-error-dark text-white w-50">Rechazar</button>
             </div>
+            }
+
             } @else {
             @if (isUserInEvent) {
-                @if (isCreator) {
-                <button (click)="deleteEvent()" class="btn bg-error-dark text-white w-100">Solicitar eliminación</button>
-            }   @else {
-                <button (click)="removeUserFromEvent()" class="btn bg-error-light text-white w-100">Desapuntarse</button>
-                }
+            @if (isCreator) {
+            <button (click)="deleteEvent()" class="btn bg-error-dark text-white w-100">Solicitar eliminación</button>
+            } @else {
+            <button (click)="removeUserFromEvent()" class="btn bg-error-light text-white w-100">Desapuntarse</button>
+            }
             } @else {
             <button (click)="addUserToEvent()" class="btn bg-secondary text-white w-100">Apúntate</button>
             }

@@ -63,13 +63,13 @@ export class EventDetailsComponent implements OnInit {
     alertContainer.style.border = "1px solid #966DAF";
     alertContainer.style.borderRadius = "5px";
     alertContainer.style.textAlign = "center";
-  
+
     // Crea un título
     const title = document.createElement("h3");
     title.textContent = "¿Estás seguro de solicitar la eliminación?";
     title.style.marginBottom = "15px";
     alertContainer.appendChild(title);
-  
+
     // Crea un área de texto para que el usuario ingrese los motivos
     const motivosInput = document.createElement("textarea");
     motivosInput.placeholder = "Ingrese los motivos aquí...";
@@ -77,7 +77,7 @@ export class EventDetailsComponent implements OnInit {
     motivosInput.style.height = "100px";
     motivosInput.style.marginBottom = "10px";
     alertContainer.appendChild(motivosInput);
-  
+
     // Crea un botón de confirmación
     const confirmButton = document.createElement("button");
     confirmButton.textContent = "Confirmar";
@@ -92,27 +92,27 @@ export class EventDetailsComponent implements OnInit {
       // Guarda los motivos en la variable
       const motivosEliminacion = motivosInput.value;
 
-  // Aquí puedes hacer lo que necesites con la variable
-  console.log(motivosEliminacion);
+      // Aquí puedes hacer lo que necesites con la variable
+      console.log(motivosEliminacion);
 
-  // Actualizar el estado a "revision"
-  this.eventService.updateEventState(this.eventId, "revision").subscribe(
-    () => {
-      // Cierra el alert después de que la actualización sea exitosa
-      document.body.removeChild(alertContainer);
-    },
-    (error) => {
-      console.error('Error al actualizar el estado del evento:', error);
+      // Actualizar el estado a "revision"
+      this.eventService.updateEventState(this.eventId, "revision").subscribe(
+        () => {
+          // Cierra el alert después de que la actualización sea exitosa
+          document.body.removeChild(alertContainer);
+        },
+        (error) => {
+          console.error('Error al actualizar el estado del evento:', error);
 
-      // Manejar el error aquí si es necesario
+          // Manejar el error aquí si es necesario
 
-      // Cierra el alert incluso si hay un error
-      document.body.removeChild(alertContainer);
-    }
-  );
-});
+          // Cierra el alert incluso si hay un error
+          document.body.removeChild(alertContainer);
+        }
+      );
+    });
     alertContainer.appendChild(confirmButton);
-  
+
     // Crea un botón de cancelar
     const cancelButton = document.createElement("button");
     cancelButton.textContent = "Cancelar";
@@ -127,12 +127,12 @@ export class EventDetailsComponent implements OnInit {
       document.body.removeChild(alertContainer);
     });
     alertContainer.appendChild(cancelButton);
-  
+
     // Agrega el contenedor al cuerpo del documento
     document.body.appendChild(alertContainer);
   }
 
-  
+
 
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
@@ -149,9 +149,9 @@ export class EventDetailsComponent implements OnInit {
 
     this.isLogged = this.userService.isLogged();
     if (this.isLogged) {
-    
+
       if (!this.isAdmin) {
-      
+
         this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
           (data) => {
             this.isUserInEvent = data;
@@ -159,20 +159,20 @@ export class EventDetailsComponent implements OnInit {
           (error) => {
             console.error('Error fetching events:', error);
           }
-        
+
         );
 
         this.eventService.isUserCreator(this.userId, this.eventId).subscribe(
           (boolean) => {
-            if (boolean == true){
-                this.isCreator = true;
+            if (boolean == true) {
+              this.isCreator = true;
             }
           },
           (error) => {
             console.error('Error fetching events:', error);
           }
         )
-          
+
       }
     }
   }
