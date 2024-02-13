@@ -28,6 +28,18 @@ export class EventService {
     );
   }
 
+  getEventsBySearchQuery(query: string, page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/buscar/${query}`, { params }).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   getEventsByState(state: string, page?: number) {
     let params = new HttpParams();
     if (page !== undefined) {

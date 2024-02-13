@@ -27,7 +27,27 @@ export class HomeComponent implements OnInit {
   }
 
   filterEventsBySearch(search: string) {
-    console.log(search);
+    if (search) {
+      this.eventService.getEventsBySearchQuery(search).subscribe(
+        (data) => {
+          this.events = data.content;
+          this.currentPage = data.pageable.pageNumber;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+    } else {
+      this.eventService.getEventsByState("disponible").subscribe(
+        (data) => {
+          this.events = data.content;
+          this.currentPage = data.pageable.pageNumber;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+    }
   }
 
   goToPage(page: number) {
@@ -35,7 +55,6 @@ export class HomeComponent implements OnInit {
       (data) => {
         this.events = data.content;
         this.currentPage = data.pageable.pageNumber;
-        console.log(this.currentPage);
       },
       (error) => {
         console.error('Error fetching events:', error);
