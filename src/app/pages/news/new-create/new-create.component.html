@@ -42,8 +42,9 @@
     <footer class="d-flex justify-content-end gap-2 fw-medium"><b>{{new.autor}}</b>- {{new.fecha| date: 'dd/MM/yyyy'}}
     </footer>
     <div class="d-flex justify-content-center gap-2">
-      <button class="btn btn-error-dark" (click)="deleteNews(new.id)">Eliminar</button>
       <button class="btn btn-primary" type="submit" (click)="editNews(new.id)">Editar</button>
+      <button class="btn btn-error-dark" (click)="deleteNews(new.id)">Eliminar</button>
+      
     </div>
     <!-- Mostrar el formulario de edición si se está editando -->
     @if (isEditing) {
