@@ -1,4 +1,4 @@
-export interface ProfileUserDTO {
+export interface UserDTO {
     id: number;
     nombre: string;
     apellidos: string;

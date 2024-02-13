@@ -13,7 +13,7 @@ export class EventService {
   constructor(private http: HttpClient) { }
 
   createEvent(data: any) {
-    return this.http.post(`${this.baseUrl}/eventos`, data)
+    return this.http.post(`${this.baseUrl}/eventos`, data);
   }
 
   getEvents(page?: number) {
@@ -22,6 +22,18 @@ export class EventService {
       params = params.set('page', page.toString());
     }
     return this.http.get(`${this.baseUrl}/eventos`, { params }).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  getEventsBySearchQuery(query: string, page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/buscar/${query}`, { params }).pipe(
       map((data: any) => {
         return data;
       })

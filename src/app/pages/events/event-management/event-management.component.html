@@ -8,16 +8,20 @@
         </select>
     </div>
 
-    <div class="d-flex justify-content-around gap-4"> <!-- Solo si el usuario tiene eventos  -->
-        <div class="row row-cols-1 row-cols-sm-2 g-3">
-            @for (event of events; track event.id) {
-            <div class="col">
-                <app-event-card [id]="event.id" [image]="event.imagen" [title]="event.titulo"
-                    [startDate]="event.finicio" [endDate]="event.ffin" [location]="event.ubicacion.nombre"
-                    [createdByUser]="event.creadoPorUsuario"></app-event-card>
-            </div>
-            }
+    @if (events.length !== 0) {
+    <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        @for (event of events; track event.id) {
+        <div class="col">
+            <app-event-card [image]="event.imagen" [id]="event.id" [title]="event.titulo" [startDate]="event.finicio"
+                [endDate]="event.ffin" [location]="event.ubicacion.nombre" [numVolunteers]="event.numVoluntarios"
+                [createdByUser]="event.creadoPorUsuario"
+                [createdByInstitution]="event.creadoPorInstitucion"></app-event-card>
         </div>
-    </div>
+        }
+    </section>
+    } @else {
+    <h1 class="text-center text-white fw-bold mt-5">No hay eventos disponibles</h1>
+    <h4 class="text-center text-white"><a href="/create-event">Crea un evento aquí</a></h4>
+    }
 </main>
 <app-footer></app-footer>

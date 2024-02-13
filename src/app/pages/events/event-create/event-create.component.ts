@@ -8,6 +8,8 @@ import { EventDTO } from '../../../models/dto/EventDTO';
 import { EventService } from '../../../services/event.service';
 import { MapboxService } from '../../../services/mapbox.service';
 import { UserService } from '../../../services/user.service';
+import { UserDTO } from '../../../models/dto/UserDTO';
+import { Event } from '../../../models/Event';
 
 interface AdressInfo {
   place_name: string;
@@ -27,7 +29,7 @@ export class EventCreateComponent {
   // Parámetros inicializados
   userId: number = -1;
   evento: EventDTO = {} as EventDTO;
-  user: any = {} as any;
+  user: UserDTO = {} as UserDTO;
   eventForm!: FormGroup;
   private inputFecha: HTMLInputElement | null;
   selectedImage: any;
@@ -154,17 +156,22 @@ export class EventCreateComponent {
     if (this.eventForm.valid) {
       const formValue = this.eventForm.value;
       formValue.nombreUbicacion = this.selectedAddress?.place_name;
-      formValue.lat = this.selectedAddress?.center[1];
-      formValue.lon = this.selectedAddress?.center[0];
+      formValue.lat = this.selectedAddress?.center[0];
+      formValue.lon = this.selectedAddress?.center[1];
 
       console.log(formValue);
       alert('El siguiente evento pasará por un proceso de validación antes de ser publicado, se le notificará de este en caso de haber pasado la revisión.');
-      this.eventService.createEvent(formValue).subscribe();
+      this.eventService.createEvent(formValue).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.eventService.addUserToEvent(this.userId, data.id).subscribe();
+        },
+        (error) => {
+          console.error('Error creating event:', error);
+        }
+      );
       this.eventForm.reset();
       this.initializeForm();
     }
   }
-
-
-
 }

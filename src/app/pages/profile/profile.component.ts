@@ -3,9 +3,8 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { UserService } from '../../services/user.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ProfileUserDTO } from '../../models/dto/ProfileUserDTO';
+import { UserDTO } from '../../models/dto/UserDTO';
 import { ProfileService } from '../../services/profile.service';
-import { User } from '../../models/User';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +26,7 @@ export class ProfileComponent implements OnInit{
 
     constructor(private profileService: ProfileService, private userService: UserService) { }
 
-    user: ProfileUserDTO = {} as ProfileUserDTO;
+    user: UserDTO = {} as UserDTO;
   
     ngOnInit(): void {
 

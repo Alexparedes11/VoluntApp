@@ -1,7 +1,7 @@
 <app-header></app-header>
-<main class="container py-4 d-flex flex-column justify-content-center align-items-center">
+<main class="container py-4 d-flex flex-column align-items-center">
 
-  <div>
+  <div class="w-100">
     <nav class="bg-top d-flex flex-wrap justify-content-between py-3 rounded-top animacion">
       <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -15,7 +15,8 @@
       <div class="input-group w-50">
         <input #seachInput class="p-1 form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
           aria-describedby="btn-buscar" />
-        <button class="btn btn-primary" type="button" id="btn-buscar" (click)="filterEventsBySearch(seachInput.value)">🔎</button>
+        <button class="btn btn-primary" type="button" id="btn-buscar"
+          (click)="filterEventsBySearch(seachInput.value)">🔎</button>
       </div>
 
       <button type="button" (click)="showFilters()" class="btn btn-primary">Filtros</button>
@@ -117,6 +118,8 @@
     </section>
 
     }
+
+    @if (events.length !== 0) {
     <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       @for (event of events; track event.id) {
       <div class="col">
@@ -126,8 +129,14 @@
       </div>
       }
     </section>
+    } @else {
+    <h1 class="text-center text-white fw-bold mt-5">No hay eventos disponibles</h1>
+    <h4 class="text-center text-white"><a href="/create-event">Crea un evento aquí</a></h4>
+    }
+
   </div>
-  <nav class="d-flex justify-content-center mt-5" aria-label="...">
+  @if (events.length !== 0) {
+  <nav class="d-flex justify-content-center mt-5">
     <ul class="pagination">
       @if (currentPage === 0) {
       <li class="page-item disabled">
@@ -156,5 +165,6 @@
       }
     </ul>
   </nav>
+  }
 </main>
 <app-footer></app-footer>

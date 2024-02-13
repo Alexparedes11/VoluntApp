@@ -10,7 +10,6 @@ main {
     flex-direction: column;
     gap: 2rem;
     width: 25rem;
-    height: 25rem;
     border-radius: $border-radius-xl;
     background-color: $white-light;
     padding: 2rem 4rem;
@@ -106,5 +105,24 @@ main {
                 background-color: $primary-dark;
               }	
         }
+
+        .derecha {
+            width: 100%;
+        }
+        
+        span {
+            color: red;
+            font-size: 12px;
+        }
     }
+}
+
+is-invalid {
+    border: 1px solid red;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+    margin-top: 0px;
 }

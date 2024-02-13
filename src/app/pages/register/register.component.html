@@ -3,7 +3,7 @@
         <div class="top">
             <img src="/assets/banner.png" alt="VoluntApp banner">
         </div>
-        <form [formGroup]="institucion ? formInstitucion : formUsuario" class="form" (submit)="crearUsuario()">
+        <form [formGroup]="institucion ? formInstitucion : formUsuario" class="form" (submit)="handleSubmit()">
             @if (pagina === 1) {
             <header class="d-flex justify-content-between">
                 <h1>Regístrate</h1>
@@ -19,11 +19,27 @@
             </select>
 
             @if (institucion === true) {
-            <input type="text" placeholder="Nombre a mostrar" required>
-            <input type="text" placeholder="Nombre legal" required>
+            <input type="text" placeholder="Nombre a mostrar" formControlName="nombre"
+            [ngClass]="{'is-invalid': formInstitucion.get('nombre')?.invalid && (formInstitucion.get('nombre')?.touched || formInstitucion.get('nombre')?.dirty)}">
+            <span *ngIf="formInstitucion.get('nombre')?.invalid && (formInstitucion.get('nombre')?.touched || formInstitucion.get('nombre')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar en blanco.
+            </span>
+            <input type="text" placeholder="Nombre legal" formControlName="nombreLegal"
+            [ngClass]="{'is-invalid': formInstitucion.get('nombreLegal')?.invalid && (formInstitucion.get('nombreLegal')?.touched || formInstitucion.get('nombreLegal')?.dirty)}">
+            <span *ngIf="formInstitucion.get('nombreLegal')?.invalid && (formInstitucion.get('nombreLegal')?.touched || formInstitucion.get('nombreLegal')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar en blanco.
+            </span>
             } @else {
-            <input type="text" formControlName="nombre" placeholder="Nombre" required>
-            <input type="text" formControlName="apellidos" placeholder="Apellidos" required>
+            <input type="text" formControlName="nombre" placeholder="Nombre" 
+            [ngClass]="{'is-invalid': formUsuario.get('nombre')?.invalid && (formUsuario.get('nombre')?.touched || formUsuario.get('nombre')?.dirty)}">
+            <span *ngIf="formUsuario.get('nombre')?.invalid && (formUsuario.get('nombre')?.touched || formUsuario.get('nombre')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar en blanco.
+            </span>
+            <input type="text" formControlName="apellidos" placeholder="Apellidos"
+            [ngClass]="{'is-invalid': formUsuario.get('apellidos')?.invalid && (formUsuario.get('apellidos')?.touched || formUsuario.get('apellidos')?.dirty)}">
+            <span *ngIf="formUsuario.get('apellidos')?.invalid && (formUsuario.get('apellidos')?.touched || formUsuario.get('apellidos')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar en blanco.
+            </span>
             }
             <div class="d-flex gap-2 mt-auto">
                 <button class="px-4 btn btn-outline-primary" (click)="back()">←</button>
@@ -41,13 +57,37 @@
                 </ul>
             </header>
             @if (institucion === true) {
-            <input type="text" placeholder="CIF institución">
-            <input type="text" placeholder="Nombre de la persona a cargo">
-            <input type="text" placeholder="Teléfono de la persona a cargo">
+            <input type="text" placeholder="CIF institución" formControlName="cif" maxlength="9" (input)="convertirAMayusculas(this)"
+            [ngClass]="{'is-invalid': formInstitucion.get('cif')?.invalid && (formInstitucion.get('cif')?.touched || formInstitucion.get('cif')?.dirty)}">
+            <span *ngIf="formInstitucion.get('cif')?.invalid && (formInstitucion.get('cif')?.touched || formInstitucion.get('cif')?.dirty)" class="invalid-feedback">
+                El CIF debe tener un formato válido.
+            </span>
+            <input type="text" placeholder="Nombre de la persona a cargo" formControlName="personaCargo"
+            [ngClass]="{'is-invalid': formInstitucion.get('personaCargo')?.invalid && (formInstitucion.get('personaCargo')?.touched || formInstitucion.get('personaCargo')?.dirty)}">
+            <span *ngIf="formInstitucion.get('personaCargo')?.invalid && (formInstitucion.get('personaCargo')?.touched || formInstitucion.get('personaCargo')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar vacío.
+            </span>
+            <input type="text" placeholder="Teléfono de la persona a cargo" formControlName="telefono"  minlength="9" maxlength="9" pattern="[0-9]*" inputmode="numeric"
+            [ngClass]="{'is-invalid': formInstitucion.get('telefono')?.invalid && (formInstitucion.get('telefono')?.touched || formInstitucion.get('telefono')?.dirty)}">
+            <span *ngIf="formInstitucion.get('telefono')?.invalid && (formInstitucion.get('telefono')?.touched || formInstitucion.get('telefono')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar vacío.
+            </span>
             } @else {
-            <input type="text" formControlName="dni" placeholder="DNI">
-            <input type="text" formControlName="telefono" placeholder="Teléfono">
-            <input type="text" formControlName="direccion" placeholder="Dirección">
+            <input type="text" formControlName="dni" placeholder="DNI" pattern="[0-9]{8}[a-zA-Z]" maxlength="9" (input)="convertirAMayusculas(this)"
+            [ngClass]="{'is-invalid': formUsuario.get('dni')?.invalid && (formUsuario.get('dni')?.touched || formUsuario.get('dni')?.dirty)}">
+            <span *ngIf="formUsuario.get('dni')?.invalid && (formUsuario.get('dni')?.touched || formUsuario.get('dni')?.dirty)" class="invalid-feedback">
+                El DNI debe tener un formato válido.
+            </span>
+            <input type="text" formControlName="telefono" placeholder="Teléfono" minlength="9" maxlength="9" pattern="[0-9]*" inputmode="numeric"
+            [ngClass]="{'is-invalid': formUsuario.get('telefono')?.invalid && (formUsuario.get('telefono')?.touched || formUsuario.get('telefono')?.dirty)}">
+            <span *ngIf="formUsuario.get('telefono')?.invalid && (formUsuario.get('telefono')?.touched || formUsuario.get('telefono')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar vacío.
+            </span>
+            <input type="text" formControlName="direccion" placeholder="Dirección"
+            [ngClass]="{'is-invalid': formUsuario.get('direccion')?.invalid && (formUsuario.get('direccion')?.touched || formUsuario.get('direccion')?.dirty)}">
+            <span *ngIf="formUsuario.get('direccion')?.invalid && (formUsuario.get('direccion')?.touched || formUsuario.get('direccion')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar vacío.
+            </span>
             }
             <div class="d-flex gap-2 mt-auto">
                 <button class="px-4 btn btn-outline-primary" (click)="anteriorPagina()">←</button>
@@ -64,12 +104,42 @@
                     <a class="select" (click)="terceraPagina()">3</a>
                 </ul>
             </header>
-            <input type="text" formControlName="email" placeholder="Correo electrónico">
-            <input type="password" formControlName="contraseña" placeholder="Contraseña">
-            <input type="password" placeholder="Repetir contraseña">
+            @if (institucion === true) {
+            <input type="email" placeholder="email" formControlName="email"  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+            [ngClass]="{'is-invalid': formInstitucion.get('email')?.invalid && (formInstitucion.get('email')?.touched || formInstitucion.get('email')?.dirty)}">
+            <span *ngIf="formInstitucion.get('email')?.invalid && (formInstitucion.get('email')?.touched || formInstitucion.get('email')?.dirty)" class="invalid-feedback">
+                Introduce un correo electrónico válido.
+            </span>
+            <input type="password" placeholder="Contraseña" formControlName="password" (input)="validarConfirmacion()"
+            [ngClass]="{'is-invalid': formInstitucion.get('password')?.invalid && (formInstitucion.get('password')?.touched || formInstitucion.get('password')?.dirty)}">
+            <span *ngIf="formInstitucion.get('password')?.invalid && (formInstitucion.get('password')?.touched || formInstitucion.get('password')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar vacío.
+            </span>
+            <input type="password" placeholder="Confirmar contraseña" 
+            [ngClass]="{'is-invalid': contrasenaConfirmadaInvalida}" (input)="validarConfirmacion()" (blur)="validarConfirmacion()" required>
+            <span *ngIf="contrasenaConfirmadaInvalida && formInstitucion.get('password')?.touched" class="invalid-feedback">
+                Las contraseñas no coinciden.
+            </span>
+            } @else {
+            <input type="text" formControlName="email" placeholder="Correo electrónico" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+            [ngClass]="{'is-invalid': formUsuario.get('email')?.invalid && (formUsuario.get('email')?.touched || formUsuario.get('email')?.dirty)}">
+            <span *ngIf="formUsuario.get('email')?.invalid && (formUsuario.get('email')?.touched || formUsuario.get('email')?.dirty)" class="invalid-feedback">
+                Introduce un correo electrónico válido.
+            </span>
+            <input type="password" formControlName="contraseña" placeholder="Contraseña" (input)="validarConfirmacion()"
+            [ngClass]="{'is-invalid': formUsuario.get('contraseña')?.invalid && (formUsuario.get('contraseña')?.touched || formUsuario.get('contraseña')?.dirty)}">
+            <span *ngIf="formUsuario.get('contraseña')?.invalid && (formUsuario.get('contraseña')?.touched || formUsuario.get('contraseña')?.dirty)" class="invalid-feedback">
+                Este campo no puede estar vacío.
+            </span>
+            <input type="password" placeholder="Confirmar contraseña" 
+            [ngClass]="{'is-invalid': contrasenaConfirmadaInvalida}" (input)="validarConfirmacion()" (blur)="validarConfirmacion()" required>
+            <span *ngIf="contrasenaConfirmadaInvalida && formUsuario.get('contraseña')?.touched" class="invalid-feedback">
+                Las contraseñas no coinciden.
+            </span>
+            }
             <div class="d-flex gap-2 mt-auto">
                 <button class="px-4 btn btn-outline-primary" (click)="anteriorPagina()">←</button>
-                <button class="w-100" type="submit">Registrarse</button>
+                <button class="w-100" type="submit"  [disabled]="formInstitucion.invalid && formUsuario.invalid || contrasenaConfirmadaInvalida == true" class="btn btn-secondary derecha">Registrarse</button>
             </div>
             }
         </form>
