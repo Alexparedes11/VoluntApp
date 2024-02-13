@@ -24,98 +24,21 @@
 
     @if (muestraFiltros) {
 
-    <section class="p-4 mb-3 rounded-bottom despuescontenedor text-white">
-      <div class="row align-items-start">
-        <div class="col border-end p-2 me-1">
-          <h4 class="fw-bold">Categorias</h4>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> Ayuda humanitaria </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> Deportiva </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> Ambiental </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> Cultural </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> Educativa </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> Social </label>
-          </div>
-
-        </div>
-
-        <div class="col p-2 mx-1">
-          <h4 class="fw-bold">Instituciones</h4>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> UNICEF </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> CRUZ ROJA </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> ACHALAY </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> CARITAS </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> SAVE THE CHILDREN </label>
-          </div>
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-            <label class="form-check-label" for="flexCheckDefault"> ACNUR </label>
-          </div>
-        </div>
-
-        <div class="col border-start ms-1">
-          <h4 class="fw-bold">Fechas</h4>
-
-          <div class="mb-3 row">
-            <label for="staticEmail" class="col-sm-2 col-form-label">Desde</label>
-            <div class="col-sm-10">
-              <input type="date" class="form-control" id="staticEmail" value="email@example.com">
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label for="staticEmail" class="col-sm-2 col-form-label">Hasta</label>
-            <div class="col-sm-10">
-              <input type="date" class="form-control" id="staticEmail" value="email@example.com">
-            </div>
-          </div>
-
-          <h4 class="fw-bold">Ubicacion</h4>
-          <input class="form-control" type="search" placeholder="Buscar ubicacion" />
-        </div>
+    <form [formGroup]="fechaForm" (submit)="applyFilters()" class="mb-3 despuescontenedor text-white rounded d-flex gap-3 align-items-end">
+      <div>
+        <label for="finicio">Inicio</label>
+        <input formControlName="finicio" type="datetime-local" class="form-control" id="finicio">
       </div>
-    </section>
+      <div>
+        <label for="ffin">Fin</label>
+        <input formControlName="ffin" type="datetime-local" class="form-control" id="ffin">
+      </div>
+      <div>
+        <label for="ubicacion">Ubicación</label>
+        <input type="text" class="form-control" id="ubicacion">
+      </div>
+      <button type="submit" class="btn btn-primary ms-auto h-50">Aplicar filtros</button>
+    </form>
 
     }
 
