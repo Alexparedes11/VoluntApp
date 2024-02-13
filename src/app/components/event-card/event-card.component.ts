@@ -1,6 +1,5 @@
 import { Component, Input, numberAttribute } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { User } from '../../models/User';
 
 @Component({
   selector: 'app-event-card',
@@ -16,7 +15,6 @@ export class EventCardComponent {
   @Input() startDate: Date | null = null;
   @Input() endDate: Date | null = null;
   @Input() location: string | null = null;
-  @Input() volunteersList: User[] | null = null;
   @Input() numVolunteers: number | null = null;
   @Input() createdByUser: string | null = null;
   @Input() createdByInstitution: string | null = null;
