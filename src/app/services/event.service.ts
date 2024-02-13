@@ -52,6 +52,18 @@ export class EventService {
     );
   }
 
+  getEventByDateFilters(finicio: string, ffin: string, page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas/${finicio}/${ffin}`, { params }).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   updateEventState(id: number, newState: string) {
     const body = newState ;
     return this.http.put(`${this.baseUrl}/eventos/${id}/estado`, body);

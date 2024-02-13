@@ -4,12 +4,13 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { EventCardComponent } from '../../components/event-card/event-card.component';
 import { EventService } from '../../services/event.service';
 import { EventDTO } from '../../models/dto/EventDTO';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   providers: [EventService],
-  imports: [HeaderComponent, FooterComponent, EventCardComponent],
+  imports: [HeaderComponent, FooterComponent, EventCardComponent, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -22,8 +23,25 @@ export class HomeComponent implements OnInit {
 
   muestraFiltros: boolean = false;
 
+  fechaForm: FormGroup = new FormGroup({
+    finicio: new FormControl(''),
+    ffin: new FormControl(''),
+  });
+
   showFilters() {
     this.muestraFiltros = !this.muestraFiltros;
+  }
+
+  applyFilters() {
+    this.eventService.getEventByDateFilters(this.fechaForm.value.finicio, this.fechaForm.value.ffin).subscribe(
+      (data) => {
+        this.events = data.content;
+        this.currentPage = data.pageable.pageNumber;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    )
   }
 
   filterEventsBySearch(search: string) {
