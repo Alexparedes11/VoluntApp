@@ -2,32 +2,21 @@
 
 <main class="container gap-2 text-white">
   <div class="row">
-
-    <div class="d-flex flex-column w-50">
-
+    <div class="d-flex flex-column w-100">
       <h2 class="fw-bold mt-4 mb-4">Crear noticia</h2>
       <div class="w-100">
-        <form>
+        <form [formGroup]="newsForm" class="form" (submit)="submitNew()">
           <div class="form-floating mb-4 text-black">
-            <input
-              type="text"
-              class="form-control"
-              id="noticia"
-              placeholder="Titulo de noticia"
-              required
-            />
+            <input type="text" class="form-control" id="titulo" formControlName="titulo" placeholder="Titulo de noticia"
+              required />
             <label for="noticia">Titulo de noticia</label>
           </div>
           <div class="formFile mb-4 text-black text-center">
-            <input type="file" class="form-control py-3" id="formFile" />
+            <input type="file" formControlName="imagen" class="form-control py-3" id="formFile" />
           </div>
           <div class="form-floating mb-4 text-black">
-            <textarea
-              class="form-control"
-              placeholder="Contenido"
-              id="consulta"
-              style="min-height: 125px"
-            ></textarea>
+            <textarea class="form-control" formControlName="contenido" placeholder="Contenido" id="consulta"
+              style="min-height: 125px"></textarea>
             <label for="consulta">Contenido</label>
           </div>
           <button type="submit" class="btn btn-primary w-100">
@@ -36,17 +25,55 @@
         </form>
       </div>
     </div>
-    <div class="d-flex flex-column w-50">
-      <h2 class="fw-bold mt-4 mb-4">Noticias creadas</h2>
-        <div class="w-100 p-2 bg-white text-black d-flex  align-items-center justify-content-between rounded">
-            <span>Título de la noticia</span>
-            <div class="d-flex gap-2 ">
-                <button class="btn btn-danger">Eliminar</button>
-                <button class="btn btn-primary">Editar</button>
-            </div>
-        </div>   
-    </div>
   </div>
-</main>
+      
+  <h2 class="fw-bold mt-4 mb-4">Lista de Noticias</h2>
+  @if (newsMostrar.length > 0) {
+  <div class="d-flex flex-column w-50">
 
+  </div>
+  @for (new of newsMostrar; track new.id) {
+  <article>
+    <h3 class="fw-semibold">{{new.titulo}}</h3>
+    <div class="d-flex justify-content-center">
+      <img [src]="new.imagen" class="noticia-img rounded mb-3">
+    </div>
+    <p>{{new.contenido}}</p>
+    <footer class="d-flex justify-content-end gap-2 fw-medium"><b>{{new.autor}}</b>- {{new.fecha| date: 'dd/MM/yyyy'}}
+    </footer>
+    <div class="d-flex justify-content-center gap-2">
+      <button class="btn btn-error-dark" (click)="deleteNews(new.id)">Eliminar</button>
+      <button class="btn btn-primary" type="submit" (click)="editNews(new.id)">Editar</button>
+    </div>
+    <!-- Mostrar el formulario de edición si se está editando -->
+    @if (isEditing) {
+    <h2 class="fw-bold mt-4 mb-4">Editar noticia</h2>
+    <div class="d-flex align-items-center justify-content-center">
+      <form [formGroup]="newsForm" class="form w-75" (submit)="submitEdit()">
+        <div class="form-floating mb-4 text-black">
+          <input type="text" class="form-control" id="titulo" formControlName="titulo"
+            placeholder="Titulo de noticia" />
+          <label for="noticia">Titulo de noticia</label>
+        </div>
+        <div class="formFile mb-4 text-black text-center">
+          <input type="file" formControlName="imagen" class="form-control py-3" id="formFile" />
+        </div>
+        <div class="form-floating mb-4 text-black">
+          <textarea class="form-control" formControlName="contenido" placeholder="Contenido" id="consulta"
+            style="min-height: 125px"></textarea>
+          <label for="consulta">Contenido</label>
+        </div>
+        <button type="submit" class="btn btn-primary m-1">Guardar cambios</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+      </form>
+    </div>
+    }
+  </article>
+  }
+}
+@else{
+  <h3 class="fw-bold mt-4 mb-4">No hay noticias</h3>
+}
+
+</main>
 <app-footer></app-footer>
