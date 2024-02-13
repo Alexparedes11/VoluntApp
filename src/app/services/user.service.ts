@@ -25,6 +25,14 @@ export class UserService {
     return this.http.post(`${this.baseUrl}/usuarios`, data)
   }
 
+  edit(id: number, user: any) {
+    return this.http.put(`${this.baseUrl}/usuarios/${id}`, user).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   logout() {
     this.cookieService.delete('token');
   }

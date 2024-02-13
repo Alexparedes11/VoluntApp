@@ -12,11 +12,11 @@
     <h1 class="text-center sombras fw-bold">{{user.nombre}} {{user.apellidos}}</h1>
     <div class="row">
       <div class="col-lg-auto">
-        <h5 class="text-center text-primary fw-bold">0</h5>
+        <h5 class="text-center text-primary fw-bold">{{event.length}}</h5>
         <h5 class="text-center">Eventos creados</h5>
       </div>
       <div class="col-lg-auto">
-        <h5 class="text-center text-primary fw-bold">20</h5>
+        <h5 class="text-center text-primary fw-bold">{{user.eventosNombre.length}}</h5>
         <h5 class="text-center">Eventos hechos</h5>
       </div>
     </div>
@@ -27,26 +27,26 @@
   </div>
   @if (editarperfil) {
   <div class="container py-5">
-    <form class="row g-3">
+    <form class="row g-3 form" [formGroup]="profileForm" (submit)="submitEditar()">
       <div class="col-lg-4">
         <label for="inputEmail4" class="form-label">Nombre</label>
-        <input type="email" class="form-control" id="inputEmail4" placeholder={{user.nombre}} />
+        <input type="email" class="form-control" id="inputEmail4" placeholder={{user.nombre}} formControlName="nombre"/>
       </div>
       <div class="col-lg-4">
         <label for="inputPassword4" class="form-label">Apellidos</label>
-        <input type="password" class="form-control" id="inputPassword4" placeholder={{user.apellidos}}/>
+        <input type="password" class="form-control" id="inputPassword4" placeholder={{user.apellidos}} formControlName="apellidos"/>
       </div>
       <div class="col-lg-4">
         <label for="inputAddress2" class="form-label">Teléfono</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder={{user.telefono}} />
+        <input type="text" class="form-control" id="inputAddress2" placeholder={{user.telefono}} formControlName="telefono"/>
       </div>
       <div class="col-lg-6">
         <label for="inputAddress" class="form-label">Correo electrónico</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder={{user.email}} />
+        <input type="text" class="form-control" id="inputAddress" placeholder={{user.email}} formControlName="email"/>
       </div>
       <div class="col-lg-6">
         <label for="inputAddress" class="form-label">Dirección</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder={{user.direccion}} />
+        <input type="text" class="form-control" id="inputAddress" placeholder={{user.direccion}} formControlName="direccion"/>
       </div>
       <div class="col-12 mt-4">
         <button type="submit" class="btn btn-primary w-100">Guardar cambios</button>

@@ -7,4 +7,6 @@ export interface UserDTO {
     imagen: string;
     dni: string;
     direccion: string;
+    contraseña: string;
+    eventosNombre: Array<String>;
 }
