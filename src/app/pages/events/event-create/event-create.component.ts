@@ -156,8 +156,8 @@ export class EventCreateComponent {
     if (this.eventForm.valid) {
       const formValue = this.eventForm.value;
       formValue.nombreUbicacion = this.selectedAddress?.place_name;
-      formValue.lat = this.selectedAddress?.center[1];
-      formValue.lon = this.selectedAddress?.center[0];
+      formValue.lat = this.selectedAddress?.center[0];
+      formValue.lon = this.selectedAddress?.center[1];
 
       console.log(formValue);
       alert('El siguiente evento pasará por un proceso de validación antes de ser publicado, se le notificará de este en caso de haber pasado la revisión.');
