@@ -1,6 +1,7 @@
 <app-header></app-header>
 <main class="container d-flex py-4 flex-column gap-2 text-white ">
     <h1 class="fw-bold">Noticias</h1>
+    @if(news.length > 0) {
     <section class="d-flex flex-column gap-4">
         @for (new of news; track new.id) {
         <article>
@@ -13,5 +14,6 @@
         </article>
         }
     </section>
+}
 </main>
 <app-footer></app-footer>

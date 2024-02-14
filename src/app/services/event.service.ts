@@ -126,4 +126,10 @@ export class EventService {
     return this.http.get<boolean>(`${this.baseUrl}/eventos/esCreador/${idUser}/${idEvent}`);
   }
 
+
+  sendDeleteRequest(consulta: any): Observable<any> {
+    const url = `${this.baseUrl}/contacto/enviarSolicitud`;
+    return this.http.post(url, consulta);
+}
+
 }

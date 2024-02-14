@@ -6,6 +6,7 @@ import { EventDTO } from '../../../models/dto/EventDTO';
 import { UserService } from '../../../services/user.service';
 import { DatePipe } from '@angular/common';
 import { MapComponent } from '../../../components/map/map.component';
+import { UserDTO } from '../../../models/dto/UserDTO';
 
 @Component({
   selector: 'app-event-details',
@@ -27,6 +28,9 @@ export class EventDetailsComponent implements OnInit {
   isCreator: boolean = false;
 
   event: EventDTO = {} as EventDTO;
+
+
+
 
   addUserToEvent() {
     this.eventService.addUserToEvent(this.userId, this.eventId).subscribe(
@@ -78,46 +82,13 @@ export class EventDetailsComponent implements OnInit {
     motivosInput.style.marginBottom = "10px";
     alertContainer.appendChild(motivosInput);
 
-    // Crea un botón de confirmación
-    const confirmButton = document.createElement("button");
-    confirmButton.textContent = "Confirmar";
-    confirmButton.style.backgroundColor = "#890101";
-    confirmButton.style.color = "#fff";
-    confirmButton.style.padding = "8px 15px";
-    confirmButton.style.border = "none";
-    confirmButton.style.borderRadius = "3px";
-    confirmButton.style.cursor = "pointer";
-    confirmButton.style.marginRight = "10px";
-    confirmButton.addEventListener("click", () => {
-      // Guarda los motivos en la variable
-      const motivosEliminacion = motivosInput.value;
 
-      // Aquí puedes hacer lo que necesites con la variable
-      console.log(motivosEliminacion);
-
-      // Actualizar el estado a "revision"
-      this.eventService.updateEventState(this.eventId, "revision").subscribe(
-        () => {
-          // Cierra el alert después de que la actualización sea exitosa
-          document.body.removeChild(alertContainer);
-        },
-        (error) => {
-          console.error('Error al actualizar el estado del evento:', error);
-
-          // Manejar el error aquí si es necesario
-
-          // Cierra el alert incluso si hay un error
-          document.body.removeChild(alertContainer);
-        }
-      );
-    });
-    alertContainer.appendChild(confirmButton);
 
     // Crea un botón de cancelar
     const cancelButton = document.createElement("button");
     cancelButton.textContent = "Cancelar";
-    cancelButton.style.backgroundColor = "#386641"; // Cambiado a #386641
-    cancelButton.style.color = "#fff"; // Cambiado a #fff
+    cancelButton.style.backgroundColor = "#890101"; 
+    cancelButton.style.color = "#fff"; 
     cancelButton.style.padding = "8px 15px";
     cancelButton.style.border = "none";
     cancelButton.style.borderRadius = "3px";
@@ -127,12 +98,58 @@ export class EventDetailsComponent implements OnInit {
       document.body.removeChild(alertContainer);
     });
     alertContainer.appendChild(cancelButton);
-
+        // Crea un botón de confirmación
+        const confirmButton = document.createElement("button");
+        confirmButton.textContent = "Confirmar";
+        confirmButton.style.backgroundColor = "#386641";
+        confirmButton.style.color = "#fff";
+        confirmButton.style.padding = "8px 15px";
+        confirmButton.style.border = "none";
+        confirmButton.style.borderRadius = "3px";
+        confirmButton.style.cursor = "pointer";
+        confirmButton.style.marginRight = "10px";
+        confirmButton.addEventListener("click", () => {
+          // Obtiene el email del usuario
+          
+    
+    
+          // Guarda los motivos en la variable
+          const motivosEliminacion = motivosInput.value;
+          let user: UserDTO;
+          this.userService.getUserById(this.userId).subscribe((userData) => {
+            user = userData;
+            // Enviar los motivos de eliminación
+            this.eventService.sendDeleteRequest({
+              email: user.email,
+              asunto: "Motivos de eliminacion: ",
+              mensaje: motivosEliminacion + " - Evento: " + this.eventId
+            }).subscribe(response => {
+              alert("Solicitud de eliminación enviada correctamente");
+            });
+          });
+    
+          // Actualizar el estado a "revision"
+          this.eventService.updateEventState(this.eventId, "revision").subscribe(
+            () => {
+              // Cierra el alert después de que la actualización sea exitosa
+              document.body.removeChild(alertContainer);
+            },
+            (error) => {
+              console.error('Error al actualizar el estado del evento:', error);
+    
+              // Manejar el error aquí si es necesario
+    
+              // Cierra el alert incluso si hay un error
+              document.body.removeChild(alertContainer);
+            }
+          );
+        });
+        alertContainer.appendChild(confirmButton);
     // Agrega el contenedor al cuerpo del documento
     document.body.appendChild(alertContainer);
   }
 
-
+  
 
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();

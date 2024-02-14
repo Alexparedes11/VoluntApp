@@ -66,14 +66,6 @@ export class UserService {
     }
     return false;
   }
-  
-  getUserDTOById(id: number) {
-    return this.http.get<EventDTO>(`${this.baseUrl}/usuarios/${id}`).pipe(
-      map((data: EventDTO) => {
-        return data;
-      })
-    );
-  }
 
   getUserById(id: number) {
     return this.http.get<UserDTO>(`${this.baseUrl}/usuarios/${id}`).pipe(
