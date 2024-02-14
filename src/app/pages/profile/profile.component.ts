@@ -9,6 +9,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { NgClass, NgIf } from '@angular/common';
 import { EventService } from '../../services/event.service';
 import { EventDTO } from '../../models/dto/EventDTO';
+import { Location } from '@angular/common';
+import { NumeroDeEventosDTO } from '../../models/dto/NumeroDeEventosDTO';
 
 @Component({
   selector: 'app-profile',
@@ -21,8 +23,12 @@ import { EventDTO } from '../../models/dto/EventDTO';
 export class ProfileComponent implements OnInit{
 
   userId: number = -1;
-
   editarperfil: boolean = false;
+  user: UserDTO = {} as UserDTO;
+  event: EventDTO[] = [];
+  profileForm!: FormGroup;
+  editedUser: UserDTO | null = null;
+  eventosPerfil: NumeroDeEventosDTO = {} as NumeroDeEventosDTO;
 
   mostrarContenedor() {
     this.editarperfil = !this.editarperfil;
@@ -30,14 +36,21 @@ export class ProfileComponent implements OnInit{
 
     constructor(private fb: FormBuilder, private profileService: ProfileService, private userService: UserService, private eventoService: EventService) { }
 
-    user: UserDTO = {} as UserDTO;
-    event: EventDTO[] = [];
-    profileForm!: FormGroup;
-    editedUser: UserDTO | null = null;
+   
   
     ngOnInit(): void {
 
       this.userId = this.userService.getUserIdFromToken();
+      
+      this.eventoService.obtenerEventosPerfil(this.userId).subscribe(
+        (data) => {
+          console.log(data);
+          this.eventosPerfil = data;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
 
       this.profileService.getData(this.userId).subscribe(
         (data) => {
@@ -65,18 +78,20 @@ export class ProfileComponent implements OnInit{
   // Inicializamos el formulario
   initializeForm(): void {
     this.profileForm = this.fb.group({
-      nombre: new FormControl('' , Validators.required),
-      apellidos: new FormControl('', Validators.required),
+      nombre: new FormControl('' ),
+      apellidos: new FormControl(''),
       dni: new FormControl(this.user.dni),
-      telefono: new FormControl('', Validators.required),
-      direccion: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
+      telefono: new FormControl(''),
+      direccion: new FormControl(''),
+      email: new FormControl(''),
       contraseña: new FormControl(this.user.contraseña),
       eventosNombre: new FormControl(this.user.eventosNombre),
     });
   }
 
   submitEditar(): void {
+    this.editedUser = this.user;
+    console.log(this.editedUser);
     if(this.editedUser) {
       // Obtienes los valores actuales del fomulario
       const editedNombre = this.profileForm.get('nombre')?.value ?? '';
@@ -101,16 +116,18 @@ export class ProfileComponent implements OnInit{
         this.editedUser.email = editedEmail;
       }
 
-      console.log(this.editedUser);
-
       this.userService.edit(this.userId, this.editedUser).subscribe(
         () => {
           console.log('Usuario editado con éxito');
           this.editedUser = null;
           this.profileForm.reset();
+          this.mostrarContenedor();
         },
         (error: any) => {
+          alert('El correo eléctronico ya esta siendo utilizado');
           console.error('Error al editar noticia:', error);
+          location.reload();
+          this.profileForm.reset();
         }
       )
     }

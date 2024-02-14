@@ -51,3 +51,13 @@ main{
      font-weight: bold;
      transition: all 0.1s linear
  }
+
+ is-invalid {
+    border: 1px solid red;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+    margin-top: 0px;
+}
