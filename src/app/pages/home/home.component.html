@@ -24,20 +24,24 @@
 
     @if (muestraFiltros) {
 
-    <form [formGroup]="fechaForm" (submit)="applyFilters()" class="mb-3 despuescontenedor text-white rounded d-flex gap-3 align-items-end">
-      <div>
+    <form [formGroup]="filtersForm" (submit)="applyFilters()"
+      class="mb-3 despuescontenedor text-white rounded d-flex gap-3 align-items-end">
+      <div class="form-group">
         <label for="finicio">Inicio</label>
         <input formControlName="finicio" type="datetime-local" class="form-control" id="finicio">
       </div>
-      <div>
+      <div class="form-group">
         <label for="ffin">Fin</label>
         <input formControlName="ffin" type="datetime-local" class="form-control" id="ffin">
       </div>
-      <div>
+      <div class="form-group d-block">
         <label for="ubicacion">Ubicación</label>
-        <input type="text" class="form-control" id="ubicacion">
+        <input formControlName="ubicacion" type="text" class="form-control" id="ubicacion">
       </div>
-      <button type="submit" class="btn btn-primary ms-auto h-50">Aplicar filtros</button>
+      <div class="ms-auto d-flex gap-3">
+        <button type="submit" class="btn btn-primary h-50">Limpiar filtros</button>
+        <button type="submit" class="btn btn-primary h-50">Aplicar filtros</button>
+      </div>
     </form>
 
     }

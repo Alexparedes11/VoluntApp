@@ -52,12 +52,24 @@ export class EventService {
     );
   }
 
-  getEventByDateFilters(finicio: string, ffin: string, page?: number) {
+  getEventByDateFilter(finicio: string, ffin: string, page?: number) {
     let params = new HttpParams();
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
     return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas/${finicio}/${ffin}`, { params }).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  getEventsByLocationFilter(location: string, page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/ubicacion/disponibles/${location}`, { params }).pipe(
       map((data: any) => {
         return data;
       })
