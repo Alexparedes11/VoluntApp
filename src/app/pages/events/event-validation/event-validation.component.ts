@@ -17,15 +17,51 @@ import { EventDTO } from '../../../models/dto/EventDTO';
 export class EventValidationComponent implements OnInit {
   
   constructor(private eventService: EventService) { }
+
   events: EventDTO[] = [];
 
+  handleChange(e: any) {
+    const searchStatus = e.target.value;
+    switch (searchStatus) {
+      case 'crear':
+        this.eventService.getEventsByState("revision").subscribe(
+          (data) => {
+            this.events = data;
+          },
+          (error) => {
+            console.error('Error fetching events:', error);
+          }
+        );
+        break;
+      case 'eliminar':
+        this.eventService.getEventsByState("en-eliminacion").subscribe(
+          (data) => {
+            this.events = data;
+          },
+          (error) => {
+            console.error('Error fetching events:', error);
+          }
+        );
+        break;
+    }
+  }
   ngOnInit(): void {
-    this.eventService.getEventsByState("revision").subscribe(
+    this.eventService.getEventsByState('revision').subscribe(
       (data) => {
         this.events = data.content;
       },
       (error) => {
-        console.error('Error fetching events:', error);
+        console.error('Error fetching events por aprobar:', error);
+      }
+    );
+
+    // Obtener solicitudes de eliminación
+    this.eventService.getEventsByState('en-eliminacion').subscribe(
+      (data) => {
+        this.events = data.content;
+      },
+      (error) => {
+        console.error('Error fetching solicitudes de eliminación:', error);
       }
     );
   }

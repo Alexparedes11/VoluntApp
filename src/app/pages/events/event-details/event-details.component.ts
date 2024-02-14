@@ -56,7 +56,7 @@ export class EventDetailsComponent implements OnInit {
     );
     this.isUserInEvent = false;
   }
-  deleteEvent() {
+  RequestdeleteEvent() {
     // Crea un contenedor div para personalizar el estilo del alert
     const alertContainer = document.createElement("div");
     alertContainer.style.position = "fixed";
@@ -129,8 +129,8 @@ export class EventDetailsComponent implements OnInit {
             });
           });
     
-          // Actualizar el estado a "revision"
-          this.eventService.updateEventState(this.eventId, "revision").subscribe(
+          // Actualizar el estado a "en-eliminacion"
+          this.eventService.updateEventState(this.eventId, "en-eliminacion").subscribe(
             () => {
               // Cierra el alert después de que la actualización sea exitosa
               document.body.removeChild(alertContainer);
