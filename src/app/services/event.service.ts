@@ -53,12 +53,24 @@ export class EventService {
     );
   }
 
-  getEventByDateFilters(finicio: string, ffin: string, page?: number) {
+  getEventByDateFilter(finicio: string, ffin: string, page?: number) {
     let params = new HttpParams();
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
     return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas/${finicio}/${ffin}`, { params }).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  getEventsByLocationFilter(location: string, page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/ubicacion/disponibles/${location}`, { params }).pipe(
       map((data: any) => {
         return data;
       })
@@ -126,6 +138,12 @@ export class EventService {
   isUserCreator(idUser: number, idEvent: number): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrl}/eventos/esCreador/${idUser}/${idEvent}`);
   }
+
+
+  sendDeleteRequest(consulta: any): Observable<any> {
+    const url = `${this.baseUrl}/contacto/enviarSolicitud`;
+    return this.http.post(url, consulta);
+}
 
   obtenerEventosPerfil(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/profile/${id}`).pipe(

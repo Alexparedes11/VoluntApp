@@ -4,7 +4,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { EventCardComponent } from '../../components/event-card/event-card.component';
 import { EventService } from '../../services/event.service';
 import { EventDTO } from '../../models/dto/EventDTO';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -23,9 +23,10 @@ export class HomeComponent implements OnInit {
 
   muestraFiltros: boolean = false;
 
-  fechaForm: FormGroup = new FormGroup({
+  filtersForm: FormGroup = new FormGroup({
     finicio: new FormControl(''),
     ffin: new FormControl(''),
+    ubicacion: new FormControl(''),
   });
 
   showFilters() {
@@ -33,15 +34,31 @@ export class HomeComponent implements OnInit {
   }
 
   applyFilters() {
-    this.eventService.getEventByDateFilters(this.fechaForm.value.finicio, this.fechaForm.value.ffin).subscribe(
-      (data) => {
-        this.events = data.content;
-        this.currentPage = data.pageable.pageNumber;
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-      }
-    )
+    const finicio = this.filtersForm.value.finicio;
+    const ffin = this.filtersForm.value.ffin;
+    const ubicacion = this.filtersForm.value.ubicacion;
+
+    if (finicio && ffin && !ubicacion) {
+      this.eventService.getEventByDateFilter(finicio, ffin).subscribe(
+        (data) => {
+          this.events = data.content;
+          this.currentPage = data.pageable.pageNumber;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      )
+    } else if (ubicacion && !finicio && !ffin) {
+      this.eventService.getEventsByLocationFilter(this.filtersForm.value.ubicacion).subscribe(
+        (data) => {
+          this.events = data.content;
+          this.currentPage = data.pageable.pageNumber;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      )
+    }
   }
 
   filterEventsBySearch(search: string) {
