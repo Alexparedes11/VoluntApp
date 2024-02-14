@@ -47,6 +47,7 @@ export class EventService {
     }
     return this.http.get(`${this.baseUrl}/eventos/buscaporestado/${state}`, { params }).pipe(
       map((data: any) => {
+        console.log(data);
         return data;
       })
     );
@@ -143,5 +144,13 @@ export class EventService {
     const url = `${this.baseUrl}/contacto/enviarSolicitud`;
     return this.http.post(url, consulta);
 }
+
+  obtenerEventosPerfil(id: number) {
+    return this.http.get(`${this.baseUrl}/eventos/profile/${id}`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
 }
