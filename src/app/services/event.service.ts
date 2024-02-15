@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environments';
+import { EventDTO } from '../models/dto/EventDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
-  createEvent(data: any) {
+  createEvent(data: EventDTO) {
     return this.http.post(`${this.baseUrl}/eventos`, data);
   }
 
@@ -52,7 +53,7 @@ export class EventService {
     );
   }
 
-  getEventByDateFilter(finicio: string, ffin: string, page?: number) {
+  getEventsByDateFilter(finicio: string, ffin: string, page?: number) {
     let params = new HttpParams();
     if (page !== undefined) {
       params = params.set('page', page.toString());
@@ -70,6 +71,18 @@ export class EventService {
       params = params.set('page', page.toString());
     }
     return this.http.get(`${this.baseUrl}/eventos/ubicacion/disponibles/${location}`, { params }).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  getEventByDateAndLocationFilter(finicio: string, ffin: string, location: string, page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas-y-ubicacion/${finicio}/${ffin}/${location}`, { params }).pipe(
       map((data: any) => {
         return data;
       })

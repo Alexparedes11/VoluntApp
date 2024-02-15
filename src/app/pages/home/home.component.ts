@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     const ubicacion = this.filtersForm.value.ubicacion;
 
     if (finicio && ffin && !ubicacion) {
-      this.eventService.getEventByDateFilter(finicio, ffin).subscribe(
+      this.eventService.getEventsByDateFilter(finicio, ffin).subscribe(
         (data) => {
           this.events = data.content;
           this.currentPage = data.pageable.pageNumber;
@@ -50,6 +50,16 @@ export class HomeComponent implements OnInit {
       )
     } else if (ubicacion && !finicio && !ffin) {
       this.eventService.getEventsByLocationFilter(this.filtersForm.value.ubicacion).subscribe(
+        (data) => {
+          this.events = data.content;
+          this.currentPage = data.pageable.pageNumber;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      )
+    } else if (finicio && ffin && ubicacion) {
+      this.eventService.getEventByDateAndLocationFilter(finicio, ffin, ubicacion).subscribe(
         (data) => {
           this.events = data.content;
           this.currentPage = data.pageable.pageNumber;
