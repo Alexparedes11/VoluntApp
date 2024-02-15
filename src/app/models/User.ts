@@ -1,11 +1,11 @@
 export interface User {
     id: number;
-    name: string;
-    surname: string;
+    nombre: string;
+    apellidos: string;
     dni: string;
-    address: string;
-    email: string;
+    direccion: string;
+    username: string;
     password: string;
-    profileImage: string;
+    fotoPerfil: string;
     rol: string;
 }

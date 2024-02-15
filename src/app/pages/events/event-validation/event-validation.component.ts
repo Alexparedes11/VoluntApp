@@ -2,17 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { FooterComponent } from '../../../components/footer/footer.component';
 import { EventCardComponent } from '../../../components/event-card/event-card.component';
-import { EventService } from '../../../services/event.service';
-import { HttpClientModule } from '@angular/common/http';
 import { EventDTO } from '../../../models/dto/EventDTO';
+import { EventService } from '../../../services/event.service';
+
+
 
 @Component({
   selector: 'app-event-validation',
   standalone: true,
   providers: [EventService],
-  imports: [HeaderComponent, FooterComponent, EventCardComponent, HttpClientModule],
   templateUrl: './event-validation.component.html',
-  styleUrl: './event-validation.component.scss'
+  styleUrl: './event-validation.component.scss',
+  imports: [HeaderComponent, FooterComponent, EventCardComponent]
 })
 export class EventValidationComponent implements OnInit {
   
@@ -26,7 +27,7 @@ export class EventValidationComponent implements OnInit {
       case 'crear':
         this.eventService.getEventsByState("revision").subscribe(
           (data) => {
-            this.events = data;
+            this.events = data.content;
           },
           (error) => {
             console.error('Error fetching events:', error);
@@ -36,7 +37,7 @@ export class EventValidationComponent implements OnInit {
       case 'eliminar':
         this.eventService.getEventsByState("en-eliminacion").subscribe(
           (data) => {
-            this.events = data;
+            this.events = data.content;
           },
           (error) => {
             console.error('Error fetching events:', error);
@@ -45,23 +46,14 @@ export class EventValidationComponent implements OnInit {
         break;
     }
   }
+  
   ngOnInit(): void {
-    this.eventService.getEventsByState('revision').subscribe(
+    this.eventService.getEventsByState("revision").subscribe(
       (data) => {
         this.events = data.content;
       },
       (error) => {
         console.error('Error fetching events por aprobar:', error);
-      }
-    );
-
-    // Obtener solicitudes de eliminación
-    this.eventService.getEventsByState('en-eliminacion').subscribe(
-      (data) => {
-        this.events = data.content;
-      },
-      (error) => {
-        console.error('Error fetching solicitudes de eliminación:', error);
       }
     );
   }

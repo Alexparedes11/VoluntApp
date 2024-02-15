@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { MapComponent } from '../../../components/map/map.component';
 import { UserDTO } from '../../../models/dto/UserDTO';
 import { Router } from '@angular/router';
+import { Event } from '../../../models/Event';
 
 @Component({
   selector: 'app-event-details',
@@ -120,10 +121,13 @@ export class EventDetailsComponent implements OnInit {
           this.userService.getUserById(this.userId).subscribe((userData) => {
             user = userData;
             // Enviar los motivos de eliminación
+
+            
             this.eventService.sendDeleteRequest({
               email: user.email,
               asunto: "Motivos de eliminacion: ",
               mensaje: motivosEliminacion + " - Evento: " + this.eventId
+              
             }).subscribe(response => {
               alert("Solicitud de eliminación enviada correctamente");
             });
@@ -146,12 +150,27 @@ export class EventDetailsComponent implements OnInit {
           );
         });
         alertContainer.appendChild(confirmButton);
-    // Agrega el contenedor al cuerpo del documento
+
     document.body.appendChild(alertContainer);
   }
 
 
   acceptEvent() {
+    this.eventService.getEventById(this.eventId).subscribe(
+      (data) => {
+        console.log(data);
+        const emailRecibidor = data.creadoPorUsuarios.username;
+        const asuntoNombre = data.creadoPorUsuarios.nombre;
+        this.eventService.sendDeniedRequest({
+          email: emailRecibidor,
+          asunto: asuntoNombre,
+          mensaje: ", tu evento ha sido aprobado"
+        }).subscribe(response => {
+          alert("Solicitud de creacion enviada correctamente");
+          console.log(response);
+        });
+      }
+    );
     this.eventService.updateEventState(this.eventId, "disponible").subscribe(
       (data) => {
         return data;
@@ -160,11 +179,33 @@ export class EventDetailsComponent implements OnInit {
         console.error('Error fetching events:', error);
       }
     );
-    this.router.navigate(['/validations']);
+    
 
 
   }
+  //Denegar evento y enviar mensaje al creador
   declineEvent() {
+    
+    const motivos = prompt("Ingrese los motivos de rechazo: ");
+    if (motivos == null || motivos == "") {
+      alert("Debe ingresar los motivos de rechazo");
+      return;
+    }
+    let eventsinDto  = {} as Event;
+    this.eventService.getEventById(this.eventId).subscribe(
+      (data) => {
+        console.log(data);
+        const emailRecibidor = data.creadoPorUsuarios.username;
+        this.eventService.sendDeniedRequest({
+          email: emailRecibidor,
+          asunto: "Evento rechazado por: ",
+          mensaje: "El evento " + data.id + " ha sido rechazado por los siguientes motivos : " + motivos
+        }).subscribe(response => {
+          alert("Decision de rechazo enviada correctamente");
+          console.log(response);
+        });
+      }
+    );
     this.eventService.updateEventState(this.eventId, "denegado").subscribe(
       (data) => {
         return data;
@@ -173,8 +214,10 @@ export class EventDetailsComponent implements OnInit {
         console.error('Error fetching events:', error);
       }
     );
-    this.router.navigate(['/validations']);
+    
   }
+  
+  
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
     this.userId = this.userService.getUserIdFromToken();
