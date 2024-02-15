@@ -166,7 +166,10 @@ export class EventService {
     return this.http.post(url, consulta);
 }
 
- 
+sendDeniedRequest(consulta: any): Observable<any> {
+  const url = `${this.baseUrl}/contacto/enviarRespuestaDenegada`;
+  return this.http.post(url, consulta);
+} 
 
   obtenerEventosPerfil(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/profile/${id}`).pipe(
