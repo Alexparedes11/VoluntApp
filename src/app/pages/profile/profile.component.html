@@ -12,12 +12,16 @@
     <h1 class="text-center sombras fw-bold">{{user.nombre}} {{user.apellidos}}</h1>
     <div class="row">
       <div class="col-lg-auto">
-        <h5 class="text-center text-primary fw-bold">{{event.length}}</h5>
-        <h5 class="text-center">Eventos creados</h5>
+        <h5 class="text-center text-primary fw-bold">{{eventosPerfil.creados}}</h5>
+        <h5 class="text-center">Eventos Creados</h5>
       </div>
       <div class="col-lg-auto">
-        <h5 class="text-center text-primary fw-bold">{{user.eventosNombre.length}}</h5>
-        <h5 class="text-center">Eventos hechos</h5>
+        <h5 class="text-center text-primary fw-bold">{{eventosPerfil.apuntados}}</h5>
+        <h5 class="text-center">Eventos Apuntados</h5>
+      </div>
+      <div class="col-lg-auto">
+        <h5 class="text-center text-primary fw-bold">{{eventosPerfil.realizados}}</h5>
+        <h5 class="text-center">Eventos Realizados</h5>
       </div>
     </div>
     
@@ -34,22 +38,30 @@
       </div>
       <div class="col-lg-4">
         <label for="inputPassword4" class="form-label">Apellidos</label>
-        <input type="password" class="form-control" id="inputPassword4" placeholder={{user.apellidos}} formControlName="apellidos"/>
+        <input type="text" class="form-control" id="inputPassword4" placeholder={{user.apellidos}} formControlName="apellidos"/>
       </div>
       <div class="col-lg-4">
         <label for="inputAddress2" class="form-label">Teléfono</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder={{user.telefono}} formControlName="telefono"/>
+        <input type="tel" class="form-control" id="inputAddress2" placeholder={{user.telefono}} formControlName="telefono" minlength="9" maxlength="9" pattern="[0-9]*"
+        [ngClass]="{'is-invalid': profileForm.get('telefono')?.invalid && (profileForm.get('telefono')?.touched || profileForm.get('telefono')?.dirty)}">
+            <span *ngIf="profileForm.get('telefono')?.invalid && (profileForm.get('telefono')?.touched || profileForm.get('telefono')?.dirty)" class="invalid-feedback">
+                Introduce un teléfono válido.
+            </span>
       </div>
       <div class="col-lg-6">
         <label for="inputAddress" class="form-label">Correo electrónico</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder={{user.email}} formControlName="email"/>
+        <input type="email" class="form-control" id="inputAddress" placeholder={{user.email}} formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+        [ngClass]="{'is-invalid': profileForm.get('email')?.invalid && (profileForm.get('email')?.touched || profileForm.get('email')?.dirty)}">
+            <span *ngIf="profileForm.get('email')?.invalid && (profileForm.get('email')?.touched || profileForm.get('email')?.dirty)" class="invalid-feedback">
+                Introduce un correo electrónico válido.
+            </span>
       </div>
       <div class="col-lg-6">
         <label for="inputAddress" class="form-label">Dirección</label>
         <input type="text" class="form-control" id="inputAddress" placeholder={{user.direccion}} formControlName="direccion"/>
       </div>
       <div class="col-12 mt-4">
-        <button type="submit" class="btn btn-primary w-100">Guardar cambios</button>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="profileForm.invalid">Guardar cambios</button>
       </div>
     </form>
   </div>

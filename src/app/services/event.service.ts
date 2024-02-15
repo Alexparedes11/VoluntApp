@@ -48,6 +48,7 @@ export class EventService {
     }
     return this.http.get(`${this.baseUrl}/eventos/buscaporestado/${state}`, { params }).pipe(
       map((data: any) => {
+        console.log(data);
         return data;
       })
     );
@@ -149,6 +150,20 @@ export class EventService {
   
   isUserCreator(idUser: number, idEvent: number): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrl}/eventos/esCreador/${idUser}/${idEvent}`);
+  }
+
+
+  sendDeleteRequest(consulta: any): Observable<any> {
+    const url = `${this.baseUrl}/contacto/enviarSolicitud`;
+    return this.http.post(url, consulta);
+}
+
+  obtenerEventosPerfil(id: number) {
+    return this.http.get(`${this.baseUrl}/eventos/profile/${id}`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
 }
