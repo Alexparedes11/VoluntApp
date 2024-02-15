@@ -5,35 +5,36 @@ import { Component } from "@angular/core";
 import { NewsDTO } from "../../../models/dto/NewsDTO";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { DatePipe } from "@angular/common";
+import { UserService } from "../../../services/user.service";
+import { UserDTO } from "../../../models/dto/UserDTO";
 
 @Component({
   selector: 'app-new-create',
   standalone: true,
   imports: [HeaderComponent, FooterComponent, ReactiveFormsModule, DatePipe],
-  providers: [NewsService],
+  providers: [NewsService, UserService],
   templateUrl: './new-create.component.html',
   styleUrl: './new-create.component.scss'
 })
 export class NewCreateComponent {
+
+  constructor(private fb: FormBuilder, private newsService: NewsService, private userService: UserService) { }
+
   newsForm = new FormGroup({
     titulo: new FormControl('', Validators.required),
     contenido: new FormControl('', Validators.required),
     imagen: new FormControl('', Validators.required),
+    fecha: new FormControl(new Date()),
+    autor: new FormControl('')
   });
 
   newsMostrar: NewsDTO[] = [];
-  news = {} as NewsDTO;
-
-  deleteNewsForm = new FormGroup({
-    titulo: new FormControl('', Validators.required),
-  });
 
   editingNews: NewsDTO | null = null;
   isEditing = false;
-  selectedImage: File | null = null;
+  selectedImage: string | null = null;
 
 
-  constructor(private fb: FormBuilder, private newsService: NewsService) { }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -46,27 +47,27 @@ export class NewCreateComponent {
     }
   }
 
+
   //Crear noticia
   submitNew() {
-    // HAY QUE HACER UN FORM
-    const currentDate = new Date();
-
-    this.news.autor = 'Voluntapp';
-    this.news.fecha = currentDate;
-
-    this.news.titulo = this.newsForm.get('titulo')?.value ?? '';
-    this.news.contenido = this.newsForm.get('contenido')?.value ?? '';
-    //this.news.imagen = this.selectedImage;
-
-    this.newsService.createNews(this.news).subscribe(
-      (data: any) => {
-        console.log('Noticia creada:', data);
-        this.updateNewsList();
-      },
-      (error: any) => {
-        console.error('Error al crear noticia:', error);
+    const userId = this.userService.getUserIdFromToken();
+    this.userService.getUserById(userId).subscribe(
+      (data: UserDTO) => {
+        console.log(data);
+        this.newsForm.value.autor = data.nombre + ' ' + data.apellidos;
+        this.newsForm.value.imagen = this.selectedImage;
+        this.newsService.createNews(this.newsForm.value as NewsDTO).subscribe(
+          (data: NewsDTO) => {
+            console.log('Noticia creada:', data);
+            this.updateNewsList();
+          },
+          (error: any) => {
+            console.error('Error al crear noticia:', error);
+          }
+        );
       }
     );
+
   }
 
   //Mostrar lista de noticias:

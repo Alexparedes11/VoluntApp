@@ -12,7 +12,7 @@
             <label for="noticia">Titulo de noticia</label>
           </div>
           <div class="formFile mb-4 text-black text-center">
-            <input type="file" accept="image/png, image/jpg, image/jpeg, image/webp" formControlName="imagen"
+            <input (change)="onFileSelected($event)" type="file" accept="image/png, image/jpg, image/jpeg, image/webp" formControlName="imagen"
               class="form-control py-3" id="formFile" />
           </div>
           <div class="form-floating mb-4 text-black">
