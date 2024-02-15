@@ -179,7 +179,7 @@ export class EventDetailsComponent implements OnInit {
         console.error('Error fetching events:', error);
       }
     );
-    this.router.navigate(['/validations']);
+    
 
 
   }
@@ -214,7 +214,7 @@ export class EventDetailsComponent implements OnInit {
         console.error('Error fetching events:', error);
       }
     );
-    this.router.navigate(['/validations']);
+    
   }
   
   
