@@ -156,6 +156,21 @@ export class EventDetailsComponent implements OnInit {
 
 
   acceptEvent() {
+    this.eventService.getEventById(this.eventId).subscribe(
+      (data) => {
+        console.log(data);
+        const emailRecibidor = data.creadoPorUsuarios.username;
+        const asuntoNombre = data.creadoPorUsuarios.nombre;
+        this.eventService.sendDeniedRequest({
+          email: emailRecibidor,
+          asunto: asuntoNombre,
+          mensaje: ", tu evento ha sido aprobado"
+        }).subscribe(response => {
+          alert("Solicitud de creacion enviada correctamente");
+          console.log(response);
+        });
+      }
+    );
     this.eventService.updateEventState(this.eventId, "disponible").subscribe(
       (data) => {
         return data;
@@ -184,9 +199,9 @@ export class EventDetailsComponent implements OnInit {
         this.eventService.sendDeniedRequest({
           email: emailRecibidor,
           asunto: "Evento rechazado por: ",
-          mensaje: "El evento " + eventsinDto.id + " ha sido rechazado por los siguientes motivos : " + motivos
+          mensaje: "El evento " + data.id + " ha sido rechazado por los siguientes motivos : " + motivos
         }).subscribe(response => {
-          alert("Solicitud de rechazo enviada correctamente");
+          alert("Decision de rechazo enviada correctamente");
           console.log(response);
         });
       }
@@ -199,7 +214,7 @@ export class EventDetailsComponent implements OnInit {
         console.error('Error fetching events:', error);
       }
     );
-
+    this.router.navigate(['/validations']);
   }
   
   
