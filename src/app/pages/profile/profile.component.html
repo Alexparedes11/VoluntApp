@@ -38,11 +38,11 @@
       </div>
       <div class="col-lg-4">
         <label for="inputPassword4" class="form-label">Apellidos</label>
-        <input type="password" class="form-control" id="inputPassword4" placeholder={{user.apellidos}} formControlName="apellidos"/>
+        <input type="text" class="form-control" id="inputPassword4" placeholder={{user.apellidos}} formControlName="apellidos"/>
       </div>
       <div class="col-lg-4">
         <label for="inputAddress2" class="form-label">Teléfono</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder={{user.telefono}} formControlName="telefono" minlength="9" maxlength="9" pattern="[0-9]*"
+        <input type="tel" class="form-control" id="inputAddress2" placeholder={{user.telefono}} formControlName="telefono" minlength="9" maxlength="9" pattern="[0-9]*"
         [ngClass]="{'is-invalid': profileForm.get('telefono')?.invalid && (profileForm.get('telefono')?.touched || profileForm.get('telefono')?.dirty)}">
             <span *ngIf="profileForm.get('telefono')?.invalid && (profileForm.get('telefono')?.touched || profileForm.get('telefono')?.dirty)" class="invalid-feedback">
                 Introduce un teléfono válido.
