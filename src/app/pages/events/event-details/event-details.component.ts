@@ -7,6 +7,7 @@ import { UserService } from '../../../services/user.service';
 import { DatePipe } from '@angular/common';
 import { MapComponent } from '../../../components/map/map.component';
 import { UserDTO } from '../../../models/dto/UserDTO';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-details',
@@ -18,7 +19,7 @@ import { UserDTO } from '../../../models/dto/UserDTO';
 })
 export class EventDetailsComponent implements OnInit {
 
-  constructor(private eventService: EventService, private userService: UserService) { }
+  constructor(private eventService: EventService, private userService: UserService, private router: Router) { }
 
   @Input("id") eventId: number = -1;
   userId: number = -1;
@@ -55,7 +56,7 @@ export class EventDetailsComponent implements OnInit {
     );
     this.isUserInEvent = false;
   }
-  deleteEvent() {
+  RequestdeleteEvent() {
     // Crea un contenedor div para personalizar el estilo del alert
     const alertContainer = document.createElement("div");
     alertContainer.style.position = "fixed";
@@ -128,8 +129,8 @@ export class EventDetailsComponent implements OnInit {
             });
           });
     
-          // Actualizar el estado a "revision"
-          this.eventService.updateEventState(this.eventId, "revision").subscribe(
+          // Actualizar el estado a "en-eliminacion"
+          this.eventService.updateEventState(this.eventId, "en-eliminacion").subscribe(
             () => {
               // Cierra el alert después de que la actualización sea exitosa
               document.body.removeChild(alertContainer);
@@ -149,8 +150,31 @@ export class EventDetailsComponent implements OnInit {
     document.body.appendChild(alertContainer);
   }
 
-  
 
+  acceptEvent() {
+    this.eventService.updateEventState(this.eventId, "disponible").subscribe(
+      (data) => {
+        return data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+    this.router.navigate(['/validations']);
+
+
+  }
+  declineEvent() {
+    this.eventService.updateEventState(this.eventId, "denegado").subscribe(
+      (data) => {
+        return data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+    this.router.navigate(['/validations']);
+  }
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
     this.userId = this.userService.getUserIdFromToken();

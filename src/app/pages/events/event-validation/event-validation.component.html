@@ -1,7 +1,12 @@
 <app-header></app-header>
 
-<main class="container py-4 d-flex flex-column justify-content-center align-items-center">
-    <div>
+<main class="container text-white py-4">
+  <div class="d-flex flex-column gap-4 mb-3">
+    <h1 class="fw-bold">Validaciones de eventos</h1>
+    <select (change)="handleChange($event)" class="form-select" aria-label="Default select example">
+        <option selected value="crear">Eventos por aprobar</option>
+        <option value="eliminar">Eventos para eliminar</option>
+    </select>
       <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         @for (event of events; track event.id) {
           <div class="col">
