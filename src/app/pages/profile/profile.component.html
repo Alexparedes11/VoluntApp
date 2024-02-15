@@ -24,7 +24,7 @@
         <h5 class="text-center">Eventos Realizados</h5>
       </div>
     </div>
-    
+
     <button (click)="mostrarContenedor()" class="btn btn-primary btn-block">
       Editar perfil
     </button>
@@ -34,31 +34,45 @@
     <form class="row g-3 form" [formGroup]="profileForm" (submit)="submitEditar()">
       <div class="col-lg-4">
         <label for="inputEmail4" class="form-label">Nombre</label>
-        <input type="email" class="form-control" id="inputEmail4" placeholder={{user.nombre}} formControlName="nombre"/>
+        <input type="email" class="form-control" id="inputEmail4" placeholder={{user.nombre}}
+          formControlName="nombre" />
       </div>
       <div class="col-lg-4">
         <label for="inputPassword4" class="form-label">Apellidos</label>
-        <input type="text" class="form-control" id="inputPassword4" placeholder={{user.apellidos}} formControlName="apellidos"/>
+        <input type="text" class="form-control" id="inputPassword4" placeholder={{user.apellidos}}
+          formControlName="apellidos" />
       </div>
       <div class="col-lg-4">
         <label for="inputAddress2" class="form-label">Teléfono</label>
-        <input type="tel" class="form-control" id="inputAddress2" placeholder={{user.telefono}} formControlName="telefono" minlength="9" maxlength="9" pattern="[0-9]*"
-        [ngClass]="{'is-invalid': profileForm.get('telefono')?.invalid && (profileForm.get('telefono')?.touched || profileForm.get('telefono')?.dirty)}">
-            <span *ngIf="profileForm.get('telefono')?.invalid && (profileForm.get('telefono')?.touched || profileForm.get('telefono')?.dirty)" class="invalid-feedback">
-                Introduce un teléfono válido.
-            </span>
+        <input type="tel" class="form-control" id="inputAddress2" placeholder={{user.telefono}}
+          formControlName="telefono" minlength="9" maxlength="9" pattern="[0-9]*"
+          [ngClass]="{'is-invalid': profileForm.get('telefono')?.invalid && (profileForm.get('telefono')?.touched || profileForm.get('telefono')?.dirty)}">
+        <span
+          *ngIf="profileForm.get('telefono')?.invalid && (profileForm.get('telefono')?.touched || profileForm.get('telefono')?.dirty)"
+          class="invalid-feedback">
+          Introduce un teléfono válido.
+        </span>
       </div>
       <div class="col-lg-6">
         <label for="inputAddress" class="form-label">Correo electrónico</label>
-        <input type="email" class="form-control" id="inputAddress" placeholder={{user.email}} formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
-        [ngClass]="{'is-invalid': profileForm.get('email')?.invalid && (profileForm.get('email')?.touched || profileForm.get('email')?.dirty)}">
-            <span *ngIf="profileForm.get('email')?.invalid && (profileForm.get('email')?.touched || profileForm.get('email')?.dirty)" class="invalid-feedback">
-                Introduce un correo electrónico válido.
-            </span>
+        <input type="email" class="form-control" id="inputAddress" placeholder={{user.email}} formControlName="email"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+          [ngClass]="{'is-invalid': profileForm.get('email')?.invalid && (profileForm.get('email')?.touched || profileForm.get('email')?.dirty)}">
+        @if (profileForm.get('email')?.hasError('emailInUse')) {
+        <span class="invalid-feedback">
+          El correo electrónico ya está en uso.
+        </span>
+        } @else if (profileForm.get('email')?.invalid && (profileForm.get('email')?.touched ||
+        profileForm.get('email')?.dirty)) {
+        <span class="invalid-feedback">
+          Introduce un correo electrónico válido.
+        </span>
+        }
       </div>
       <div class="col-lg-6">
         <label for="inputAddress" class="form-label">Dirección</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder={{user.direccion}} formControlName="direccion"/>
+        <input type="text" class="form-control" id="inputAddress" placeholder={{user.direccion}}
+          formControlName="direccion" />
       </div>
       <div class="col-12 mt-4">
         <button type="submit" class="btn btn-primary w-100" [disabled]="profileForm.invalid">Guardar cambios</button>
