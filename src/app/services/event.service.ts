@@ -120,6 +120,14 @@ export class EventService {
     );
   }
 
+  getEventDTOById(id: number) {
+    return this.http.get(`${this.baseUrl}/eventosDTO/${id}`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   isUserInEvent(idUser: number, idEvent: number) {
     const body = {
       id_usuario: idUser,

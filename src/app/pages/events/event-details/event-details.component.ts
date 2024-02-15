@@ -179,7 +179,7 @@ export class EventDetailsComponent implements OnInit {
     this.isAdmin = this.userService.isAdmin();
     this.userId = this.userService.getUserIdFromToken();
 
-    this.eventService.getEventById(this.eventId).subscribe(
+    this.eventService.getEventDTOById(this.eventId).subscribe(
       (data) => {
         this.event = data;
       },
