@@ -145,6 +145,8 @@ export class EventService {
     return this.http.post(url, consulta);
 }
 
+ 
+
   obtenerEventosPerfil(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/profile/${id}`).pipe(
       map((data: any) => {

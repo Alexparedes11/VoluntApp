@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { MapComponent } from '../../../components/map/map.component';
 import { UserDTO } from '../../../models/dto/UserDTO';
 import { Router } from '@angular/router';
+import { Event } from '../../../models/Event';
 
 @Component({
   selector: 'app-event-details',
@@ -164,17 +165,14 @@ export class EventDetailsComponent implements OnInit {
 
 
   }
+  //Denegar evento y enviar mensaje al creador
   declineEvent() {
-    this.eventService.updateEventState(this.eventId, "denegado").subscribe(
-      (data) => {
-        return data;
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-      }
-    );
-    this.router.navigate(['/validations']);
+
+    const event: Event = this.eventService.getEventById(this.eventId).subscribe();
+
   }
+  
+  
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
     this.userId = this.userService.getUserIdFromToken();

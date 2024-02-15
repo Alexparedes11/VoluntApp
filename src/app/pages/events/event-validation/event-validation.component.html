@@ -1,21 +1,25 @@
 <app-header></app-header>
-
 <main class="container text-white py-4">
   <div class="d-flex flex-column gap-4 mb-3">
     <h1 class="fw-bold">Validaciones de eventos</h1>
     <select (change)="handleChange($event)" class="form-select" aria-label="Default select example">
-        <option selected value="crear">Eventos por aprobar</option>
-        <option value="eliminar">Eventos para eliminar</option>
+      <option selected value="crear">Eventos por aprobar</option>
+      <option value="eliminar">Eventos para eliminar</option>
     </select>
-      <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        @for (event of events; track event.id) {
-          <div class="col">
-            <app-event-card [image]="event.imagen" [id]="event.id" [title]="event.titulo" [startDate]="event.finicio" [endDate]="event.ffin" [location]="event.ubicacion.nombre" [numVolunteers]="event.numVoluntarios" [createdByUser]="event.creadoPorUsuario" [createdByInstitution]="event.creadoPorInstitucion"></app-event-card>
-          </div>
-        }
-      </section>
-    </div>
-  </main>
+  </div>
+    @if(events.length !== 0) {
+    <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      @for (event of events; track event.id) {
+      <div class="col">
+        <app-event-card [image]="event.imagen" [id]="event.id" [title]="event.titulo" [startDate]="event.finicio"
+          [endDate]="event.ffin" [location]="event.ubicacion.nombre" [numVolunteers]="event.numVoluntarios"
+          [createdByUser]="event.creadoPorUsuario" [createdByInstitution]="event.creadoPorInstitucion"></app-event-card>
+      </div>
+      }
+    </section>
+    } @else {
+    <h1 class="text-center text-white fw-bold mt-5">No hay eventos por validar</h1>
+    }
+</main>
 
 <app-footer></app-footer>
-
