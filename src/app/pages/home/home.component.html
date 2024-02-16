@@ -4,11 +4,13 @@
   <div class="w-100">
     <nav class="bg-top d-flex flex-wrap justify-content-between py-3 rounded-top animacion">
       <div class="dropdown">
-        <select class="form-select btn btn-primary text-start " aria-label="Default select example">
+        <form>
+        <select (change)="filterByTimeOrPeople($event)" class="form-select btn btn-primary text-start " aria-label="Default select example">
           <option selected value="Reciente">Reciente</option>
           <option value="Popular">Popular</option>
           <option value="Antiguo">Más antiguo</option>
         </select>
+      </form>
       </div>
       <div class="input-group w-50">
         <input #seachInput class="p-1 form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
@@ -50,7 +52,8 @@
       <div class="col">
         <app-event-card [image]="event.imagen" [id]="event.id" [title]="event.titulo" [startDate]="event.finicio"
           [endDate]="event.ffin" [location]="event.ubicacion.nombre" [numVolunteers]="event.numVoluntarios"
-          [createdByUser]="event.creadoPorUsuario" [createdByInstitution]="event.creadoPorInstitucion" [nombreInstituciones]="event.nombreInstituciones"></app-event-card>
+          [createdByUser]="event.creadoPorUsuario" [createdByInstitution]="event.creadoPorInstitucion"
+          [nombreInstituciones]="event.nombreInstituciones"></app-event-card>
       </div>
       }
     </section>

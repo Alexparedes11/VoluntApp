@@ -53,6 +53,17 @@ export class EventService {
       })
     );
   }
+  getEventsOrderByDate(page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/ordenarporfecha`, { params }).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
 
   getEventsByDateFilter(finicio: string, ffin: string, page?: number) {
     let params = new HttpParams();
