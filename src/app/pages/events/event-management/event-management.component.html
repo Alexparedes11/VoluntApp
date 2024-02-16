@@ -11,12 +11,14 @@
     @if (events.length !== 0) {
     <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         @for (event of events; track event.id) {
+        @if (event.estado !== 'eliminado' && event.estado !== 'denegado') {
         <div class="col">
             <app-event-card [image]="event.imagen" [id]="event.id" [title]="event.titulo" [startDate]="event.finicio"
                 [endDate]="event.ffin" [location]="event.ubicacion.nombre" [numVolunteers]="event.numVoluntarios"
                 [createdByUser]="event.creadoPorUsuario"
                 [createdByInstitution]="event.creadoPorInstitucion" [nombreInstituciones]="event.nombreInstituciones"></app-event-card>
         </div>
+        }
         }
     </section>
     } @else {

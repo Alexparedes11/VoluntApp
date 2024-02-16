@@ -27,7 +27,6 @@ export class EventCreateComponent {
 
   // Parámetros inicializados
   userId: number = -1;
-  evento: EventDTO = {} as EventDTO;
   user: UserDTO = {} as UserDTO;
   eventForm!: FormGroup;
   private inputFecha: HTMLInputElement | null;
@@ -75,6 +74,7 @@ export class EventCreateComponent {
   // Inicializamos el formulario
   initializeForm(): void {
     this.eventForm = this.fb.group({
+      id: [''],
       finicio: ['', Validators.required],
       ffin: ['', Validators.required],
       titulo: ['', Validators.required],

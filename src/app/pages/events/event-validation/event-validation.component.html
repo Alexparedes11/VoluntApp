@@ -3,8 +3,8 @@
   <div class="d-flex flex-column gap-4 mb-3">
     <h1 class="fw-bold">Validaciones de eventos</h1>
     <select (change)="handleChange($event)" class="form-select" aria-label="Default select example">
-      <option selected value="crear">Eventos por aprobar</option>
-      <option value="eliminar">Eventos para eliminar</option>
+      <option selected value="crear">Solicitudes de subida</option>
+      <option value="eliminar">Solicitudes de eliminación</option>
     </select>
   </div>
     @if(events.length !== 0) {
