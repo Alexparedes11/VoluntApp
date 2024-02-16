@@ -40,6 +40,8 @@ export class UserService {
     if (token) {
       const jwtHelper = new JwtHelperService();
       const decodedToken = jwtHelper.decodeToken(token);
+      
+      console.log(decodedToken.Tipo);
       return decodedToken.sub;
     }
     return -1;
