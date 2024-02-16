@@ -5,7 +5,6 @@
     <div class="editarperfil text-center d-flex align-items-center flex-column">
       <img [src]="user.fotoPerfil" class="rounded-circle img-perfil"
         style="position: absolute; transform: translateY(-70%);" alt="Imagen de perfil" />
-      <p class="overlay">✏️</p>
     </div>
   </div>
   <div class="margen text-center w-50">
@@ -73,6 +72,10 @@
         <label for="inputAddress" class="form-label">Dirección</label>
         <input type="text" class="form-control" id="inputAddress" placeholder={{user.direccion}}
           formControlName="direccion" />
+      </div>
+      <div class="col-lg-6">
+        <label for="inputAddress" class="form-label">Imagen de perfil</label>
+        <input type="file" class="form-control" formControlName="imagenperfil" />
       </div>
       <div class="col-12 mt-4">
         <button type="submit" class="btn btn-primary w-100" [disabled]="profileForm.invalid">Guardar cambios</button>

@@ -32,6 +32,27 @@ export class HomeComponent implements OnInit {
   showFilters() {
     this.muestraFiltros = !this.muestraFiltros;
   }
+  selectedOption: string = 'Reciente';
+
+  filterByTimeOrPeople(e: any) {
+    const searchType = e.target.value;
+    switch (searchType) {
+      case 'reciente':
+        //Ordenar por fecha de inicio
+        this.eventService.getEventsOrderByDate().subscribe();
+        
+
+        break;
+      case 'populares':
+        //Ordenar por numero de asistentes
+        break;
+      case 'antiguos':
+        //Ordenar por fecha de inicio de forma inversa
+        break;
+
+    }
+    //Si se selecciona la opcion receiente obtener los eventos ordenador por fecha de inicio
+  }
 
   applyFilters() {
     const finicio = this.filtersForm.value.finicio;
@@ -111,6 +132,7 @@ export class HomeComponent implements OnInit {
     this.eventService.getEventsByState("disponible").subscribe(
       (data) => {
         this.events = data.content;
+        console.log(this.events);
         for (let i = 0; i < data.totalPages; i++) {
           this.pages.push(i + 1);
         }

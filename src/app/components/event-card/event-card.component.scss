@@ -2,3 +2,13 @@ img {
     height: 200px;
     object-fit: cover;
 }
+
+.texto-superpuesto {
+    position: absolute;
+    top: 10px; /* ajusta la distancia desde la parte superior */
+    left: 10px; /* ajusta la distancia desde el lado izquierdo */
+    color: white; /* color del texto */
+    font-size: 24px; /* tamaño de fuente */
+    background-color: rgba(0, 0, 0, 0.5); /* fondo del texto */
+    padding: 10px; /* espacio alrededor del texto */
+  }

@@ -18,4 +18,29 @@ export class EventCardComponent {
   @Input() numVolunteers: number | null = null;
   @Input() createdByUser: string | null = null;
   @Input() createdByInstitution: string | null = null;
+  @Input() nombreInstituciones: Array<string> | null = null;
+
+
+  currentIndex: number = 0;
+  currentInstitution: string = ''; // Inicialmente mostrar el primer elemento del array
+
+  stringFunction() {
+    if (this.nombreInstituciones) {
+      this.currentInstitution = this.nombreInstituciones[0];
+    }
+  }
+
+  intervalFunction() {
+    if (this.nombreInstituciones) {
+      this.currentIndex = (this.currentIndex + 1) % this.nombreInstituciones.length;
+      this.currentInstitution = this.nombreInstituciones[this.currentIndex];
+    }
+  }
+
+  ngOnInit() {
+    this.stringFunction();
+    setInterval(() => {
+      this.intervalFunction();
+    }, 2000); // Intervalo en milisegundos (por ejemplo, cada segundo)
+  }
 }

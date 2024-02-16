@@ -46,9 +46,20 @@ export class EventService {
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
-    return this.http.get(`${this.baseUrl}/eventos/buscaporestado/${state}`, { params }).pipe(
+    return this.http.get<EventDTO>(`${this.baseUrl}/eventos/buscaporestado/${state}`, { params }).pipe(
       map((data: any) => {
         console.log(data);
+        return data;
+      })
+    );
+  }
+  getEventsOrderByDate(page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/ordenarporfecha`, { params }).pipe(
+      map((data: any) => {
         return data;
       })
     );

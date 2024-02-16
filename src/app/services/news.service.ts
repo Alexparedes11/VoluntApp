@@ -15,6 +15,7 @@ import { environment } from '../../environments/environments';
         })
       );
     }
+
     createNews(news: any) {
       return this.http.post(`${this.baseUrl}/noticias/crearNoticia`, news).pipe(
         map((data: any) => {

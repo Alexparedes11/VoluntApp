@@ -1,7 +1,7 @@
 <div class="carousel">
     <div class="carousel-inner rounded">
         <div class="carousel-item active">
-            <img [src]="imagesPath + images[currentImage] + '.jpg'" alt="Slide 1">
+            <img (click)="goToNew()" [src]="images[currentImage]" alt="Slide 1">  
         </div>
     </div>
     <button (click)="prevImage()" class="carousel-control-prev">

@@ -36,8 +36,6 @@ export class ProfileComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private profileService: ProfileService, private userService: UserService, private eventoService: EventService) { }
 
-
-
   ngOnInit(): void {
 
     this.userId = this.userService.getUserIdFromToken();

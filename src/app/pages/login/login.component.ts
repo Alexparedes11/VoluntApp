@@ -20,7 +20,7 @@ export class LoginComponent {
 
   form = new FormGroup(
     {
-      username: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+      username: new FormControl('', [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       password: new FormControl('', Validators.required)
     }
   );
@@ -32,6 +32,7 @@ export class LoginComponent {
   }
 
   loguearUsuario(): void {
+    this.form.value.username = this.form.value.username?.toLowerCase();
     this.userService.login(this.form.value).subscribe(
       (data: any) => {
         this.cookieService.set('token', data.token);

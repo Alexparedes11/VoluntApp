@@ -12,8 +12,11 @@ export class MapboxService {
 
   searchWord(query: string) {
     const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
-    return this.http.get(url + query + '.json?types=address&access_token=' + environment.mapbox.accessToken).pipe(map((res: any) => {
-      return res.features;
-    }));
+    const countryCode = 'ES';
+    return this.http.get(url + query + '.json?types=address&country=' + countryCode + '&access_token=' + environment.mapbox.accessToken)
+      .pipe(map((res: any) => {
+        return res.features;
+      }));
   }
+
 }
