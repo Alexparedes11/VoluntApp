@@ -7,5 +7,6 @@ export interface User {
     username: string;
     password: string;
     fotoPerfil: string;
+    fotoBanner: string;
     rol: string;
 }
