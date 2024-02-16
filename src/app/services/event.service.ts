@@ -13,7 +13,7 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
-  createEvent(data: any) {
+  createEvent(data: EventDTO) {
     return this.http.post(`${this.baseUrl}/eventos`, data);
   }
 
@@ -54,7 +54,7 @@ export class EventService {
     );
   }
 
-  getEventByDateFilter(finicio: string, ffin: string, page?: number) {
+  getEventsByDateFilter(finicio: string, ffin: string, page?: number) {
     let params = new HttpParams();
     if (page !== undefined) {
       params = params.set('page', page.toString());
@@ -72,6 +72,18 @@ export class EventService {
       params = params.set('page', page.toString());
     }
     return this.http.get(`${this.baseUrl}/eventos/ubicacion/disponibles/${location}`, { params }).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  getEventByDateAndLocationFilter(finicio: string, ffin: string, location: string, page?: number) {
+    let params = new HttpParams();
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas-y-ubicacion/${finicio}/${ffin}/${location}`, { params }).pipe(
       map((data: any) => {
         return data;
       })
@@ -102,6 +114,14 @@ export class EventService {
 
   getEventById(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/${id}`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  getEventDTOById(id: number) {
+    return this.http.get(`${this.baseUrl}/eventosDTO/${id}`).pipe(
       map((data: any) => {
         return data;
       })
@@ -145,6 +165,11 @@ export class EventService {
     const url = `${this.baseUrl}/contacto/enviarSolicitud`;
     return this.http.post(url, consulta);
 }
+
+sendDeniedRequest(consulta: any): Observable<any> {
+  const url = `${this.baseUrl}/contacto/enviarRespuestaDenegada`;
+  return this.http.post(url, consulta);
+} 
 
   obtenerEventosPerfil(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/profile/${id}`).pipe(

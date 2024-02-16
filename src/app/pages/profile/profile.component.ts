@@ -15,12 +15,12 @@ import { NumeroDeEventosDTO } from '../../models/dto/NumeroDeEventosDTO';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  providers: [ProfileService, UserService, EventService ],
+  providers: [ProfileService, UserService, EventService],
   imports: [HeaderComponent, FooterComponent, HttpClientModule, ReactiveFormsModule, NgIf, NgClass],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent implements OnInit{
+export class ProfileComponent implements OnInit {
 
   userId: number = -1;
   editarperfil: boolean = false;
@@ -34,51 +34,51 @@ export class ProfileComponent implements OnInit{
     this.editarperfil = !this.editarperfil;
   }
 
-    constructor(private fb: FormBuilder, private profileService: ProfileService, private userService: UserService, private eventoService: EventService) { }
+  constructor(private fb: FormBuilder, private profileService: ProfileService, private userService: UserService, private eventoService: EventService) { }
 
-   
-  
-    ngOnInit(): void {
 
-      this.userId = this.userService.getUserIdFromToken();
-      
-      this.eventoService.obtenerEventosPerfil(this.userId).subscribe(
-        (data) => {
-          console.log(data);
-          this.eventosPerfil = data;
-        },
-        (error) => {
-          console.error('Error fetching events:', error);
-        }
-      );
 
-      this.profileService.getData(this.userId).subscribe(
-        (data) => {
-          console.log(data);
-          this.user = data;
-        },
-        (error) => {
-          console.error('Error fetching events:', error);
-        }
-      );
+  ngOnInit(): void {
 
-      this.eventoService.getEventsCreatedByUser(this.userId).subscribe(
-        (data) => {
-          console.log(data);
-          this.event = data;
-          this.initializeForm();
-          console.log("Este es el formulario " + this.profileForm.value)
-        },
-        (error) => {
-          console.error('Error fetching events:', error);
-        }
-      );
-    }
+    this.userId = this.userService.getUserIdFromToken();
+
+    this.eventoService.obtenerEventosPerfil(this.userId).subscribe(
+      (data) => {
+        console.log(data);
+        this.eventosPerfil = data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+
+    this.profileService.getData(this.userId).subscribe(
+      (data) => {
+        console.log(data);
+        this.user = data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+
+    this.eventoService.getEventsCreatedByUser(this.userId).subscribe(
+      (data) => {
+        console.log(data);
+        this.event = data;
+        this.initializeForm();
+        console.log("Este es el formulario " + this.profileForm.value)
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+  }
 
   // Inicializamos el formulario
   initializeForm(): void {
     this.profileForm = this.fb.group({
-      nombre: new FormControl('' ),
+      nombre: new FormControl(''),
       apellidos: new FormControl(''),
       dni: new FormControl(this.user.dni),
       telefono: new FormControl(''),
@@ -92,7 +92,7 @@ export class ProfileComponent implements OnInit{
   submitEditar(): void {
     this.editedUser = this.user;
     console.log(this.editedUser);
-    if(this.editedUser) {
+    if (this.editedUser) {
       // Obtienes los valores actuales del fomulario
       const editedNombre = this.profileForm.get('nombre')?.value ?? '';
       const editedApellidos = this.profileForm.get('apellidos')?.value ?? '';
@@ -124,13 +124,10 @@ export class ProfileComponent implements OnInit{
           this.mostrarContenedor();
         },
         (error: any) => {
-          alert('El correo eléctronico ya esta siendo utilizado');
-          console.error('Error al editar noticia:', error);
-          location.reload();
-          this.profileForm.reset();
+          this.profileForm.get('email')?.setErrors({ emailInUse: true });
         }
       )
     }
-    
+
   }
 }

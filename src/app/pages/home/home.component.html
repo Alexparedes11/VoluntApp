@@ -4,13 +4,11 @@
   <div class="w-100">
     <nav class="bg-top d-flex flex-wrap justify-content-between py-3 rounded-top animacion">
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Reciente
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Popular</a></li>
-          <li><a class="dropdown-item" href="#">Mas antiguo</a></li>
-        </ul>
+        <select class="form-select btn btn-primary text-start " aria-label="Default select example">
+          <option selected value="Reciente">Reciente</option>
+          <option value="Popular">Popular</option>
+          <option value="Antiguo">Más antiguo</option>
+        </select>
       </div>
       <div class="input-group w-50">
         <input #seachInput class="p-1 form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."

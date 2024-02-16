@@ -9,7 +9,6 @@ import { EventService } from '../../../services/event.service';
 import { MapboxService } from '../../../services/mapbox.service';
 import { UserService } from '../../../services/user.service';
 import { UserDTO } from '../../../models/dto/UserDTO';
-import { Event } from '../../../models/Event';
 
 interface AdressInfo {
   place_name: string;
@@ -32,7 +31,7 @@ export class EventCreateComponent {
   user: UserDTO = {} as UserDTO;
   eventForm!: FormGroup;
   private inputFecha: HTMLInputElement | null;
-  selectedImage: any;
+  selectedImage: File | null = null;
   addresses: AdressInfo[] = [];
   selectedAddressName: string | null = null;
   selectedAddress: AdressInfo | null = null;
@@ -158,6 +157,7 @@ export class EventCreateComponent {
       formValue.nombreUbicacion = this.selectedAddress?.place_name;
       formValue.lat = this.selectedAddress?.center[0];
       formValue.lon = this.selectedAddress?.center[1];
+      formValue.imagen = this.selectedImage;
 
       console.log(formValue);
       alert('El siguiente evento pasará por un proceso de validación antes de ser publicado, se le notificará de este en caso de haber pasado la revisión.');
