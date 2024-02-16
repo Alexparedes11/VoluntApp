@@ -32,6 +32,7 @@ export class LoginComponent {
   }
 
   loguearUsuario(): void {
+    this.form.value.username = this.form.value.username?.toLowerCase();
     this.userService.login(this.form.value).subscribe(
       (data: any) => {
         this.cookieService.set('token', data.token);

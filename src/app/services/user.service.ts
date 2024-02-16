@@ -4,8 +4,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { CookieService } from 'ngx-cookie-service';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environments';
-import { User } from '../models/User';
-import { EventDTO } from '../models/dto/EventDTO';
 import { UserDTO } from '../models/dto/UserDTO';
 
 @Injectable({
@@ -43,6 +41,16 @@ export class UserService {
       const jwtHelper = new JwtHelperService();
       const decodedToken = jwtHelper.decodeToken(token);
       return decodedToken.sub;
+    }
+    return -1;
+  }
+
+  getUserTypeFromToken(): number {
+    const token = this.cookieService.get('token');
+    if (token) {
+      const jwtHelper = new JwtHelperService();
+      const decodedToken = jwtHelper.decodeToken(token);
+      return decodedToken.Tipo;
     }
     return -1;
   }
