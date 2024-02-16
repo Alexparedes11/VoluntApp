@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environments';
+import { EventDTO } from '../models/dto/EventDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class EventService {
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
-    return this.http.get(`${this.baseUrl}/eventos/buscaporestado/${state}`, { params }).pipe(
+    return this.http.get<EventDTO>(`${this.baseUrl}/eventos/buscaporestado/${state}`, { params }).pipe(
       map((data: any) => {
         console.log(data);
         return data;
