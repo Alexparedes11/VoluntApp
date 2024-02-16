@@ -44,6 +44,8 @@ export class EventDetailsComponent implements OnInit {
       }
     );
     this.isUserInEvent = true;
+    alert("Te has unido al evento correctamente");
+
   }
 
   removeUserFromEvent() {

@@ -21,7 +21,7 @@
             </span>
             <span class="error-message" *ngIf="errorMensaje">{{ errorMensaje }}</span>
             <a href="/register">¿No tienes una cuenta?</a>
-            <a href="">¿Has olvidado tu contraseña?</a>
+            <a href="/forgetpassword">¿Has olvidado tu contraseña?</a>
             <div class="d-flex gap-2 mt-auto">
                 <button type="button" class="px-4 btn btn-outline-primary" (click)="back()">←</button>
                 <button class="w-100" type="submit" [disabled]="form.invalid"

@@ -1,31 +1,31 @@
 <app-header></app-header>
-<main class="text-white">
+<main class="text-white text-center d-flex flex-column align-items-center">
   <div class="d-flex flex-column align-items-center">
-    <img src="/assets/images/bannerprofile.jpg" class="img-fluid imagenbanner" alt="VoluntApp banner" />
+    <img [src]="user.fotoBanner" class="img-fluid imagenbanner" alt="Imagen de banner" />
     <div class="editarperfil text-center d-flex align-items-center flex-column">
-      <img src="/assets/images/montana.jpg" class="rounded-circle img-perfil"
+      <img [src]="user.fotoPerfil" class="rounded-circle img-perfil"
         style="position: absolute; transform: translateY(-70%);" alt="Imagen de perfil" />
       <p class="overlay">✏️</p>
     </div>
   </div>
-  <div class="align-items-center d-flex flex-column text-white gap-3 margen">
-    <h1 class="text-center sombras fw-bold">{{user.nombre}} {{user.apellidos}}</h1>
-    <div class="row">
-      <div class="col-lg-auto">
+  <div class="margen text-center w-50">
+    <h1 class="text-center sombras fw-bold mb-3">{{user.nombre}} {{user.apellidos}}</h1>
+    <div class="row ">
+      <div class="col-lg-4 col-md-12">
         <h5 class="text-center text-primary fw-bold">{{eventosPerfil.creados}}</h5>
-        <h5 class="text-center">Eventos Creados</h5>
+        <h5 class="text-center">Creados</h5>
       </div>
-      <div class="col-lg-auto">
+      <div class="col-lg-4 col-md-12">
         <h5 class="text-center text-primary fw-bold">{{eventosPerfil.apuntados}}</h5>
-        <h5 class="text-center">Eventos Apuntados</h5>
+        <h5 class="text-center">Apuntados</h5>
       </div>
-      <div class="col-lg-auto">
+      <div class="col-lg-4 col-md-12">
         <h5 class="text-center text-primary fw-bold">{{eventosPerfil.realizados}}</h5>
-        <h5 class="text-center">Eventos Realizados</h5>
+        <h5 class="text-center">Realizados</h5>
       </div>
     </div>
 
-    <button (click)="mostrarContenedor()" class="btn btn-primary btn-block">
+    <button (click)="mostrarContenedor()" class="btn btn-primary btn-block text-center mt-4">
       Editar perfil
     </button>
   </div>
