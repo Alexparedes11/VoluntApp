@@ -31,9 +31,6 @@ export class EventDetailsComponent implements OnInit {
 
   event: EventDTO = {} as EventDTO;
 
-
-
-
   addUserToEvent() {
     this.eventService.addUserToEvent(this.userId, this.eventId).subscribe(
       (data) => {
@@ -278,7 +275,6 @@ export class EventDetailsComponent implements OnInit {
     );
 
   }
-
 
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
