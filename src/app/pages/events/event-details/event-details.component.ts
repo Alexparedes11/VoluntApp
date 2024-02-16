@@ -44,18 +44,25 @@ export class EventDetailsComponent implements OnInit {
       }
     );
     this.isUserInEvent = true;
+    alert("Te has unido al evento correctamente");
+
   }
 
   removeUserFromEvent() {
-    this.eventService.removeUserFromEvent(this.userId, this.eventId).subscribe(
-      (data) => {
-        return data;
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-      }
-    );
-    this.isUserInEvent = false;
+    const userConfirmed = window.confirm('¿Estás seguro de que deseas desapuntarte del evento?');
+
+    if (userConfirmed) {
+      this.eventService.removeUserFromEvent(this.userId, this.eventId).subscribe(
+        (data) => {
+          this.isUserInEvent = false;
+          return data;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+    }
+
   }
   RequestdeleteEvent() {
     // Crea un contenedor div para personalizar el estilo del alert

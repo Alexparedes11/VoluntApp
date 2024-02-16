@@ -12,6 +12,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { EventValidationComponent } from './pages/events/event-validation/event-validation.component';
 import { NewCreateComponent } from './pages/news/new-create/new-create.component';
 import { EventCreateComponent } from './pages/events/event-create/event-create.component';
+import { ForgetpasswordComponent } from './pages/forgetpassword/forgetpassword.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -26,5 +27,6 @@ export const routes: Routes = [
     { path: 'contact', component: ContactComponent},
     { path: 'validations', component: EventValidationComponent},
     { path: 'create-new', component: NewCreateComponent},
-    { path: 'create-event', component: EventCreateComponent }
+    { path: 'create-event', component: EventCreateComponent },
+    { path: 'forgetpassword', component: ForgetpasswordComponent }
 ];
