@@ -22,18 +22,18 @@ export class EventCardComponent {
 
 
   currentIndex: number = 0;
-  currentString: string = ''; // Inicialmente mostrar el primer elemento del array
+  currentInstitution: string = ''; // Inicialmente mostrar el primer elemento del array
 
   stringFunction() {
     if (this.nombreInstituciones) {
-      this.currentString = this.nombreInstituciones[0];
+      this.currentInstitution = this.nombreInstituciones[0];
     }
   }
 
   intervalFunction() {
     if (this.nombreInstituciones) {
       this.currentIndex = (this.currentIndex + 1) % this.nombreInstituciones.length;
-      this.currentString = this.nombreInstituciones[this.currentIndex];
+      this.currentInstitution = this.nombreInstituciones[this.currentIndex];
     }
   }
 

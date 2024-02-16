@@ -1,9 +1,9 @@
 <article class="card shadow-sm border-0">
-        <img class="bd-placeholder-img card-img-top" [src]="image" alt="">
-        @if (nombreInstituciones?.length != 0) {
-            <div class="texto-superpuesto">Apoyado por: {{currentString}}</div>
-        }
-        
+    @if (nombreInstituciones?.length != 0) {
+    <span class="badge bg-secondary"> {{'Apoyado por ' + currentInstitution}}</span>
+    }
+    <img class="bd-placeholder-img card-img-top" [src]="image" alt="">
+
     <section class="card-body">
         <h1 class="fw-bold fs-4">{{title}}</h1>
         <div class="d-flex justify-content-between align-items-end">
