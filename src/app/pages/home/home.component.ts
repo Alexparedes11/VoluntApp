@@ -111,6 +111,7 @@ export class HomeComponent implements OnInit {
     this.eventService.getEventsByState("disponible").subscribe(
       (data) => {
         this.events = data.content;
+        console.log(this.events);
         for (let i = 0; i < data.totalPages; i++) {
           this.pages.push(i + 1);
         }
