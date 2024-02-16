@@ -2,7 +2,11 @@
 <main class="container p-4 text-white">
     <h1 class="fw-bold d-flex align-items-center gap-3">{{event.titulo}}<span
             class="badge bg-secondary-dark fs-5">{{event.numVoluntarios}}
-            🙋‍♂️</span></h1>
+            🙋‍♂️</span>
+        @if(event.estado=='revision') {
+        <span class="badge bg-error-light fs-5">En revisión</span>
+        }
+    </h1>
     <section class="grid-container">
         <div class="area1">
             <img class="rounded w-100" [src]="event.imagen" alt="">
@@ -45,16 +49,21 @@
             </div>
             }
             @else if(event.estado=='en-eliminacion'){
-                <div class="d-flex align-items-center gap-2">
-            <button (click)="declineEvent()" class="btn bg-error-dark text-white w-100">Eliminar</button>
-            <button (click)="acceptEvent()" class="btn bg-success-dark text-white w-100">Mantener</button>
-        </div>
+            <div class="d-flex align-items-center gap-2">
+                <button (click)="declineElimination()" class="btn bg-success-dark text-white w-100">Mantener</button>
+                <button (click)="acceptElimination()" class="btn bg-error-dark text-white w-100">Eliminar</button>
+            </div>
             }
 
             } @else {
             @if (isUserInEvent) {
             @if (isCreator) {
-            <button (click)="RequestdeleteEvent()" class="btn bg-error-dark text-white w-100">Solicitar eliminación</button>
+            @if (event.estado === 'disponible') {
+            <button (click)="requestEventElimination()" class="btn bg-error-dark text-white w-100">Solicitar
+                eliminación</button>
+            } @else if (event.estado === 'revision') {
+            <button (click)="deleteEvent()" class="btn bg-error-dark text-white w-100">Eliminar</button>
+            }
             } @else {
             <button (click)="removeUserFromEvent()" class="btn bg-error-light text-white w-100">Desapuntarse</button>
             }
