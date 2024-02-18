@@ -159,12 +159,10 @@ export class EventCreateComponent {
       formValue.lon = this.selectedAddress?.center[1];
       formValue.imagen = this.selectedImage;
 
-      console.log(formValue);
       alert('El siguiente evento pasará por un proceso de validación antes de ser publicado, se le notificará de este en caso de haber pasado la revisión.');
       this.eventService.createEvent(formValue).subscribe(
         (data: any) => {
-          console.log(data);
-          this.eventService.addUserToEvent(this.userId, data.id).subscribe();
+          this.eventService.addUserToEvent(this.userId, Number(data.id)).subscribe();
         },
         (error) => {
           console.error('Error creating event:', error);
