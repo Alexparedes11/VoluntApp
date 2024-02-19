@@ -41,20 +41,21 @@ export class UserService {
       const jwtHelper = new JwtHelperService();
       const decodedToken = jwtHelper.decodeToken(token);
       
-      console.log(decodedToken.Tipo);
       return decodedToken.sub;
     }
     return -1;
   }
 
-  getUserTypeFromToken(): number {
+  getUserTypeFromToken(): string {
     const token = this.cookieService.get('token');
     if (token) {
       const jwtHelper = new JwtHelperService();
       const decodedToken = jwtHelper.decodeToken(token);
       return decodedToken.Tipo;
+    } else {
+      return "Error";
     }
-    return -1;
+
   }
 
   isAdmin(): boolean {

@@ -24,12 +24,13 @@
         <h5 class="text-center">Realizados</h5>
       </div>
     </div>
-
+    @if (tipo == "Usuario") {
     <button (click)="mostrarContenedor()" class="btn btn-primary btn-block text-center mt-4">
       Editar perfil
     </button>
+    }
   </div>
-  @if (editarperfil) {
+  @if (editarperfil && tipo == "Usuario") {
   <div class="container py-5">
     <form class="row g-3 form" [formGroup]="profileForm" (submit)="submitEditar()">
       <div class="col-lg-4">
