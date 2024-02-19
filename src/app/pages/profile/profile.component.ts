@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   selectedProfileImage: string | null = null;
   selectedBannerImage: string | null = null;
   userId: number = -1;
+  tipo: string = "";
   editarperfil: boolean = false;
   user: UserDTO = {} as UserDTO;
   event: EventDTO[] = [];
@@ -60,7 +61,12 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userId = this.userService.getUserIdFromToken();
+    this.tipo = this.userService.getUserTypeFromToken();
+    console.log(this.tipo);
+    
+    if (this.tipo == "Usuario") {
+
+      this.userId = this.userService.getUserIdFromToken();
 
     this.eventoService.obtenerEventosPerfil(this.userId).subscribe(
       (data) => {

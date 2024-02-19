@@ -34,24 +34,46 @@ export class HomeComponent implements OnInit {
   }
   selectedOption: string = 'Reciente';
 
-  filterByTimeOrPeople(e: any) {
+  orderByTimeOrPeople(e: any) {
     const searchType = e.target.value;
     switch (searchType) {
       case 'reciente':
-        //Ordenar por fecha de inicio
-        this.eventService.getEventsOrderByDate().subscribe();
-        
-
+        this.eventService.ordenarporfechaProxima().subscribe(
+          (data: any) => {
+            console.log('Datos recibidos:', data);
+            this.events = data.content;
+            this.currentPage = data.pageable.pageNumber;
+          },
+          (error) => {
+            console.error('Error fetching events:', error);
+          }
+        );
         break;
-      case 'populares':
-        //Ordenar por numero de asistentes
+      case 'Popular':
+        this.eventService.ordenarporvoluntarios().subscribe(
+          (data: any) => {
+            console.log('Datos recibidos:', data);
+            this.events = data.content;
+            this.currentPage = data.pageable.pageNumber;
+          },
+          (error) => {
+            console.error('Error fetching events:', error);
+          }
+        );
         break;
       case 'antiguos':
-        //Ordenar por fecha de inicio de forma inversa
+        this.eventService.ordenarporfechaAntigua().subscribe(
+          (data: any) => {
+            console.log('Datos recibidos:', data);
+            this.events = data.content;
+            this.currentPage = data.pageable.pageNumber;
+          },
+          (error) => {
+            console.error('Error fetching events:', error);
+          }
+        );
         break;
-
     }
-    //Si se selecciona la opcion receiente obtener los eventos ordenador por fecha de inicio
   }
 
   applyFilters() {

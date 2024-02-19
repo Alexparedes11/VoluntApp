@@ -30,7 +30,7 @@ export class RegisterComponent {
 
   // Formulario para registrar un usuario
   formUsuario = new FormGroup({
-    nombre: new FormControl('' , Validators.required),
+    nombre: new FormControl('', Validators.required),
     apellidos: new FormControl('', Validators.required),
     dni: new FormControl('', Validators.required),
     telefono: new FormControl('', Validators.required),
@@ -111,21 +111,32 @@ export class RegisterComponent {
         this.contrasenaConfirmadaInvalida = false;
       }
     }
-    
+
   }
 
   handleSubmit() {
     if (this.institucion) {
       this.crearInstitucion();
       this.router.navigate(['/login']);
-    } else { 
+    } else {
       this.crearUsuario();
       this.router.navigate(['/login']);
     }
   }
 
   crearUsuario() {
-    this.userService.register(this.formUsuario.value).subscribe();
+    this.userService.register(this.formUsuario.value).subscribe(() => {
+      // Usuario registrado con éxito, ahora enviar el correo
+      const emailReg = this.formUsuario.value.email;
+      this.userService.sendRegisterCompleteEmail({
+        email: emailReg,
+        asunto: "¡Registro completado! 🎉",
+        mensaje: "¡Bienvenido a Voluntapp! Tu registro se ha completado con éxito."
+      }).subscribe(response => {
+        alert("Registro exitoso, revisa tu correo para confirmar tu cuenta.");
+        console.log(response);
+      });
+    })
   }
 
   crearInstitucion() {

@@ -5,16 +5,15 @@
       class="bg-top d-flex py-3 w-100 gap-3 justify-content-between"
     >
       <div class="dropdown">
-        <form>
           <select
-            (change)="filterByTimeOrPeople($event)"
+            (change)="orderByTimeOrPeople($event)"
             class="form-select btn btn-primary text-start"
+            aria-label="Default select example"
           >
-            <option selected value="Reciente">Reciente</option>
+            <option selected value="reciente">Eventos proximos</option>
             <option value="Popular">Popular</option>
-            <option value="Antiguo">Más antiguo</option>
+            <option value="antiguos">Eventos mas lejanos</option>
           </select>
-        </form>
       </div>
       <div class="input-group w-50">
         <input

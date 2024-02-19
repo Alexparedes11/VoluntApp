@@ -23,8 +23,10 @@ export class EventDetailsComponent implements OnInit {
   constructor(private eventService: EventService, private userService: UserService, private router: Router) { }
 
   @Input("id") eventId: number = -1;
+  tipo: string = "";
   userId: number = -1;
   isUserInEvent: boolean = false;
+  isInstitucionInEvent: boolean = false;
   isLogged: boolean = false;
   isAdmin: boolean = false;
   isCreator: boolean = false;
@@ -45,6 +47,20 @@ export class EventDetailsComponent implements OnInit {
 
   }
 
+  addInstitucionToEvent() {
+    this.eventService.addInstitutionToEvent(this.userId, this.eventId).subscribe(
+      (data) => {
+        return data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+    this.isInstitucionInEvent = true;
+    alert("Te has unido al evento correctamente");
+
+  }
+
   removeUserFromEvent() {
     this.eventService.removeUserFromEvent(this.userId, this.eventId).subscribe(
       (data) => {
@@ -55,6 +71,19 @@ export class EventDetailsComponent implements OnInit {
       }
     );
     this.isUserInEvent = false;
+
+  }
+
+  removeInstitucionFromEvent() {
+    this.eventService.removeInstitutionFromEvent(this.userId, this.eventId).subscribe(
+      (data) => {
+        return data;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+    this.isInstitucionInEvent = false;
 
   }
 
@@ -279,6 +308,9 @@ export class EventDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
     this.userId = this.userService.getUserIdFromToken();
+    this.tipo = this.userService.getUserTypeFromToken();
+
+    console.log(this.tipo);
 
     this.eventService.getEventDTOById(this.eventId).subscribe(
       (data) => {
@@ -290,9 +322,10 @@ export class EventDetailsComponent implements OnInit {
     );
 
     this.isLogged = this.userService.isLogged();
+
     if (this.isLogged) {
 
-      if (!this.isAdmin) {
+      if (!this.isAdmin && this.tipo == "Usuario") {
 
         this.eventService.isUserInEvent(this.userId, this.eventId).subscribe(
           (data) => {
@@ -315,6 +348,15 @@ export class EventDetailsComponent implements OnInit {
           }
         )
 
+      } else {
+        this.eventService.isInstitucionInEvent(this.userId, this.eventId).subscribe(
+          (data) => {
+            this.isInstitucionInEvent = data;
+          },
+          (error) => {
+            console.log('Error fetching events: ', error);
+          }
+        )
       }
     }
   }
