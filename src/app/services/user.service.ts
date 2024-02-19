@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CookieService } from 'ngx-cookie-service';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { UserDTO } from '../models/dto/UserDTO';
 
@@ -84,7 +84,8 @@ export class UserService {
       })
     );
   }
-  sendRegisterCompleteEmail(email: string) {
-    return this.http.post(`${this.baseUrl}/usuarios/registro`, { email });
-  }
+  sendRegisterCompleteEmail(consulta: any): Observable<any> {
+    const url = `${this.baseUrl}/contacto/enviarRegistro`;
+    return this.http.post(url, consulta);
+}
 }

@@ -190,4 +190,13 @@ sendDeniedRequest(consulta: any): Observable<any> {
     );
   }
 
+  ordenarporvoluntarios() {
+    return this.http.get(`${this.baseUrl}/eventos/ordenarporvoluntarios`);
+  }
+  ordenarporfechaProxima() {
+    return this.http.get(`${this.baseUrl}/eventos/ordenarporfechaProxima`);
+  }
+  ordenarporfechaAntigua() {
+    return this.http.get(`${this.baseUrl}/eventos/ordenarporfechaAntigua`);
+  }
 }
