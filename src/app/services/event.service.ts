@@ -151,12 +151,32 @@ export class EventService {
     );
   }
 
+  isInstitucionInEvent(idInstitution: number, idEvent: number) {
+    const body = {
+      id_institucion: idInstitution,
+      id_evento: idEvent
+    };
+    return this.http.post(`${this.baseUrl}/eventos/isInstitutionInEvento`, body).pipe(
+      map((data: any) => {
+        return data;
+      })
+    ); 
+  }
+
   addUserToEvent(idUser: number, idEvent: number) {
     const body = {
       id_usuario: idUser,
       id_evento: idEvent
     };
     return this.http.post(`${this.baseUrl}/eventos/apuntar-usuario`, body);
+  }
+
+  addInstitutionToEvent(idInstitution: number, idEvent: number) {
+    const body = {
+      id_institucion: idInstitution,
+      id_evento: idEvent
+    };
+    return this.http.post(`${this.baseUrl}/eventos/apuntar-institucion`, body);
   }
 
   removeUserFromEvent(idUser: number, idEvent: number) {
@@ -167,6 +187,14 @@ export class EventService {
     return this.http.post(`${this.baseUrl}/eventos/desapuntar-usuario`, body);
   }
   
+  removeInstitutionFromEvent(idInstitution: number, idEvent: number) {
+    const body = {
+      id_institucion: idInstitution,
+      id_evento: idEvent
+    };
+    return this.http.post(`${this.baseUrl}/eventos/desapuntar-institucion`, body);
+  }
+
   isUserCreator(idUser: number, idEvent: number): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrl}/eventos/esCreador/${idUser}/${idEvent}`);
   }
@@ -175,12 +203,12 @@ export class EventService {
   sendDeleteRequest(consulta: any): Observable<any> {
     const url = `${this.baseUrl}/contacto/enviarSolicitud`;
     return this.http.post(url, consulta);
-}
+  }
 
-sendDeniedRequest(consulta: any): Observable<any> {
-  const url = `${this.baseUrl}/contacto/enviarRespuestaDenegada`;
-  return this.http.post(url, consulta);
-} 
+  sendDeniedRequest(consulta: any): Observable<any> {
+    const url = `${this.baseUrl}/contacto/enviarRespuestaDenegada`;
+    return this.http.post(url, consulta);
+  } 
 
   obtenerEventosPerfil(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/profile/${id}`).pipe(

@@ -23,6 +23,7 @@ import { NumeroDeEventosDTO } from '../../models/dto/NumeroDeEventosDTO';
 export class ProfileComponent implements OnInit {
 
   userId: number = -1;
+  tipo: string = "";
   editarperfil: boolean = false;
   user: UserDTO = {} as UserDTO;
   event: EventDTO[] = [];
@@ -38,53 +39,94 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userId = this.userService.getUserIdFromToken();
+    this.tipo = this.userService.getUserTypeFromToken();
+    console.log(this.tipo);
+    
+    if (this.tipo == "Usuario") {
 
-    this.eventoService.obtenerEventosPerfil(this.userId).subscribe(
-      (data) => {
-        console.log(data);
-        this.eventosPerfil = data;
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-      }
-    );
+      this.userId = this.userService.getUserIdFromToken();
 
-    this.profileService.getData(this.userId).subscribe(
-      (data) => {
-        console.log(data);
-        this.user = data;
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-      }
-    );
+      this.eventoService.obtenerEventosPerfil(this.userId).subscribe(
+        (data) => {
+          console.log(data);
+          this.eventosPerfil = data;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+  
+      this.profileService.getData(this.userId).subscribe(
+        (data) => {
+          console.log(data);
+          this.user = data;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+  
+      this.eventoService.getEventsCreatedByUser(this.userId).subscribe(
+        (data) => {
+          console.log(data);
+          this.event = data;
+          this.initializeForm();
+          console.log("Este es el formulario " + this.profileForm.value)
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+    } else if(this.tipo == "Institucion"){
 
-    this.eventoService.getEventsCreatedByUser(this.userId).subscribe(
-      (data) => {
-        console.log(data);
-        this.event = data;
-        this.initializeForm();
-        console.log("Este es el formulario " + this.profileForm.value)
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-      }
-    );
+      this.userId = this.userService.getUserIdFromToken();
+
+  
+      this.profileService.getDataInstitucion(this.userId).subscribe(
+        (data) => {
+          console.log(data);
+          this.user = data;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+  
+      this.eventoService.getEventsCreatedByUser(this.userId).subscribe(
+        (data) => {
+          console.log(data);
+          this.event = data;
+          this.initializeForm();
+          console.log("Este es el formulario " + this.profileForm.value)
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+    }
+    
+   
   }
 
   // Inicializamos el formulario
   initializeForm(): void {
-    this.profileForm = this.fb.group({
-      nombre: new FormControl(''),
-      apellidos: new FormControl(''),
-      dni: new FormControl(this.user.dni),
-      telefono: new FormControl(''),
-      direccion: new FormControl(''),
-      email: new FormControl(''),
-      contraseña: new FormControl(this.user.contraseña),
-      eventosNombre: new FormControl(this.user.eventosNombre),
-    });
+    if (this.tipo == "Usuario") {
+      this.profileForm = this.fb.group({
+        nombre: new FormControl(''),
+        apellidos: new FormControl(''),
+        dni: new FormControl(this.user.dni),
+        telefono: new FormControl(''),
+        direccion: new FormControl(''),
+        email: new FormControl(''),
+        contraseña: new FormControl(this.user.contraseña),
+        eventosNombre: new FormControl(this.user.eventosNombre),
+      });
+    } else if (this.tipo == "Intitucion") {
+      this.profileForm = this.fb.group({
+        
+      })
+    }
+
   }
 
   submitEditar(): void {

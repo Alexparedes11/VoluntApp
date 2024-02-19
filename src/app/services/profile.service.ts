@@ -19,4 +19,12 @@ import { environment } from '../../environments/environments';
         })
       );
     }
+
+    getDataInstitucion(id: number) {
+      return this.http.get(`${this.baseUrl}/instituciones/${id}`).pipe(
+        map((data: any) => {
+          return data;
+        })
+      );
+    }
   }
