@@ -1,64 +1,114 @@
 <app-header></app-header>
 <main class="container py-4 d-flex flex-column align-items-center">
-
   <div class="w-100">
-    <nav class="bg-top d-flex flex-wrap justify-content-between py-3 rounded-top animacion">
+    <nav
+      class="bg-top d-flex py-3 w-100 gap-3 justify-content-between"
+    >
       <div class="dropdown">
-        <select class="form-select btn btn-primary text-start " aria-label="Default select example">
-          <option selected value="Reciente">Reciente</option>
-          <option value="Popular">Popular</option>
-          <option value="Antiguo">Más antiguo</option>
-        </select>
+        <form>
+          <select
+            (change)="filterByTimeOrPeople($event)"
+            class="form-select btn btn-primary text-start"
+          >
+            <option selected value="Reciente">Reciente</option>
+            <option value="Popular">Popular</option>
+            <option value="Antiguo">Más antiguo</option>
+          </select>
+        </form>
       </div>
       <div class="input-group w-50">
-        <input #seachInput class="p-1 form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
-          aria-describedby="btn-buscar" />
-        <button class="btn btn-primary" type="button" id="btn-buscar"
-          (click)="filterEventsBySearch(seachInput.value)">🔎</button>
+        <input
+          #seachInput
+          class="p-1 form-control shadow-none"
+          type="text"
+          placeholder="Buscar..."
+        />
+        <button
+          class="btn btn-primary"
+          type="button"
+          id="btn-buscar"
+          (click)="filterEventsBySearch(seachInput.value)"
+        >
+          Buscar
+        </button>
       </div>
 
-      <button type="button" (click)="showFilters()" class="btn btn-primary">Filtros</button>
+      <button type="button" (click)="showFilters()" class="btn btn-primary">
+        Filtros
+      </button>
     </nav>
 
     @if (muestraFiltros) {
 
-    <form [formGroup]="filtersForm" (submit)="applyFilters()"
-      class="mb-3 despuescontenedor text-white rounded d-flex gap-3 align-items-end">
+    <form
+      [formGroup]="filtersForm"
+      (submit)="applyFilters()"
+      class="mb-3 despuescontenedor text-white rounded d-flex gap-3 align-items-end"
+    >
       <div class="form-group">
         <label for="finicio">Inicio</label>
-        <input formControlName="finicio" type="datetime-local" class="form-control" id="finicio">
+        <input
+          formControlName="finicio"
+          type="datetime-local"
+          class="form-control"
+          id="finicio"
+        />
       </div>
       <div class="form-group">
         <label for="ffin">Fin</label>
-        <input formControlName="ffin" type="datetime-local" class="form-control" id="ffin">
+        <input
+          formControlName="ffin"
+          type="datetime-local"
+          class="form-control"
+          id="ffin"
+        />
       </div>
       <div class="form-group d-block">
         <label for="ubicacion">Ubicación</label>
-        <input formControlName="ubicacion" type="text" class="form-control" id="ubicacion">
+        <input
+          formControlName="ubicacion"
+          type="text"
+          class="form-control"
+          id="ubicacion"
+        />
       </div>
       <div class="ms-auto d-flex gap-3">
-        <button type="submit" class="btn btn-primary h-50">Limpiar filtros</button>
-        <button type="submit" class="btn btn-primary h-50">Aplicar filtros</button>
+        <button type="submit" class="btn btn-primary h-50">
+          Limpiar filtros
+        </button>
+        <button type="submit" class="btn btn-primary h-50">
+          Aplicar filtros
+        </button>
       </div>
     </form>
 
-    }
-
-    @if (events.length !== 0) {
+    } @if (events.length !== 0) {
     <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       @for (event of events; track event.id) {
       <div class="col">
-        <app-event-card [image]="event.imagen" [id]="event.id" [title]="event.titulo" [startDate]="event.finicio"
-          [endDate]="event.ffin" [location]="event.ubicacion.nombre" [numVolunteers]="event.numVoluntarios"
-          [createdByUser]="event.creadoPorUsuario" [createdByInstitution]="event.creadoPorInstitucion" [nombreInstituciones]="event.nombreInstituciones"></app-event-card>
+        <app-event-card
+          [image]="event.imagen"
+          [id]="event.id"
+          [title]="event.titulo"
+          [startDate]="event.finicio"
+          [endDate]="event.ffin"
+          [location]="event.ubicacion.nombre"
+          [numVolunteers]="event.numVoluntarios"
+          [createdByUser]="event.creadoPorUsuario"
+          [createdByInstitution]="event.creadoPorInstitucion"
+          [nombreInstituciones]="event.nombreInstituciones"
+        ></app-event-card>
       </div>
       }
     </section>
     } @else {
-    <h1 class="text-center text-white fw-bold mt-5">No hay eventos disponibles</h1>
-    <h4 class="text-center text-white"><a href="/create-event">Crea un evento aquí</a></h4>
+    <h1 class="text-center text-white fw-bold mt-5">
+      No hay eventos disponibles
+    </h1>
+    <h4 class="text-center text-white">
+      <a href="/create-event">Crea un evento aquí</a>
+    </h4>
     }
-
   </div>
   @if (events.length !== 0) {
   <nav class="d-flex justify-content-center mt-5">
@@ -69,23 +119,27 @@
       </li>
       } @else {
       <li class="page-item">
-        <a (click)="goToPage(currentPage - 1)" class="page-link" href="#">Anterior</a>
+        <a (click)="goToPage(currentPage - 1)" class="page-link" href="#"
+          >Anterior</a
+        >
       </li>
-      }
-      @for (page of pages; track $index) {
-      @if ($index === currentPage) {
-      <li class="page-item active"><a class="page-link" href="#">{{page}}</a></li>
+      } @for (page of pages; track $index) { @if ($index === currentPage) {
+      <li class="page-item active">
+        <a class="page-link" href="#">{{ page }}</a>
+      </li>
       } @else {
-      <li (click)="goToPage(page - 1)" class="page-item"><a class="page-link" href="#">{{page}}</a></li>
-      }
-      }
-      @if (currentPage === pages.length - 1) {
+      <li (click)="goToPage(page - 1)" class="page-item">
+        <a class="page-link" href="#">{{ page }}</a>
+      </li>
+      } } @if (currentPage === pages.length - 1) {
       <li class="page-item disabled">
         <a class="page-link">Siguiente</a>
       </li>
       } @else {
       <li class="page-item">
-        <a (click)="goToPage(currentPage + 1)" class="page-link" href="#">Siguiente</a>
+        <a (click)="goToPage(currentPage + 1)" class="page-link" href="#"
+          >Siguiente</a
+        >
       </li>
       }
     </ul>

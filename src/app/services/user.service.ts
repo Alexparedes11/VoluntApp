@@ -85,4 +85,7 @@ export class UserService {
       })
     );
   }
+  sendRegisterCompleteEmail(email: string) {
+    return this.http.post(`${this.baseUrl}/usuarios/registro`, { email });
+  }
 }

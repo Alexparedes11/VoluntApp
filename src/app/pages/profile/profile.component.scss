@@ -34,16 +34,6 @@ main{
     cursor: pointer;
     transition: all 0.1s linear;
  }
- 
- /* Aqui cuando le pasas el raton por encima se sube la opacidad del texto */
- 
- .overlay {
-    opacity: 0;
-    position: absolute;
-    transition: all .1s linear;
-    transform: translateY(-110%);
-    font-size: 3rem;
-}
 
  .editarperfil:hover p{
      opacity: 1;

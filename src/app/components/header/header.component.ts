@@ -16,6 +16,11 @@ export class HeaderComponent {
 
   isLogged: boolean = false;
   isAdmin: boolean = false;
+  muestraMenu: boolean = false;
+
+  menu() {
+      this.muestraMenu = !this.muestraMenu;
+    }
 
   logout() {
     this.userService.logout();
@@ -27,5 +32,14 @@ export class HeaderComponent {
   }
 
   
+  // mostrarMensaje(mensaje: string) {
+  //       var mensajeElement = document.getElementById("mensaje") as HTMLElement;
+  //       mensajeElement.innerText = mensaje;
+  //       mensajeElement.style.display = "block";
 
-}
+  //       setTimeout(function () {
+  //           mensajeElement.style.display = "none";
+  //       }, 1000);
+  //   }
+};
+
