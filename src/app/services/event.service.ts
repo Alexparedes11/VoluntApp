@@ -172,6 +172,7 @@ export class EventService {
   }
 
   addInstitutionToEvent(idInstitution: number, idEvent: number) {
+    console.log("La id del evento es la siguiente: " + idEvent + " y la de la institucion: " + idInstitution);
     const body = {
       id_institucion: idInstitution,
       id_evento: idEvent

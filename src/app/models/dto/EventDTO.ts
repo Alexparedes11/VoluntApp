@@ -3,7 +3,7 @@ import { Location } from "../Location";
 export interface EventDTO {
     id: number;
     titulo: string;
-    creadoPorInstitucion: null;
+    creadoPorInstitucion: string;
     creadoPorUsuario: string;
     descripcion: string;
     finicio: Date;
