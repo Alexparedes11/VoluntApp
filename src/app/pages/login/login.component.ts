@@ -36,7 +36,7 @@ export class LoginComponent {
     this.userService.login(this.form.value).subscribe(
       (data: any) => {
         this.cookieService.set('token', data.token);
-        this.router.navigate(['/']);
+        this.router.navigate(['/'], {queryParams: {reload: 'true'}});
       },
       (error: any) => {
         console.error('Error al iniciar sesión:', error);
