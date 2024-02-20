@@ -9,6 +9,8 @@ import { EventService } from '../../../services/event.service';
 import { MapboxService } from '../../../services/mapbox.service';
 import { UserService } from '../../../services/user.service';
 import { UserDTO } from '../../../models/dto/UserDTO';
+import { InstitutionService } from '../../../services/institution.service';
+import { Institution } from '../../../models/Institution';
 
 interface AdressInfo {
   place_name: string;
@@ -18,7 +20,7 @@ interface AdressInfo {
 @Component({
   selector: 'app-event-create',
   standalone: true,
-  providers: [EventService, UserService, MapboxService],
+  providers: [EventService, UserService, InstitutionService, MapboxService],
   imports: [HeaderComponent, FooterComponent, ReactiveFormsModule, InputLocationComponent, NgIf, NgClass],
   templateUrl: './event-create.component.html',
   styleUrl: './event-create.component.scss'
@@ -28,16 +30,18 @@ export class EventCreateComponent {
   // Parámetros inicializados
   userId: number = -1;
   user: UserDTO = {} as UserDTO;
+  institution: Institution = {} as Institution;
   eventForm!: FormGroup;
   private inputFecha: HTMLInputElement | null;
   selectedImage: File | null = null;
   addresses: AdressInfo[] = [];
   selectedAddressName: string | null = null;
   selectedAddress: AdressInfo | null = null;
+  tipo: string = "";
 
 
   // Constructor del formulario
-  constructor(private fb: FormBuilder, private eventService: EventService, private userService: UserService, private mapboxService: MapboxService) {
+  constructor(private fb: FormBuilder, private eventService: EventService, private userService: UserService, private mapboxService: MapboxService, private institutionService: InstitutionService) {
 
     // Prevenir que se pueda escribir en el calendario
     this.inputFecha = document.getElementById('finicio') as HTMLInputElement;
@@ -59,35 +63,72 @@ export class EventCreateComponent {
   ngOnInit(): void {
     this.initializeForm();
     this.userId = this.userService.getUserIdFromToken();
+    this.tipo = this.userService.getUserTypeFromToken();
 
-    this.userService.getUserById(this.userId).subscribe(
-      (data) => {
-        this.user = data;
-        this.initializeForm();
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-      }
-    );
+    console.log(this.tipo);
+    if (this.tipo == "Usuario") {
+      this.userService.getUserById(this.userId).subscribe(
+        (data) => {
+          this.user = data;
+          this.initializeForm();
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+    } else if (this.tipo == "Institucion") {
+      this.institutionService.getInstitucionById(this.userId).subscribe(
+        (data) => {
+          this.institution = data;
+          this.initializeForm();
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+    }
+
   }
 
   // Inicializamos el formulario
   initializeForm(): void {
-    this.eventForm = this.fb.group({
-      id: [''],
-      finicio: ['', Validators.required],
-      ffin: ['', Validators.required],
-      titulo: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      nombreUbicacion: ['', Validators.required],
-      lat: [''],
-      lon: [''],
-      imagen: [null, Validators.required],
-      estado: [''],
-      usuarioNombre: [this.user.nombre],
-      usuarioId: [this.user.id],
-      maxVoluntarios: ['', Validators.required],
-    }, { validator: this.validarFechas });
+    if (this.tipo == "Usuario") {
+      this.eventForm = this.fb.group({
+        id: [''],
+        finicio: ['', Validators.required],
+        ffin: ['', Validators.required],
+        titulo: ['', Validators.required],
+        descripcion: ['', Validators.required],
+        nombreUbicacion: ['', Validators.required],
+        lat: [''],
+        lon: [''],
+        imagen: [null, Validators.required],
+        estado: [''],
+        usuarioNombre: [this.user.nombre],
+        usuarioId: [this.user.id],
+        institucionNombre: [null],
+        maxVoluntarios: ['', Validators.required],
+      }, { validator: this.validarFechas });
+
+    } else if (this.tipo == "Institucion") {
+      this.eventForm = this.fb.group({
+        id: [''],
+        finicio: ['', Validators.required],
+        ffin: ['', Validators.required],
+        titulo: ['', Validators.required],
+        descripcion: ['', Validators.required],
+        nombreUbicacion: ['', Validators.required],
+        lat: [''],
+        lon: [''],
+        imagen: [null, Validators.required],
+        estado: [''],
+        usuarioNombre: [null],
+        institucionNombre: [this.institution.nombre],
+        usuarioId: [this.userId],
+        maxVoluntarios: ['', Validators.required],
+      }, { validator: this.validarFechas });
+    }
+
   }
 
   obtenerFechaActual(): string {
@@ -146,7 +187,13 @@ export class EventCreateComponent {
   // Dirección seleccionada
   onSelect(address: AdressInfo) {
     this.selectedAddressName = address.place_name;
-    this.selectedAddress = address;
+    this.eventForm.patchValue({
+      nombreUbicacion: address.place_name
+    });
+    const searchLocationInput = document.getElementById('searchLocationInput') as HTMLInputElement;
+    if (searchLocationInput) {
+      searchLocationInput.value = "";
+    }
     this.addresses = [];
   }
 
@@ -160,16 +207,36 @@ export class EventCreateComponent {
       formValue.imagen = this.selectedImage;
 
       alert('El siguiente evento pasará por un proceso de validación antes de ser publicado, se le notificará de este en caso de haber pasado la revisión.');
-      this.eventService.createEvent(formValue).subscribe(
-        (data: any) => {
-          this.eventService.addUserToEvent(this.userId, Number(data.id)).subscribe();
-        },
-        (error) => {
-          console.error('Error creating event:', error);
-        }
-      );
-      this.eventForm.reset();
-      this.initializeForm();
+      if (this.tipo == "Usuario") {
+
+        console.log(formValue);
+        this.eventService.createEvent(formValue).subscribe(
+          (data: any) => {
+            this.eventService.addUserToEvent(this.userId, Number(data.id)).subscribe();
+          },
+          (error) => {
+            console.error('Error creating event:', error);
+          }
+        );
+        this.eventForm.reset();
+        this.initializeForm();
+
+      } else if (this.tipo == "Institucion") {
+
+        console.log(formValue);
+        this.eventService.createEvent(formValue).subscribe(
+          (data: any) => {
+            console.log(data.id);
+            this.eventService.addInstitutionToEvent(this.userId, Number(data.id)).subscribe();
+          },
+          (error) => {
+            console.error('Error creating event:', error);
+          }
+        );
+        this.eventForm.reset();
+        this.initializeForm();
+      }
+
     }
   }
 }

@@ -85,6 +85,8 @@ export class ProfileComponent implements OnInit {
       telefono: new FormControl(''),
       direccion: new FormControl(''),
       email: new FormControl(''),
+      fotoBanner: new FormControl(''),
+      fotoPerfil: new FormControl(''),
       eventosNombre: new FormControl(this.user.eventosNombre),
     });
   }
@@ -117,6 +119,7 @@ export class ProfileComponent implements OnInit {
 
   submitEditar(): void {
     this.editedUser = this.user;
+
     if (this.editedUser) {
       // Obtienes los valores actuales del formulario
       const editedNombre = this.profileForm.get('nombre')?.value ?? '';
@@ -144,12 +147,9 @@ export class ProfileComponent implements OnInit {
       this.editedUser.fotoPerfil = this.selectedProfileImage;
       this.editedUser.fotoBanner = this.selectedBannerImage;
 
-      console.log(this.editedUser);
       this.userService.edit(this.userId, this.editedUser).subscribe(
         () => {
-          this.editedUser = null;
-          this.profileForm.reset();
-          this.mostrarContenedor();
+          window.location.reload();
         },
         (error: any) => {
           this.profileForm.get('email')?.setErrors({ emailInUse: true });

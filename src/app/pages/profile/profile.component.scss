@@ -28,20 +28,6 @@ main{
     cursor: default;
 }
 
-.editarperfil:hover .img-perfil {
-    opacity: 0.8;
-    filter: blur(.010rem);
-    cursor: pointer;
-    transition: all 0.1s linear;
- }
-
- .editarperfil:hover p{
-     opacity: 1;
-     cursor: pointer;
-     font-weight: bold;
-     transition: all 0.1s linear
- }
-
  is-invalid {
     border: 1px solid red;
 }
