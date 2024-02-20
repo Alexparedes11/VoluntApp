@@ -21,29 +21,53 @@ export class EventManagementComponent implements OnInit {
 
   events: EventDTO[] = [];
   userId: number = -1;
+  tipo: string = "";
 
   handleChange(e: any) {
     const searchType = e.target.value;
     switch (searchType) {
       case 'apuntados':
-        this.eventService.getEventsByUser(this.userId).subscribe(
-          (data) => {
-            this.events = data;
-          },
-          (error) => {
-            console.error('Error fetching events:', error);
-          }
-        );
+        if (this.tipo == "Usuario") {
+          this.eventService.getEventsByUser(this.userId).subscribe(
+            (data) => {
+              this.events = data;
+            },
+            (error) => {
+              console.error('Error fetching events:', error);
+            }
+          );
+        } else if (this.tipo == "Institucion") {
+          this.eventService.getEventsByInstitution(this.userId).subscribe(
+            (data) => {
+              this.events = data;
+            },
+            (error) => {
+              console.error('Error fetching events:', error);
+            }
+          );
+        }
         break;
       case 'creados':
-        this.eventService.getEventsCreatedByUser(this.userId).subscribe(
-          (data) => {
-            this.events = data;
-          },
-          (error) => {
-            console.error('Error fetching events:', error);
-          }
-        );
+        if (this.tipo == "Usuario") {
+          this.eventService.getEventsCreatedByUser(this.userId).subscribe(
+            (data) => {
+              this.events = data;
+            },
+            (error) => {
+              console.error('Error fetching events:', error);
+            }
+          );
+        } else if (this.tipo == "Institucion") {
+          this.eventService.getEventsCreatedByInstitution(this.userId).subscribe(
+            (data) => {
+              this.events = data;
+            },
+            (error) => {
+              console.error('Error fetching events:', error);
+            }
+          );
+        }
+
         break;
     }
   }
@@ -51,14 +75,27 @@ export class EventManagementComponent implements OnInit {
   ngOnInit() {
 
     this.userId = this.userService.getUserIdFromToken();
+    this.tipo = this.userService.getUserTypeFromToken();
 
-    this.eventService.getEventsByUser(this.userId).subscribe(
-      (data) => {
-        this.events = data;
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-      }
-    );
+    if (this.tipo == "Usuario") {
+      this.eventService.getEventsByUser(this.userId).subscribe(
+        (data) => {
+          this.events = data;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+    } else if (this.tipo == "Institucion") {
+      this.eventService.getEventsByInstitution(this.userId).subscribe(
+        (data) => {
+          this.events = data;
+        },
+        (error) => {
+          console.error('Error fetching events:', error);
+        }
+      );
+    }
+
   }
 }

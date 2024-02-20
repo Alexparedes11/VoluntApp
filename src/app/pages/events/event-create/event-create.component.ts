@@ -65,7 +65,6 @@ export class EventCreateComponent {
     this.userId = this.userService.getUserIdFromToken();
     this.tipo = this.userService.getUserTypeFromToken();
 
-    console.log(this.tipo);
     if (this.tipo == "Usuario") {
       this.userService.getUserById(this.userId).subscribe(
         (data) => {
@@ -186,8 +185,15 @@ export class EventCreateComponent {
 
   // Dirección seleccionada
   onSelect(address: AdressInfo) {
-    this.selectedAddressName = address.place_name;
     this.selectedAddress = address;
+    this.selectedAddressName = address.place_name;
+    this.eventForm.patchValue({
+      nombreUbicacion: address.place_name
+    });
+    const searchLocationInput = document.getElementById('searchLocationInput') as HTMLInputElement;
+    if (searchLocationInput) {
+      searchLocationInput.value = "";
+    }
     this.addresses = [];
   }
 

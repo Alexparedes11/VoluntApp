@@ -26,16 +26,90 @@
     top: 60px;
 }
 
-.seleccionado{
+.filamenu{
+    display: fixed;
+}
+
+.contenedor{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1rem 3rem;
+    background-color: $white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+}
+
+.header.sticky{
+    border-bottom: .3rem solid rgba(0, 0, 0, .2);
+}
+
+.navbar a{
+    font-size: 1.1rem;
+    color: $black;
+    margin-right: 2rem;
+    padding: 0.2rem;
+    transition: .2s;
+    font-weight: bold;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: $primary;
+}
+
+
+#menu-icon{
+    font-size: 3rem;
+    color: $black;
+    display: none;
+
     &:hover{
-        background-color: $white-dark;
-        color: $black;
+        cursor: pointer;
+    
     }
 }
 
-.active{
-    transition: linear 0.2s all;
-    &:hover{
-        font-weight: bold;
+@media (max-width: 850px) {
+    #menu-icon {
+        display: block;
     }
+
+    .navbar{
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: $white-dark;
+        border-top: .1rem solid rgba(0, 0, 0, .2);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+        display: none;
+    }
+
+    .navbar.active{
+        display: block;
+    }
+
+    .navbar a{
+        display: block;
+        font-size: 1.3rem;
+        
+    }
+
+    #nav-icon{
+        display: none;
+        font-size: 3rem;
+        margin: 3rem 0;
+    }
+
 }

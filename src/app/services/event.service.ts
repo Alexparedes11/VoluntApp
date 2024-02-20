@@ -115,8 +115,24 @@ export class EventService {
     );
   }
 
+  getEventsByInstitution(id: number) {
+    return this.http.get(`${this.baseUrl}/eventos/institucion/${id}`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   getEventsCreatedByUser(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/creadoPorUsuario/${id}`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  getEventsCreatedByInstitution(id: number) {
+    return this.http.get(`${this.baseUrl}/eventos/creadoPorInstitucion/${id}`).pipe(
       map((data: any) => {
         return data;
       })
