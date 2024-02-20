@@ -76,7 +76,11 @@
       </div>
       <div class="col-lg-6">
         <label for="inputAddress" class="form-label">Imagen de perfil</label>
-        <input type="file" class="form-control" formControlName="imagenperfil" />
+        <input type="file" accept="image/jpg, image/jpeg, image/webp" class="form-control" formControlName="fotoPerfil" (change)="onProfileImageSelected($event)" />
+      </div>
+      <div class="col-lg-6">
+        <label for="inputAddress" class="form-label">Imagen de banner</label>
+        <input type="file" accept="image/jpg, image/jpeg, image/webp" class="form-control" formControlName="fotoBanner" (change)="onBannerImageSelected($event)" />
       </div>
       <div class="col-12 mt-4">
         <button type="submit" class="btn btn-primary w-100" [disabled]="profileForm.invalid">Guardar cambios</button>
