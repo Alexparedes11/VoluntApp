@@ -3,7 +3,11 @@
     <div class="d-flex gap-4 mb-3">
         <h1 class="fw-bold">Mis eventos</h1>
         <select (change)="handleChange($event)" class="form-select" aria-label="Default select example">
-            <option selected value="apuntados">Apuntados</option>
+            @if (tipo === 'Usuario') {
+                <option selected value="apuntados">Apuntados</option>
+            } @else if (tipo === 'Institucion') {
+                <option selected value="apuntados">Apoyados</option>
+            }
             <option value="creados">Creados</option>
         </select>
     </div>
