@@ -72,7 +72,7 @@
                             <button (click)="addUserToEvent()" class="btn bg-secondary text-white w-100">Apúntate</button>
                     }
                     @if (isInstitucionInEvent) {
-                        <button (click)="removeInstitucionFromEvent()" class="btn bg-error-light text-white w-100">Desapoyar</button>
+                        <button (click)="removeInstitucionFromEvent()" class="btn bg-error-light text-white w-100">Dejar de apoyar</button>
                     } @else if (tipo == "Institucion") {
                         <button (click)="addInstitucionToEvent()" class="btn bg-secondary text-white w-100">Apoyar Evento</button>
                     }
