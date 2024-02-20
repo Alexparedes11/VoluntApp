@@ -8,69 +8,84 @@
             <div class="card-body">
                 <div class="d-grid mb-3 mb-3">
                     <label for="titulo">Nombre del evento: </label>
-                    <input type="text" placeholder="Titulo" name="titulo"  formControlName="titulo" class="rounded form-control"
-                    [ngClass]="{'is-invalid': eventForm.get('titulo')?.invalid && (eventForm.get('titulo')?.touched || eventForm.get('titulo')?.dirty)}">
-                    <div *ngIf="eventForm.get('titulo')?.invalid && (eventForm.get('titulo')?.touched || eventForm.get('titulo')?.dirty)" class="invalid-feedback">
+                    <input type="text" placeholder="Titulo" name="titulo" formControlName="titulo"
+                        class="rounded form-control"
+                        [ngClass]="{'is-invalid': eventForm.get('titulo')?.invalid && (eventForm.get('titulo')?.touched || eventForm.get('titulo')?.dirty)}">
+                    <div *ngIf="eventForm.get('titulo')?.invalid && (eventForm.get('titulo')?.touched || eventForm.get('titulo')?.dirty)"
+                        class="invalid-feedback">
                         El nombre es requerido y debe tener al menos 5 carácteres.
                     </div>
                 </div>
                 <div class="d-grid mb-3">
                     <label for="descripcion">Descripción del evento: </label>
-                    <textarea rows="6" cols="30" placeholder="Descripción" name="descripcion"  formControlName="descripcion" class="rounded form-control"
-                    [ngClass]="{'is-invalid': eventForm.get('descripcion')?.invalid && (eventForm.get('descripcion')?.touched || eventForm.get('descripcion')?.dirty)}">
+                    <textarea rows="6" cols="30" placeholder="Descripción" name="descripcion"
+                        formControlName="descripcion" class="rounded form-control"
+                        [ngClass]="{'is-invalid': eventForm.get('descripcion')?.invalid && (eventForm.get('descripcion')?.touched || eventForm.get('descripcion')?.dirty)}">
                     </textarea>
-                    <div *ngIf="eventForm.get('descripcion')?.invalid && (eventForm.get('descripcion')?.touched || eventForm.get('descripcion')?.dirty)" class="invalid-feedback">
+                    <div *ngIf="eventForm.get('descripcion')?.invalid && (eventForm.get('descripcion')?.touched || eventForm.get('descripcion')?.dirty)"
+                        class="invalid-feedback">
                         Se requiere de una breve descripción del evento.
                     </div>
                 </div>
                 <div class="d-grid mb-3">
                     <label for="ubicación">Ubicación del evento: </label>
-                    <input class="w-100 rounded form-control" type="text" (input)="search($event)" placeholder="Introduzca la dirección del evento" formControlName="nombreUbicacion" [value]="selectedAddressName"
-                    [ngClass]="{'is-invalid': eventForm.get('nombreUbicacion')?.invalid && (eventForm.get('nombreUbicacion')?.touched || eventForm.get('nombreUbicacion')?.dirty)}">
-                    <div *ngIf="eventForm.get('nombreUbicacion')?.invalid && (eventForm.get('nombreUbicacion')?.touched || eventForm.get('nombreUbicacion')?.dirty)" class="invalid-feedback">
+                    <input class="w-100 rounded form-control" type="text" id="searchLocationInput"
+                        (input)="search($event)" placeholder="Busca la dirección deseada">
+                    @if (addresses.length > 0) {
+                    <ul>
+                        @for (address of addresses; track $index) {
+                        <li (click)="onSelect(address)">{{address.place_name}}</li>
+                        }
+                    </ul>
+                    }
+                    <input class="w-100 rounded form-control" type="text" readonly
+                        formControlName="nombreUbicacion"
+                        [value]="selectedAddressName"
+                        [ngClass]="{'is-invalid': eventForm.get('nombreUbicacion')?.invalid && (eventForm.get('nombreUbicacion')?.touched || eventForm.get('nombreUbicacion')?.dirty)}">
+                    <div *ngIf="eventForm.get('nombreUbicacion')?.invalid && (eventForm.get('nombreUbicacion')?.touched || eventForm.get('nombreUbicacion')?.dirty)"
+                        class="invalid-feedback">
                         Se necesita una ubicación para el evento.
                     </div>
-                        @if (addresses.length > 0) {
-                        <ul>
-                            @for (address of addresses; track $index) {
-                            <li (click)="onSelect(address)">{{address.place_name}}</li>
-                            }
-                        </ul>
-                        }
                 </div>
                 <div class="d-flex">
                     <div class="d-grid mb-3 w-100">
                         <label for="finicio">Fecha de inicio: </label>
-                        <input type="datetime-local" name="finicio" formControlName="finicio" class="rounded form-control"
-                        [min]="obtenerFechaActual()"
-                        [ngClass]="{'is-invalid': eventForm.get('finicio')?.invalid && (eventForm.get('finicio')?.touched || eventForm.get('finicio')?.dirty)}">
-                        <div *ngIf="eventForm.get('finicio')?.invalid && (eventForm.get('finicio')?.touched || eventForm.get('finicio')?.dirty)" class="invalid-feedback">
+                        <input type="datetime-local" name="finicio" formControlName="finicio"
+                            class="rounded form-control" [min]="obtenerFechaActual()"
+                            [ngClass]="{'is-invalid': eventForm.get('finicio')?.invalid && (eventForm.get('finicio')?.touched || eventForm.get('finicio')?.dirty)}">
+                        <div *ngIf="eventForm.get('finicio')?.invalid && (eventForm.get('finicio')?.touched || eventForm.get('finicio')?.dirty)"
+                            class="invalid-feedback">
                             Es necesario establecer la fecha de inicio del evento.
                         </div>
                     </div>
                     <div class="d-grid mb-3 w-100">
                         <label for="ffin">Fecha de fin: </label>
                         <input type="datetime-local" name="ffin" formControlName="ffin" class="rounded form-control"
-                        [ngClass]="{'is-invalid': eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)}"
-                        [min]="eventForm.get('finicio')?.value">
-                        <div *ngIf="eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)" class="invalid-feedback">
+                            [ngClass]="{'is-invalid': eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)}"
+                            [min]="eventForm.get('finicio')?.value">
+                        <div *ngIf="eventForm.get('ffin')?.invalid && (eventForm.get('ffin')?.touched || eventForm.get('ffin')?.dirty)"
+                            class="invalid-feedback">
                             Es necesario establecer la fecha posterior a la fecha de inicio del evento.
                         </div>
                     </div>
                 </div>
                 <div class="d-grid mb-3">
                     <label for="maxVoluntarios">Máximo de voluntarios: </label>
-                    <input type="number" min="10" name="maxVoluntarios" formControlName="maxVoluntarios" class="rounded form-control"
-                    [ngClass]="{'is-invalid': eventForm.get('maxVoluntarios')?.invalid && (eventForm.get('maxVoluntarios')?.touched || eventForm.get('maxVoluntarios')?.dirty)}">
-                    <div *ngIf="eventForm.get('maxVoluntarios')?.invalid && (eventForm.get('maxVoluntarios')?.touched || eventForm.get('maxVoluntarios')?.dirty)" class="invalid-feedback">
+                    <input type="number" min="10" name="maxVoluntarios" formControlName="maxVoluntarios"
+                        class="rounded form-control"
+                        [ngClass]="{'is-invalid': eventForm.get('maxVoluntarios')?.invalid && (eventForm.get('maxVoluntarios')?.touched || eventForm.get('maxVoluntarios')?.dirty)}">
+                    <div *ngIf="eventForm.get('maxVoluntarios')?.invalid && (eventForm.get('maxVoluntarios')?.touched || eventForm.get('maxVoluntarios')?.dirty)"
+                        class="invalid-feedback">
                         Se requiere establecer un límite de voluntarios, no puede ser negativo ni menor de 10.
                     </div>
                 </div>
                 <div class="d-grid mb-3">
                     <label for="imagen">Introduzca la imagen del evento:</label>
-                    <input type="file" accept="image/png, image/jpg, image/jpeg, image/webp" name="imagen" formControlName="imagen" (change)="onFileSelected($event)"
-                    [ngClass]="{'is-invalid': eventForm.get('imagen')?.invalid && (eventForm.get('imagen')?.touched || eventForm.get('imagen')?.dirty)}">
-                    <div *ngIf="eventForm.get('imagen')?.invalid && (eventForm.get('imagen')?.touched || eventForm.get('imagen')?.dirty)" class="invalid-feedback">
+                    <input type="file" accept="image/png, image/jpg, image/jpeg, image/webp" name="imagen"
+                        formControlName="imagen" (change)="onFileSelected($event)"
+                        [ngClass]="{'is-invalid': eventForm.get('imagen')?.invalid && (eventForm.get('imagen')?.touched || eventForm.get('imagen')?.dirty)}">
+                    <div *ngIf="eventForm.get('imagen')?.invalid && (eventForm.get('imagen')?.touched || eventForm.get('imagen')?.dirty)"
+                        class="invalid-feedback">
                         La imagen es requerida.
                     </div>
                     <img [src]="selectedImage" *ngIf="selectedImage" alt="Imagen seleccionada">

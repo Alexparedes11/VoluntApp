@@ -146,7 +146,13 @@ export class EventCreateComponent {
   // Dirección seleccionada
   onSelect(address: AdressInfo) {
     this.selectedAddressName = address.place_name;
-    this.selectedAddress = address;
+    this.eventForm.patchValue({
+      nombreUbicacion: address.place_name
+    });
+    const searchLocationInput = document.getElementById('searchLocationInput') as HTMLInputElement;
+    if (searchLocationInput) {
+      searchLocationInput.value = "";
+    }
     this.addresses = [];
   }
 
