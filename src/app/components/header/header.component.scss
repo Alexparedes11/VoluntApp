@@ -41,7 +41,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 1rem;
+    padding: 1rem 3rem;
     background-color: $white;
     display: flex;
     justify-content: space-between;
@@ -55,11 +55,12 @@
 }
 
 .navbar a{
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: $black;
-    margin-left: 1rem;
+    margin-right: 2rem;
     padding: 0.2rem;
-    transition: .3s;
+    transition: .2s;
+    font-weight: bold;
 }
 
 .navbar a:hover,

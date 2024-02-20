@@ -1,23 +1,22 @@
 <header class="header">
-  <a href="/"
-class="d-flex align-items-center ms-2 me-5 mb-2 mb-lg-0 mb-md-0 mb-sm-0 text-white text-decoration-none">
-<img src="/assets/banner.png" alt="VoluntApp banner" width="180px" />
-</a>
+  <a href="/" class="d-flex align-items-center ms-2 me-5 mb-2 mb-lg-0 mb-md-0 mb-sm-0 text-white text-decoration-none">
+    <img src="/assets/banner.png" alt="VoluntApp banner" width="180px" />
+  </a>
 
-<div class="contenedor">
-  <a class="bx bx-menu" id="menu-icon" (click)="mostrarMenu()"></a>
+  <div class="contenedor">
+    <a class="bx bx-menu" id="menu-icon" (click)="mostrarMenu()"></a>
 
-  <nav class="navbar">
+    <nav class="navbar">
 
       <a href="/" id="home">Voluntariados</a>
       <a href="/news" id="search">Noticias</a>
       @if (isLogged === true && isAdmin !== true) {
-          <a  href="/myevents" id="events">Mis eventos</a>
+      <a href="/myevents" id="events">Mis eventos</a>
       }
-  
-  </nav>
 
-  @if (isAdmin === true){
+    </nav>
+
+    @if (isAdmin === true){
     <div class="dropdown gap-2 profile me-2">
       <a href="#" class="d-flex justify-content-center align-items-center gap-1 text-black fw-bold" role="button"
         data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,7 +26,7 @@ class="d-flex align-items-center ms-2 me-5 mb-2 mb-lg-0 mb-md-0 mb-sm-0 text-whi
           <path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path>
         </svg>
       </a>
-      <ul class="dropdown-menu menuperfil dropdown-menu-end" >
+      <ul class="dropdown-menu menuperfil dropdown-menu-end">
         <li><a class="dropdown-item seleccionado" href="/create-new">Gestionar noticias</a></li>
         <li><a class="dropdown-item seleccionado" href="/validations">Validar eventos</a></li>
         <li><a class="dropdown-item seleccionado" (click)="logout()" href="/login">Salir</a></li>
@@ -42,7 +41,7 @@ class="d-flex align-items-center ms-2 me-5 mb-2 mb-lg-0 mb-md-0 mb-sm-0 text-whi
     </div> }
 
     @else {
-      
+
     <div class="dropdown gap-2 profile">
       <a href="#" class="d-flex  align-items-center gap-1" role="button" data-bs-toggle="dropdown"
         aria-expanded="false">
@@ -52,7 +51,7 @@ class="d-flex align-items-center ms-2 me-5 mb-2 mb-lg-0 mb-md-0 mb-sm-0 text-whi
           <path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path>
         </svg>
       </a>
-      <ul class="dropdown-menu dropdown-menu-end mt-3" >
+      <ul class="dropdown-menu dropdown-menu-end mt-3">
         <li><a class="dropdown-item seleccionado" href="/create-event">Crear evento</a></li>
         <li><a class="dropdown-item seleccionado" href="/profile">Perfil</a></li>
         <li><a class="dropdown-item seleccionado" (click)="logout()" href="/login">Cerrar sesión</a></li>
