@@ -1,8 +1,0 @@
-<input class="w-100 rounded form-control" type="text" (input)="search($event)" placeholder="Introduzca la dirección del evento" [value]="selectedAddress">
-@if (addresses.length > 0) {
-<ul>
-    @for (address of addresses; track $index) {
-    <li (click)="onSelect(address.place_name)">{{address.place_name}}</li>
-    }
-</ul>
-}

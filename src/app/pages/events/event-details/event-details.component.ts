@@ -89,6 +89,7 @@ export class EventDetailsComponent implements OnInit {
 
   deleteEvent() {
     this.eventService.updateEventState(this.eventId, "eliminado").subscribe();
+    this.router.navigate(['/myevents']);
   }
 
   requestEventElimination() {
