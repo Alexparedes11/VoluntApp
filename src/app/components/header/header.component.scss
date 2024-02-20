@@ -41,7 +41,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 1rem 3rem;
+    padding: 1rem;
     background-color: $white;
     display: flex;
     justify-content: space-between;
@@ -70,7 +70,7 @@
 
 
 #menu-icon{
-    font-size: 3rem;
+    font-size: 2rem;
     color: $black;
     display: none;
 
@@ -102,7 +102,7 @@
 
     .navbar a{
         display: block;
-        font-size: 1.3rem;
+        font-size: 1rem;
         
     }
 
