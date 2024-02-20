@@ -12,3 +12,18 @@ img {
     background-color: rgba(0, 0, 0, 0.5); /* fondo del texto */
     padding: 10px; /* espacio alrededor del texto */
   }
+
+  .rotura{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .rotura2{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 14rem;
+  }
+  
