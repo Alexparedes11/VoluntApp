@@ -81,7 +81,7 @@
                 </div>
                 <div class="d-grid mb-3">
                     <label for="imagen">Introduzca la imagen del evento:</label>
-                    <input type="file" accept="image/png, image/jpg, image/jpeg, image/webp" name="imagen"
+                    <input type="file" accept="image/jpg, image/jpeg, image/webp" name="imagen"
                         formControlName="imagen" (change)="onFileSelected($event)"
                         [ngClass]="{'is-invalid': eventForm.get('imagen')?.invalid && (eventForm.get('imagen')?.touched || eventForm.get('imagen')?.dirty)}">
                     <div *ngIf="eventForm.get('imagen')?.invalid && (eventForm.get('imagen')?.touched || eventForm.get('imagen')?.dirty)"
