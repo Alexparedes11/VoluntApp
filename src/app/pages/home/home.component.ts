@@ -40,7 +40,6 @@ export class HomeComponent implements OnInit {
       case 'reciente':
         this.eventService.ordenarporfechaProxima().subscribe(
           (data: any) => {
-            console.log('Datos recibidos:', data);
             this.events = data.content;
             this.currentPage = data.pageable.pageNumber;
           },
@@ -52,7 +51,6 @@ export class HomeComponent implements OnInit {
       case 'Popular':
         this.eventService.ordenarporvoluntarios().subscribe(
           (data: any) => {
-            console.log('Datos recibidos:', data);
             this.events = data.content;
             this.currentPage = data.pageable.pageNumber;
           },
@@ -64,7 +62,6 @@ export class HomeComponent implements OnInit {
       case 'antiguos':
         this.eventService.ordenarporfechaAntigua().subscribe(
           (data: any) => {
-            console.log('Datos recibidos:', data);
             this.events = data.content;
             this.currentPage = data.pageable.pageNumber;
           },

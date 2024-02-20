@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CookieService } from 'ngx-cookie-service';
@@ -89,4 +89,28 @@ export class UserService {
     const url = `${this.baseUrl}/contacto/enviarRegistro`;
     return this.http.post(url, consulta);
 }
+isEmailInDB(email: string) {
+  const params = new HttpParams().set('email', email);
+  return this.http.get(`${this.baseUrl}/usuarios/username`, { params }).pipe(
+    map((data: any) => {
+      return data;
+    })
+  );
+}
+  passwordRecovery(data: any): Observable<any> {
+    const url = `${this.baseUrl}/contacto/passwordRecovery`;
+    return this.http.post(url, data);
+  }
+
+  editPasswordByEmail(email: string, password: string) {
+    const url = `${this.baseUrl}/usuarios/password/${email}`;
+    const body = { password };
+    return this.http.put(url, body).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+
 }

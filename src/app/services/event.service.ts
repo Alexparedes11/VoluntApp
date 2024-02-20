@@ -115,8 +115,24 @@ export class EventService {
     );
   }
 
+  getEventsByInstitution(id: number) {
+    return this.http.get(`${this.baseUrl}/eventos/institucion/${id}`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
   getEventsCreatedByUser(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/creadoPorUsuario/${id}`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
+  getEventsCreatedByInstitution(id: number) {
+    return this.http.get(`${this.baseUrl}/eventos/creadoPorInstitucion/${id}`).pipe(
       map((data: any) => {
         return data;
       })
@@ -172,6 +188,7 @@ export class EventService {
   }
 
   addInstitutionToEvent(idInstitution: number, idEvent: number) {
+    console.log("La id del evento es la siguiente: " + idEvent + " y la de la institucion: " + idInstitution);
     const body = {
       id_institucion: idInstitution,
       id_evento: idEvent
