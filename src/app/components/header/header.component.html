@@ -12,6 +12,7 @@
       <a href="/news" id="search">Noticias</a>
       @if (isLogged === true && isAdmin !== true) {
       <a href="/myevents" id="events">Mis eventos</a>
+      <a href="/create-event">Crear Evento</a>
       }
 
     </nav>
@@ -52,7 +53,6 @@
         </svg>
       </a>
       <ul class="dropdown-menu dropdown-menu-end mt-3">
-        <li><a class="dropdown-item seleccionado" href="/create-event">Crear evento</a></li>
         <li><a class="dropdown-item seleccionado" href="/profile">Perfil</a></li>
         <li><a class="dropdown-item seleccionado" (click)="logout()" href="/login">Cerrar sesión</a></li>
       </ul>
