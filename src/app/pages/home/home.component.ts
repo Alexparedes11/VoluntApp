@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from '../../components/header/header.component';
-import { FooterComponent } from '../../components/footer/footer.component';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EventCardComponent } from '../../components/event-card/event-card.component';
-import { EventService } from '../../services/event.service';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { HeaderComponent } from '../../components/header/header.component';
 import { EventDTO } from '../../models/dto/EventDTO';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-home',
@@ -24,8 +24,8 @@ export class HomeComponent implements OnInit {
   muestraFiltros: boolean = false;
 
   filtersForm: FormGroup = new FormGroup({
-    finicio: new FormControl(''),
-    ffin: new FormControl(''),
+    finicio: new FormControl(null),
+    ffin: new FormControl(null),
     ubicacion: new FormControl(''),
   });
 
@@ -87,10 +87,24 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  obtenerFechaActual(): string {
+    const hoy = new Date();
+    const mes = hoy.getMonth() + 1;
+    const dia = hoy.getDate();
+    const horas = hoy.getHours();
+    const minutos = hoy.getMinutes();
+    const formatoMes = mes < 10 ? `0${mes}` : mes;
+    const formatoDia = dia < 10 ? `0${dia}` : dia;
+    return `${hoy.getFullYear()}-${formatoMes}-${formatoDia}`;
+  }
+
   applyFilters() {
-    const finicio = this.filtersForm.value.finicio;
-    const ffin = this.filtersForm.value.ffin;
+    const finicio = this.filtersForm.value.finicio + "T00:00";
+    const ffin = this.filtersForm.value.ffin + "T00:00";
     const ubicacion = this.filtersForm.value.ubicacion;
+
+    
+    console.log(finicio);
 
     if (finicio && ffin && !ubicacion) {
       this.eventService.getEventsByDateFilter(finicio, ffin).subscribe(

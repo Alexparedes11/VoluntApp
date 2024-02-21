@@ -72,19 +72,32 @@
           <label for="finicio">Inicio</label>
           <input
             formControlName="finicio"
-            type="datetime-local"
+            type="date"
             class="form-control"
             id="finicio"
+            [min]="obtenerFechaActual()"
           />
         </div>
         <div class="form-group">
           <label for="ffin">Fin</label>
+          @if (filtersForm.get('finicio')?.value == null ) {
           <input
+            readonly
             formControlName="ffin"
-            type="datetime-local"
+            type="date"
             class="form-control"
             id="ffin"
+            [min]="filtersForm.get('finicio')?.value"
           />
+          } @else {
+            <input
+            formControlName="ffin"
+            type="date"
+            class="form-control"
+            id="ffin"
+            [min]="filtersForm.get('finicio')?.value"
+          />
+          }
         </div>
         <div class="form-group d-block">
           <label for="ubicacion">Ubicación</label>
