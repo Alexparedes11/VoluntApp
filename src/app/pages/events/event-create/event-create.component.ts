@@ -36,6 +36,9 @@ export class EventCreateComponent {
   selectedAddressName: string | null = null;
   selectedAddress: AddressInfo | null = null;
   tipo: string = "";
+  createdSuccessfully: boolean | null = null;
+  errorMessage: string = "";
+  showAlert: boolean = false;
 
   constructor(private eventService: EventService, private userService: UserService, private mapboxService: MapboxService, private institutionService: InstitutionService, private router: Router) {
     this.inputFecha = document.getElementById('finicio') as HTMLInputElement;
@@ -107,6 +110,14 @@ export class EventCreateComponent {
         this.eventForm.get('institucionNombre')?.setValue(this.institution.nombre);
       }
     }
+  }
+
+  closeAlert() {
+    this.showAlert = false;
+  }
+
+  goToMyEvents() {
+    this.router.navigate(['/myevents']);
   }
 
   validarFechas(group: FormGroup) {
@@ -181,25 +192,24 @@ export class EventCreateComponent {
       formValue.lon = this.selectedAddress?.center[1];
       formValue.imagen = this.selectedImage;
 
-      console.log(formValue);
       this.eventService.createEvent(formValue).subscribe(
         (data: any) => {
           if (this.tipo === "Usuario") {
             this.eventService.addUserToEvent(this.userId, Number(data.id)).subscribe();
           } else if (this.tipo === "Institucion") {
-            console.log(data.id);
             this.eventService.addInstitutionToEvent(this.userId, Number(data.id)).subscribe();
           }
-          alert('El siguiente evento pasará por un proceso de validación antes de ser publicado, se le notificará de este en caso de haber pasado la revisión.');
+          this.createdSuccessfully = true;
         },
         (error) => {
-          alert('Error al crear el evento: ' + error.error);
+          this.createdSuccessfully = false;
+          this.errorMessage = error.error;
+        },
+        () => {
           this.eventForm.reset();
           this.initializeForm();
           this.selectedImage = null;
-        },
-        () => {
-          this.router.navigate(['/myevents']);
+          this.showAlert = true;
         }
       );
     }
