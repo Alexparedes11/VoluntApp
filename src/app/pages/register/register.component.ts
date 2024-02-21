@@ -131,9 +131,9 @@ export class RegisterComponent {
       this.userService.sendRegisterCompleteEmail({
         email: emailReg,
         asunto: "¡Registro completado! 🎉",
-        mensaje: "¡Bienvenido a Voluntapp! Tu registro se ha completado con éxito."
+        mensaje: "¡Bienvenido a Voluntapp!😄🎉 Tu registro se ha completado con éxito."
       }).subscribe(response => {
-        alert("Registro exitoso, revisa tu correo para confirmar tu cuenta.");
+        alert("Registro exitoso🎉, revisa tu correo para confirmar tu cuenta.");
         console.log(response);
       });
     })

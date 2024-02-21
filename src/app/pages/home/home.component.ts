@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
   showFilters() {
     this.muestraFiltros = !this.muestraFiltros;
   }
+
   selectedOption: string = 'Reciente';
 
   orderByTimeOrPeople(e: any) {
@@ -71,6 +72,19 @@ export class HomeComponent implements OnInit {
         );
         break;
     }
+  }
+
+  clearFilters() {
+    this.filtersForm.reset();
+    this.eventService.getEventsByState("disponible").subscribe(
+      (data) => {
+        this.events = data.content;
+        this.currentPage = data.pageable.pageNumber;
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
   }
 
   applyFilters() {

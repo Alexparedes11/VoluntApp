@@ -1,18 +1,17 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FooterComponent } from '../../../components/footer/footer.component';
 import { HeaderComponent } from '../../../components/header/header.component';
-import { InputLocationComponent } from '../../../components/input-location/input-location.component';
-import { EventDTO } from '../../../models/dto/EventDTO';
 import { EventService } from '../../../services/event.service';
 import { MapboxService } from '../../../services/mapbox.service';
 import { UserService } from '../../../services/user.service';
 import { UserDTO } from '../../../models/dto/UserDTO';
 import { InstitutionService } from '../../../services/institution.service';
 import { Institution } from '../../../models/Institution';
+import { Router } from '@angular/router';
 
-interface AdressInfo {
+interface AddressInfo {
   place_name: string;
   center: number[];
 }
@@ -21,29 +20,24 @@ interface AdressInfo {
   selector: 'app-event-create',
   standalone: true,
   providers: [EventService, UserService, InstitutionService, MapboxService],
-  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule, InputLocationComponent, NgIf, NgClass],
+  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule, NgIf, NgClass],
   templateUrl: './event-create.component.html',
-  styleUrl: './event-create.component.scss'
+  styleUrls: ['./event-create.component.scss']
 })
 export class EventCreateComponent {
 
-  // Parámetros inicializados
   userId: number = -1;
   user: UserDTO = {} as UserDTO;
   institution: Institution = {} as Institution;
   eventForm!: FormGroup;
   private inputFecha: HTMLInputElement | null;
   selectedImage: File | null = null;
-  addresses: AdressInfo[] = [];
+  addresses: AddressInfo[] = [];
   selectedAddressName: string | null = null;
-  selectedAddress: AdressInfo | null = null;
+  selectedAddress: AddressInfo | null = null;
   tipo: string = "";
 
-
-  // Constructor del formulario
-  constructor(private fb: FormBuilder, private eventService: EventService, private userService: UserService, private mapboxService: MapboxService, private institutionService: InstitutionService) {
-
-    // Prevenir que se pueda escribir en el calendario
+  constructor(private eventService: EventService, private userService: UserService, private mapboxService: MapboxService, private institutionService: InstitutionService, private router: Router) {
     this.inputFecha = document.getElementById('finicio') as HTMLInputElement;
 
     if (this.inputFecha) {
@@ -55,11 +49,8 @@ export class EventCreateComponent {
         e.preventDefault();
       });
     }
-
-
   }
 
-  // Obtenemos el usuario
   ngOnInit(): void {
     this.initializeForm();
     this.userId = this.userService.getUserIdFromToken();
@@ -86,61 +77,36 @@ export class EventCreateComponent {
         }
       );
     }
-
   }
 
-  // Inicializamos el formulario
   initializeForm(): void {
+    this.eventForm = new FormGroup({
+      id: new FormControl(''),
+      finicio: new FormControl('', Validators.required),
+      ffin: new FormControl('', Validators.required),
+      titulo: new FormControl('', Validators.required),
+      descripcion: new FormControl('', Validators.required),
+      nombreUbicacion: new FormControl('', Validators.required),
+      lat: new FormControl(''),
+      lon: new FormControl(''),
+      imagen: new FormControl(null, Validators.required),
+      estado: new FormControl(''),
+      usuarioNombre: new FormControl(null),
+      usuarioId: new FormControl(this.userId),
+      institucionNombre: new FormControl(null),
+      maxVoluntarios: new FormControl('', Validators.required),
+    });
+
     if (this.tipo == "Usuario") {
-      this.eventForm = this.fb.group({
-        id: [''],
-        finicio: ['', Validators.required],
-        ffin: ['', Validators.required],
-        titulo: ['', Validators.required],
-        descripcion: ['', Validators.required],
-        nombreUbicacion: ['', Validators.required],
-        lat: [''],
-        lon: [''],
-        imagen: [null, Validators.required],
-        estado: [''],
-        usuarioNombre: [this.user.nombre],
-        usuarioId: [this.user.id],
-        institucionNombre: [null],
-        maxVoluntarios: ['', Validators.required],
-      }, { validator: this.validarFechas });
-
+      if (this.eventForm) {
+        this.eventForm.get('usuarioNombre')?.setValue(this.user.nombre);
+        this.eventForm.get('usuarioId')?.setValue(this.user.id);
+      }
     } else if (this.tipo == "Institucion") {
-      this.eventForm = this.fb.group({
-        id: [''],
-        finicio: ['', Validators.required],
-        ffin: ['', Validators.required],
-        titulo: ['', Validators.required],
-        descripcion: ['', Validators.required],
-        nombreUbicacion: ['', Validators.required],
-        lat: [''],
-        lon: [''],
-        imagen: [null, Validators.required],
-        estado: [''],
-        usuarioNombre: [null],
-        institucionNombre: [this.institution.nombre],
-        usuarioId: [this.userId],
-        maxVoluntarios: ['', Validators.required],
-      }, { validator: this.validarFechas });
+      if (this.eventForm) {
+        this.eventForm.get('institucionNombre')?.setValue(this.institution.nombre);
+      }
     }
-
-  }
-
-  obtenerFechaActual(): string {
-    const hoy = new Date();
-    const mes = hoy.getMonth() + 1;
-    const dia = hoy.getDate();
-    const horas = hoy.getHours();
-    const minutos = hoy.getMinutes();
-    const formatoMes = mes < 10 ? `0${mes}` : mes;
-    const formatoDia = dia < 10 ? `0${dia}` : dia;
-    const formatoHoras = horas < 10 ? `0${horas}` : horas;
-    const formatoMinutos = minutos < 10 ? `0${minutos}` : minutos;
-    return `${hoy.getFullYear()}-${formatoMes}-${formatoDia}T${formatoHoras}:${formatoMinutos}`;
   }
 
   validarFechas(group: FormGroup) {
@@ -159,7 +125,19 @@ export class EventCreateComponent {
     }
   }
 
-  // Mostrar la imagen en por pantalla
+  obtenerFechaActual(): string {
+    const hoy = new Date();
+    const mes = hoy.getMonth() + 1;
+    const dia = hoy.getDate();
+    const horas = hoy.getHours();
+    const minutos = hoy.getMinutes();
+    const formatoMes = mes < 10 ? `0${mes}` : mes;
+    const formatoDia = dia < 10 ? `0${dia}` : dia;
+    const formatoHoras = horas < 10 ? `0${horas}` : horas;
+    const formatoMinutos = minutos < 10 ? `0${minutos}` : minutos;
+    return `${hoy.getFullYear()}-${formatoMes}-${formatoDia}T${formatoHoras}:${formatoMinutos}`;
+  }
+
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -171,7 +149,6 @@ export class EventCreateComponent {
     }
   }
 
-  // Búsqueda de la dirección
   search(event: any) {
     const searchTerm = event.target.value.toLowerCase();
     if (searchTerm && searchTerm.length > 0) {
@@ -183,8 +160,7 @@ export class EventCreateComponent {
     }
   }
 
-  // Dirección seleccionada
-  onSelect(address: AdressInfo) {
+  onSelect(address: AddressInfo) {
     this.selectedAddress = address;
     this.selectedAddressName = address.place_name;
     this.eventForm.patchValue({
@@ -197,7 +173,6 @@ export class EventCreateComponent {
     this.addresses = [];
   }
 
-  // Subir el evento a la base de datos para revisarlo
   submitEvent() {
     if (this.eventForm.valid) {
       const formValue = this.eventForm.value;
@@ -206,37 +181,27 @@ export class EventCreateComponent {
       formValue.lon = this.selectedAddress?.center[1];
       formValue.imagen = this.selectedImage;
 
-      alert('El siguiente evento pasará por un proceso de validación antes de ser publicado, se le notificará de este en caso de haber pasado la revisión.');
-      if (this.tipo == "Usuario") {
-
-        console.log(formValue);
-        this.eventService.createEvent(formValue).subscribe(
-          (data: any) => {
+      console.log(formValue);
+      this.eventService.createEvent(formValue).subscribe(
+        (data: any) => {
+          if (this.tipo === "Usuario") {
             this.eventService.addUserToEvent(this.userId, Number(data.id)).subscribe();
-          },
-          (error) => {
-            console.error('Error creating event:', error);
-          }
-        );
-        this.eventForm.reset();
-        this.initializeForm();
-
-      } else if (this.tipo == "Institucion") {
-
-        console.log(formValue);
-        this.eventService.createEvent(formValue).subscribe(
-          (data: any) => {
+          } else if (this.tipo === "Institucion") {
             console.log(data.id);
             this.eventService.addInstitutionToEvent(this.userId, Number(data.id)).subscribe();
-          },
-          (error) => {
-            console.error('Error creating event:', error);
           }
-        );
-        this.eventForm.reset();
-        this.initializeForm();
-      }
-
+          alert('El siguiente evento pasará por un proceso de validación antes de ser publicado, se le notificará de este en caso de haber pasado la revisión.');
+        },
+        (error) => {
+          alert('Error al crear el evento: ' + error.error);
+          this.eventForm.reset();
+          this.initializeForm();
+          this.selectedImage = null;
+        },
+        () => {
+          this.router.navigate(['/myevents']);
+        }
+      );
     }
   }
 }

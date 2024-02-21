@@ -13,6 +13,7 @@ import { EventValidationComponent } from './pages/events/event-validation/event-
 import { NewCreateComponent } from './pages/news/new-create/new-create.component';
 import { EventCreateComponent } from './pages/events/event-create/event-create.component';
 import { ForgetpasswordComponent } from './pages/forgetpassword/forgetpassword.component';
+import { NewpasswordComponent } from './pages/newpassword/newpassword.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -28,5 +29,6 @@ export const routes: Routes = [
     { path: 'validations', component: EventValidationComponent},
     { path: 'create-new', component: NewCreateComponent},
     { path: 'create-event', component: EventCreateComponent },
-    { path: 'forgetpassword', component: ForgetpasswordComponent }
+    { path: 'forgetpassword', component: ForgetpasswordComponent },
+    { path: 'newpassword', component: NewpasswordComponent }
 ];
