@@ -46,8 +46,8 @@
             @if (isAdmin) {
             @if (event.estado === 'revision') {
             <div class="d-flex align-items-center gap-2">
-                <button (click)="declineEvent()" class="btn bg-error-dark text-white w-50">Rechazar</button>
                 <button (click)="acceptEvent()" class="btn bg-success-dark text-white w-50">Aprobar</button>
+                <button (click)="declineEvent()" class="btn bg-error-dark text-white w-50">Rechazar</button>
             </div>
             }
             @else if(event.estado=='en-eliminacion'){
