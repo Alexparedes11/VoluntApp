@@ -85,4 +85,40 @@
         </div>
     </section>
 </main>
+@if (showAlert) {
+    <div class="modal fade show d-block" id="alertModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLabel">
+                        @if (createdSuccessfully === true && desapuntarseUsuario === false && desapuntarseInstitucion === false) {
+                        ¡Enhorabuena! 🎉
+                        } @else if (desapuntarseUsuario === true && desapuntarseInstitucion === false) {
+                            Te has desapuntado del evento 😞
+                        } @else if (desapuntarseInstitucion === true && desapuntarseUsuario === false) {
+                            Has dejado de apoyar al evento 😞
+                        } @else if (createdSuccessfully === false){
+                            Error al unirte al evento ❌
+                        }
+                    </h1>
+                    <button (click)="closeAlert()" type="button" class="btn-close" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if (createdSuccessfully === true && desapuntarseUsuario === false && desapuntarseInstitucion === false) {
+                    Te has unido al evento correctamente.
+                    }@else if (desapuntarseUsuario === true && desapuntarseInstitucion === false) {
+                    Has dejado de formar parte del evento correctamente.
+                    }@else if (desapuntarseUsuario === false && desapuntarseInstitucion === true) {
+                    Has dejado de formar parte del evento correctamente.
+                    } @else if (createdSuccessfully === false) {
+                    {{errorMessage}}
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button (click)="closeAlert()" type="button" class="btn btn-error-light">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
 <app-footer></app-footer>

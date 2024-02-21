@@ -30,6 +30,11 @@ export class EventDetailsComponent implements OnInit {
   isLogged: boolean = false;
   isAdmin: boolean = false;
   isCreator: boolean = false;
+  showAlert: boolean = false;
+  createdSuccessfully: boolean | null = null;
+  errorMessage: string = "";
+  desapuntarseUsuario: boolean | null = null;
+  desapuntarseInstitucion: boolean | null = null;
 
   event: EventDTO = {} as EventDTO;
 
@@ -39,12 +44,22 @@ export class EventDetailsComponent implements OnInit {
         return data;
       },
       (error) => {
+        this.createdSuccessfully = false;
+        this.errorMessage = error.error;
         console.error('Error fetching events:', error);
+      }, () => {
+        this.desapuntarseInstitucion = false;
+        this.desapuntarseUsuario = false;
+        this.createdSuccessfully = true;
+        this.isUserInEvent = true;
+        this.showAlert = true;
       }
     );
-    this.isUserInEvent = true;
-    alert("Te has unido al evento correctamente");
 
+  }
+
+  closeAlert() {
+    this.showAlert = false;
   }
 
   addInstitucionToEvent() {
@@ -54,10 +69,14 @@ export class EventDetailsComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching events:', error);
+      }, () => {
+        this.createdSuccessfully = true;
+        this.desapuntarseInstitucion = false;
+        this.desapuntarseUsuario = false;
+        this.isInstitucionInEvent = true;
+        this.showAlert = true;
       }
     );
-    this.isInstitucionInEvent = true;
-    alert("Te has unido al evento correctamente");
 
   }
 
@@ -67,10 +86,16 @@ export class EventDetailsComponent implements OnInit {
         return data;
       },
       (error) => {
+        this.createdSuccessfully = false;
+        this.errorMessage = error.error;
         console.error('Error fetching events:', error);
+      }, () => {
+        this.desapuntarseInstitucion = false;
+        this.desapuntarseUsuario = true;
+        this.isUserInEvent = false;
+        this.showAlert = true;
       }
     );
-    this.isUserInEvent = false;
 
   }
 
@@ -81,6 +106,11 @@ export class EventDetailsComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching events:', error);
+      }, () => {
+        this.desapuntarseInstitucion = true;
+        this.desapuntarseUsuario = false;
+        this.isInstitucionInEvent = false;
+        this.showAlert = true;
       }
     );
     this.isInstitucionInEvent = false;
