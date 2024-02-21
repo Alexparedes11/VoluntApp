@@ -5,6 +5,8 @@
             🙋‍♂️</span>
         @if(event.estado=='revision') {
         <span class="badge bg-error-light fs-5">En revisión</span>
+        } @else if (event.estado == 'finalizado') {
+        <span class="badge bg-error-light fs-5">Finalizado</span>
         }
     </h1>
     <section class="grid-container">
