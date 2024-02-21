@@ -47,11 +47,11 @@
     justify-content: space-between;
     align-items: center;
     z-index: 100;
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .header.sticky{
-    border-bottom: .3rem solid rgba(0, 0, 0, .2);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .navbar a{

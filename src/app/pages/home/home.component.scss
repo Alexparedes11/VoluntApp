@@ -1,0 +1,48 @@
+@import '../../../styles/variables.scss';
+
+main {
+    margin-top: 0;
+    width: 100%;
+}
+
+.hero {
+    display: flex;
+    padding: 0 15rem;
+    justify-content: space-between;
+    background-image: url('/assets/home.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    filter: brightness(1);
+
+    article {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .informacion {
+        gap: 1rem;
+        width: 55%;
+    }
+
+
+    h1 {
+        font-size: 5rem;
+        font-weight: bolder;
+        color: $black;
+    }
+
+    img {
+        width: 400px;
+        height: 600px;
+        object-fit: cover;
+        border-radius: 1rem;
+    }
+}
+
+#voluntariados {
+    padding-top: 5rem;
+}

@@ -5,13 +5,12 @@ import { EventCardComponent } from '../../components/event-card/event-card.compo
 import { EventService } from '../../services/event.service';
 import { EventDTO } from '../../models/dto/EventDTO';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HeroSectionComponent } from '../../components/hero-section/hero-section.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   providers: [EventService],
-  imports: [HeaderComponent, FooterComponent, EventCardComponent, ReactiveFormsModule, HeroSectionComponent],
+  imports: [HeaderComponent, FooterComponent, EventCardComponent, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
