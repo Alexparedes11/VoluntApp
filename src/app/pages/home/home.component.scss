@@ -5,6 +5,7 @@ main {
     width: 100%;
 }
 
+
 .hero {
     display: flex;
     padding: 0 15rem;
@@ -34,7 +35,7 @@ main {
         font-weight: bolder;
         color: $black;
     }
-
+    
     img {
         width: 400px;
         height: 600px;
@@ -42,6 +43,89 @@ main {
         border-radius: 1rem;
     }
 }
+
+@media (max-width: 1400px) {
+.hero {
+    display: flex;
+    padding: 0 7rem;
+    flex-direction: column;
+    justify-content: space-between;
+    background-image: url('/assets/home.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 10;
+    filter: brightness(1);
+
+    article {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .informacion {
+        gap: 1rem;
+        width: 100%;
+    }
+
+
+    h1 {
+        margin-top: 30vh;
+        font-size: 4rem;
+        font-weight: bolder;
+        color: $black;
+    }
+    
+    img {
+        display: none;
+        width: 600px;
+        height: 600px;
+        object-fit: cover;
+        border-radius: 1rem;
+    }
+}
+}
+@media (max-width: 700px) {
+    .hero {
+        display: flex;
+        padding: 0 7rem;
+        flex-direction: column;
+        justify-content: space-between;
+        background-image: url('/assets/home.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 10;
+        filter: brightness(1);
+    
+        article {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    
+        .informacion {
+            gap: 1rem;
+            width: 100%;
+        }
+    
+    
+        h1 {
+            margin-top: 20vh;
+            font-size: 4rem;
+            font-weight: bolder;
+            color: $black;
+        }
+        
+        img {
+            display: none;
+            width: 600px;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 1rem;
+        }
+    }
+    }
 
 #voluntariados {
     padding-top: 5rem;

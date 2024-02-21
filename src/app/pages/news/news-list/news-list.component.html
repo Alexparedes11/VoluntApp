@@ -1,24 +1,6 @@
 <app-header></app-header>
 <main class="container-fluid px-5 py-4 flex-column gap-2 text-white ">
-    <!-- <h1 class="fw-bold">Noticias</h1>
-    @if(news.length > 0) {
-    <section class="d-flex flex-column gap-4">
-        @for (new of news; track new.id) {
-        <article>
-            <h2 class="fw-semibold">{{new.titulo}}</h2>
-            <div class="d-flex justify-content-center">
-                <img [src]="new.imagen" class="noticia-img rounded mb-3">
-            </div>
-            <p>{{new.contenido}}</p>
-            <footer class="d-flex justify-content-end gap-2 fw-medium"><b>{{new.autor}}</b>- {{new.fecha| date:
-                'dd/MM/yyyy'}}</footer>
-        </article>
-        }
-    </section>
-    }
-    @else {
-    <h1 class="text-center text-white fw-bold mt-5">No hay noticias</h1>
-    } -->
+    <h1 class="fw-bold">Noticias</h1>
     @if(news.length > 0) {
     @for (new of news; track new.id) {
     <div class="card mb-3">
