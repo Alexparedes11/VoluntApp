@@ -1,29 +1,20 @@
-# Use the official image as a parent image
-FROM node:21-alpine3.18 AS builder
+# Usa una imagen de Node.js como base
+FROM node:latest
 
-# Set the working directory
+# Establece el directorio de trabajo en /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
+# Copia los archivos de la aplicación al directorio de trabajo
 COPY . .
 
-# Build the Angular app in production mode
-RUN npm run build --prod
+# Instala Angular CLI globalmente
+RUN npm install -g @angular/cli
 
-# Use Nginx for serving the Angular app
-FROM nginx:alpine
+# Instala las dependencias del proyecto
+RUN npm install
 
-# Copy the built app from the previous stage
-COPY --from=builder /dist/volunt-app /usr/share/nginx/html
+# Expon el puerto 4200 para que la aplicación sea accesible desde el exterior
+EXPOSE 4200
 
-# Expose port 80
-EXPOSE 80
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Comando para iniciar la aplicación Angular con ng serve
+CMD ["ng", "serve"]
