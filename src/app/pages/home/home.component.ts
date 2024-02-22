@@ -24,8 +24,8 @@ export class HomeComponent implements OnInit {
   muestraFiltros: boolean = false;
 
   filtersForm: FormGroup = new FormGroup({
-    finicio: new FormControl(null),
-    ffin: new FormControl(null),
+    finicio: new FormControl(''),
+    ffin: new FormControl(''),
     ubicacion: new FormControl(''),
   });
 
@@ -99,12 +99,9 @@ export class HomeComponent implements OnInit {
   }
 
   applyFilters() {
-    const finicio = this.filtersForm.value.finicio + "T00:00";
-    const ffin = this.filtersForm.value.ffin + "T00:00";
+    const finicio = this.filtersForm.value.finicio;
+    const ffin = this.filtersForm.value.ffin;
     const ubicacion = this.filtersForm.value.ubicacion;
-
-    
-    console.log(finicio);
 
     if (finicio && ffin && !ubicacion) {
       this.eventService.getEventsByDateFilter(finicio, ffin).subscribe(

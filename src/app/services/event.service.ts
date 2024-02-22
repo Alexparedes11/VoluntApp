@@ -70,7 +70,7 @@ export class EventService {
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
-    return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas/${finicio}/${ffin}`, { params }).pipe(
+    return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas/${finicio}T00:00/${ffin}T00:00`, { params }).pipe(
       map((data: any) => {
         return data;
       })
@@ -94,7 +94,7 @@ export class EventService {
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
-    return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas-y-ubicacion/${finicio}/${ffin}/${location}`, { params }).pipe(
+    return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas-y-ubicacion/${finicio}T00:00/${ffin}T00:00/${location}`, { params }).pipe(
       map((data: any) => {
         return data;
       })
