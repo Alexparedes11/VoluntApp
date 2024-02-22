@@ -1,5 +1,5 @@
 # Use the official image as a parent image
-FROM node:14 AS builder
+FROM node:21-alpine3.18 AS builder
 
 # Set the working directory
 WORKDIR /app
