@@ -1,20 +1,29 @@
-# Usa una imagen de Node.js como base
-FROM node:latest
+# Use the official image as a parent image
+FROM node:14 AS builder
 
-# Establece el directorio de trabajo en /app
+# Set the working directory
 WORKDIR /app
 
-# Copia los archivos de la aplicación al directorio de trabajo
-COPY . .
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Instala Angular CLI globalmente
-RUN npm install -g @angular/cli
-
-# Instala las dependencias del proyecto
+# Install dependencies
 RUN npm install
 
-# Expon el puerto 4200 para que la aplicación sea accesible desde el exterior
-EXPOSE 4200
+# Copy the rest of the application code
+COPY . .
 
-# Comando para iniciar la aplicación Angular con ng serve
-CMD ["ng", "serve"]
+# Build the Angular app in production mode
+RUN npm run build --prod
+
+# Use Nginx for serving the Angular app
+FROM nginx:alpine
+
+# Copy the built app from the previous stage
+COPY --from=builder /dist/volunt-app /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
