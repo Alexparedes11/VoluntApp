@@ -17,4 +17,4 @@ RUN npm install
 EXPOSE 4200
 
 # Comando para iniciar la aplicación Angular con ng serve
-CMD ["ng", "serve"]
+CMD ["ng", "serve", "--host", "0.0.0.0"]
