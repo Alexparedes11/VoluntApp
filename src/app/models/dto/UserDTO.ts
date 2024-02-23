@@ -11,4 +11,7 @@ export interface UserDTO {
     fotoBanner: string | null;
     fotoPerfil: string | null;
     eventosNombre: Array<String>;
+    personaCargo: string;
+    nombreLegal: string;
+    cif: string;
 }

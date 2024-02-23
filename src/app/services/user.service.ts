@@ -58,6 +58,14 @@ export class UserService {
 
   }
 
+  getUserByIdInstitucion(id: number) {
+    return this.http.get<UserDTO>(`${this.baseUrl}/instituciones/${id}`).pipe(
+      map((data: UserDTO) => {
+        return data;
+      })
+    );
+  }
+
   isAdmin(): boolean {
     const token = this.cookieService.get('token');
     if (token) {

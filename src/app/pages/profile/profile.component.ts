@@ -9,6 +9,7 @@ import { NgIf, NgClass } from '@angular/common'; // Importar NgIf y NgClass por 
 import { EventService } from '../../services/event.service';
 import { EventDTO } from '../../models/dto/EventDTO';
 import { NumeroDeEventosDTO } from '../../models/dto/NumeroDeEventosDTO';
+import { InstitucionDTO } from '../../models/dto/InstitucionDTO';
 
 @Component({
   selector: 'app-profile',
@@ -22,11 +23,13 @@ export class ProfileComponent implements OnInit {
 
   selectedProfileImage: string | null = null;
   selectedBannerImage: string | null = null;
+  logueado: boolean = false;
   userId: number = -1;
   tipo: string = "";
   editarperfil: boolean = false;
   user: UserDTO = {} as UserDTO;
   event: EventDTO[] = [];
+  userIn: InstitucionDTO = {} as InstitucionDTO;
   profileForm!: FormGroup;
   editedUser: UserDTO | null = null;
   eventosPerfil: NumeroDeEventosDTO = {} as NumeroDeEventosDTO;
@@ -37,6 +40,7 @@ export class ProfileComponent implements OnInit {
 
     this.tipo = this.userService.getUserTypeFromToken();
     console.log(this.tipo);
+    this.logueado = this.userService.isLogged();
 
     if (this.tipo == "Usuario") {
 
@@ -73,8 +77,21 @@ export class ProfileComponent implements OnInit {
           console.error('Error fetching events:', error);
         }
       );
+      } else if (this.tipo == "Institucion") {
+        this.userId = this.userService.getUserIdFromToken();
+        
+        this.userService.getUserByIdInstitucion(this.userId).subscribe(
+          (data: InstitucionDTO) => { // Update the type of data to InstitucionDTO
+            console.log(data);
+            this.userIn = data; // Assign data directly to userIn
+          },
+          (error) => {
+            console.error('Error fetching user data:', error);
+          }
+        );
+
     }
-  }
+}
 
   // Mover la función initializeForm fuera de ngOnInit
   initializeForm(): void {
