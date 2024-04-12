@@ -1,9 +1,9 @@
-import { FooterComponent } from "../../../components/footer/footer.component";
 import { DatePipe } from '@angular/common';
-import { NewsService } from '../../../services/news.service';
-import { HeaderComponent } from "../../../components/header/header.component";
 import { Component } from "@angular/core";
+import { FooterComponent } from "../../../components/footer/footer.component";
+import { HeaderComponent } from "../../../components/header/header.component";
 import { NewsDTO } from "../../../models/dto/NewsDTO";
+import { NewsService } from '../../../services/news.service';
 
 @Component({
   selector: 'app-news-list',
@@ -16,12 +16,57 @@ import { NewsDTO } from "../../../models/dto/NewsDTO";
 export class NewsListComponent {
   constructor(private newsService: NewsService) { }
   news: NewsDTO[] = [];
+  news2: NewsDTO[] = [];
+
   ngOnInit(): void {
     this.newsService.getNews().subscribe(
       (data) => {
-        this.news = data.content;
+        this.news2 = data.content;
       }
     );
+
+    this.newsService.getNewsRSS().subscribe(
+      (xmlData) => {
+        this.newsService.parseXMLData(xmlData).subscribe(
+          (parsedData) => {
+            // Procesa los datos del feed RSS aquí
+            this.news = this.parseRSSData(parsedData);
+          },
+          (error) => {
+            console.error('Error al analizar datos XML:', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Error al obtener noticias:', error);
+      }
+    );
+  }
+
+  private parseRSSData(data: any): NewsDTO[] {
+    // Implementa la lógica para parsear los datos del feed RSS
+    // y retornar un arreglo de objetos NewsDTO
+    // Ejemplo:
+    if (data && data.rss && data.rss.channel && data.rss.channel[0] && data.rss.channel[0].item) {
+      return data.rss.channel[0].item.map((item: any) => {
+          const mediaContent = item['media:content'] ? item['media:content'][0] : null;
+          const mediaContentUrl = mediaContent ? mediaContent.$.url : null;
+          const creator = item['dc:creator'] ? item['dc:creator'][0] : null;
+          const pubDate = item.pubDate ? new Date(item.pubDate[0]) : null;
+
+          return {
+              titulo: item.title[0],
+              contenido: item.description[0],
+              imagen: mediaContentUrl,
+              autor: creator,
+              fecha: pubDate
+              // Otros campos que desees extraer del feed RSS
+          };
+      });
+  } else {
+      return [];
+  }
+  
   }
 }
 

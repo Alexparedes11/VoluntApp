@@ -1,13 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { parseString } from 'xml2js';
 import { environment } from '../../environments/environments';
 @Injectable({
     providedIn: 'root'
   })
   export class NewsService {
     private baseUrl = environment.server.ip + ':' + environment.server.port;
+
+    private rssUrl = 'https://feeds.elpais.com/mrss-s/list/ep/site/elpais.com/section/clima-y-medio-ambiente';
+
+    
+
     constructor(private http: HttpClient) { }
+    
     getNews() {
       return this.http.get(`${this.baseUrl}/noticias`).pipe(
         map((data: any) => {
@@ -44,5 +52,28 @@ import { environment } from '../../environments/environments';
       );
     }
 
-
+    getNewsRSS(): Observable<any> {
+      return this.http.get(this.rssUrl, { responseType: 'text' })
+        .pipe(
+          catchError(this.handleError)
+        );
+    }
+  
+    private handleError(error: any): Observable<any> {
+      console.error('Ocurrió un error al obtener el feed RSS:', error);
+      throw error; // Puedes manejar el error de otra manera si lo deseas
+    }
+  
+    parseXMLData(xmlData: string): Observable<any> {
+      return new Observable(observer => {
+        parseString(xmlData, (err, result) => {
+          if (err) {
+            observer.error(err);
+          } else {
+            observer.next(result);
+            observer.complete();
+          }
+        });
+      });
+    }
   }
