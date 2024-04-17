@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from "@angular/core";
 import { FooterComponent } from "../../../components/footer/footer.component";
 import { HeaderComponent } from "../../../components/header/header.component";
@@ -11,20 +11,28 @@ import { NewsService } from '../../../services/news.service';
   templateUrl: './news-list.component.html',
   styleUrl: './news-list.component.scss',
   providers: [NewsService, DatePipe],
-  imports: [HeaderComponent, FooterComponent, DatePipe],
+  imports: [HeaderComponent, FooterComponent, DatePipe, CommonModule],
 })
 export class NewsListComponent {
+
   constructor(private newsService: NewsService) { }
+
+  // Creamos dos objetos NewsDTO
   news: NewsDTO[] = [];
   news2: NewsDTO[] = [];
 
+
+  counter = 0;
+
   ngOnInit(): void {
+    // Obtener noticias de la api de nuestra aplicación
     this.newsService.getNews().subscribe(
       (data) => {
         this.news2 = data.content;
       }
     );
 
+    // Obtener noticias de la RSS
     this.newsService.getNewsRSS().subscribe(
       (xmlData) => {
         this.newsService.parseXMLData(xmlData).subscribe(
@@ -46,7 +54,6 @@ export class NewsListComponent {
   private parseRSSData(data: any): NewsDTO[] {
     // Implementa la lógica para parsear los datos del feed RSS
     // y retornar un arreglo de objetos NewsDTO
-    // Ejemplo:
     if (data && data.rss && data.rss.channel && data.rss.channel[0] && data.rss.channel[0].item) {
       return data.rss.channel[0].item.map((item: any) => {
           const mediaContent = item['media:content'] ? item['media:content'][0] : null;
@@ -59,14 +66,16 @@ export class NewsListComponent {
               contenido: item.description[0],
               imagen: mediaContentUrl,
               autor: creator,
-              fecha: pubDate
-              // Otros campos que desees extraer del feed RSS
+              fecha: pubDate,
+              link: item.link[0]
           };
       });
-  } else {
-      return [];
-  }
+    } else {
+        return [];
+    }
   
   }
+
+  
 }
 

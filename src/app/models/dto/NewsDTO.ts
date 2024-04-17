@@ -5,4 +5,5 @@ export interface NewsDTO {
     fecha: Date;
     imagen: string;
     titulo: string;
+    link: string;
 }
