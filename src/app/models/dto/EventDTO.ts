@@ -13,5 +13,6 @@ export interface EventDTO {
     maxVoluntarios: number;
     numVoluntarios: number;
     ubicacion: Location;
-    nombreInstituciones: Array<string>; // Para no crear un modelo de instituciones
+    nombreInstituciones: Array<string>;
+    tags: Array<string>;
 }

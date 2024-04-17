@@ -3,27 +3,19 @@ img {
     object-fit: cover;
 }
 
+span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
 .texto-superpuesto {
-    position: absolute;
-    top: 10px; /* ajusta la distancia desde la parte superior */
-    left: 10px; /* ajusta la distancia desde el lado izquierdo */
-    color: white; /* color del texto */
-    font-size: 24px; /* tamaño de fuente */
-    background-color: rgba(0, 0, 0, 0.5); /* fondo del texto */
-    padding: 10px; /* espacio alrededor del texto */
-  }
-
-  .rotura{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-
-  .rotura2{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-  
+  position: absolute;
+  top: 10px; 
+  left: 10px; 
+  color: white; 
+  font-size: 24px; 
+  background-color: rgba(0, 0, 0, 0.5); 
+  padding: 10px;
+}

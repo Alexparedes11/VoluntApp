@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
   standalone: true,
   imports: [DatePipe],
   templateUrl: './event-card.component.html',
-  styleUrl: './event-card.component.scss'
+  styleUrl: './event-card.component.scss',
 })
 export class EventCardComponent {
   @Input() id: number | null = null;
@@ -19,10 +19,10 @@ export class EventCardComponent {
   @Input() createdByUser: string | null = null;
   @Input() createdByInstitution: string | null = null;
   @Input() nombreInstituciones: Array<string> | null = null;
-
+  @Input() tags: Array<string> | null = null;
 
   currentIndex: number = 0;
-  currentInstitution: string = ''; // Inicialmente mostrar el primer elemento del array
+  currentInstitution: string = '';
 
   stringFunction() {
     if (this.nombreInstituciones) {
@@ -32,7 +32,8 @@ export class EventCardComponent {
 
   intervalFunction() {
     if (this.nombreInstituciones) {
-      this.currentIndex = (this.currentIndex + 1) % this.nombreInstituciones.length;
+      this.currentIndex =
+        (this.currentIndex + 1) % this.nombreInstituciones.length;
       this.currentInstitution = this.nombreInstituciones[this.currentIndex];
     }
   }
@@ -41,6 +42,6 @@ export class EventCardComponent {
     this.stringFunction();
     setInterval(() => {
       this.intervalFunction();
-    }, 2000); // Intervalo en milisegundos (por ejemplo, cada segundo)
+    }, 2000);
   }
 }

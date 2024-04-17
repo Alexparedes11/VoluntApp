@@ -1,5 +1,6 @@
 import { User } from "./User";
 import { Location } from "./Location";
+import { Institution } from "./Institution";
 
 export interface Event {
     id: number;
@@ -10,7 +11,7 @@ export interface Event {
     estado: string;
     imagen: string;
     creadoPorUsuarios: User;
-    creadoPorInstituciones: any; // Podría ser un tipo específico si tienes un modelo para instituciones
+    creadoPorInstituciones: Institution;
     ffin: string;
     finicio: string;
   }
