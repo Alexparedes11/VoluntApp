@@ -1,6 +1,8 @@
 <app-header></app-header>
 <main class="container-fluid px-5 py-4 flex-column gap-2 text-white ">
     <h1 class="titulo">Noticias VoluntApp</h1>
+    <hr class="hr-parent">
+    <hr class="hr-child">
     @if(news2.length > 0) {
       <div class="row">
         <div class="col-md-6" *ngFor="let new of news2; let i=index" >
@@ -27,6 +29,8 @@
     }
 
     <h1 class="titulo">Noticias Medio Ambiente</h1>
+    <hr class="hr-parent">
+    <hr class="hr-child">
     @if(news.length > 0) {
     <div class="row">
       
