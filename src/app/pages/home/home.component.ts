@@ -1,70 +1,93 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  NgModel,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { EventCardComponent } from '../../components/event-card/event-card.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { EventDTO } from '../../models/dto/EventDTO';
 import { EventService } from '../../services/event.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   providers: [EventService],
-  imports: [HeaderComponent, FooterComponent, EventCardComponent, ReactiveFormsModule],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    EventCardComponent,
+    ReactiveFormsModule,
+    NgSelectModule,
+  ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService) {}
   events: EventDTO[] = [];
   pages: Array<number> = [];
   currentPage: number = 0;
 
   muestraFiltros: boolean = false;
+  categorias: Array<string> = [
+    'Solidaridad',
+    'Ayuda',
+    'Niños',
+    'Mascotas',
+    'Medio Ambiente',
+    'Mayores',
+    'Alimentación',
+    'Salud',
+    'Deporte',
+  ];
 
   filtersForm: FormGroup = new FormGroup({
     finicio: new FormControl(''),
     ffin: new FormControl(''),
     ubicacion: new FormControl(''),
+    categorias: new FormControl(''),
   });
+
+  resetOrderBy() {
+    const orderByTimeOrPeople = document.getElementById(
+      'orderByTimeOrPeople'
+    ) as HTMLSelectElement;
+    orderByTimeOrPeople.value = 'popular';
+  }
+
+  updateContent(data: any) {
+    this.pages = [];
+    this.events = data.content;
+    for (let i = 0; i < data.totalPages; i++) {
+      this.pages.push(i + 1);
+    }
+  }
 
   showFilters() {
     this.muestraFiltros = !this.muestraFiltros;
   }
 
-  selectedOption: string = 'Reciente';
-
   orderByTimeOrPeople(e: any) {
     const searchType = e.target.value;
     switch (searchType) {
-      case 'reciente':
-        this.eventService.ordenarporfechaProxima().subscribe(
-          (data: any) => {
-            this.events = data.content;
-            this.currentPage = data.pageable.pageNumber;
-          },
-          (error) => {
-            console.error('Error fetching events:', error);
-          }
-        );
-        break;
-      case 'Popular':
+      case 'popular':
         this.eventService.ordenarporvoluntarios().subscribe(
           (data: any) => {
-            this.events = data.content;
-            this.currentPage = data.pageable.pageNumber;
+            this.updateContent(data);
           },
           (error) => {
             console.error('Error fetching events:', error);
           }
         );
         break;
-      case 'antiguos':
+      case 'proximos':
         this.eventService.ordenarporfechaAntigua().subscribe(
           (data: any) => {
-            this.events = data.content;
-            this.currentPage = data.pageable.pageNumber;
+            this.updateContent(data);
           },
           (error) => {
             console.error('Error fetching events:', error);
@@ -76,82 +99,50 @@ export class HomeComponent implements OnInit {
 
   clearFilters() {
     this.filtersForm.reset();
-    this.eventService.getEventsByState("disponible").subscribe(
+    this.eventService.getEventsByState('disponible').subscribe(
       (data) => {
-        this.events = data.content;
-        this.currentPage = data.pageable.pageNumber;
+        this.updateContent(data);
       },
       (error) => {
         console.error('Error fetching events:', error);
       }
     );
-  }
-
-  obtenerFechaActual(): string {
-    const hoy = new Date();
-    const mes = hoy.getMonth() + 1;
-    const dia = hoy.getDate();
-    const horas = hoy.getHours();
-    const minutos = hoy.getMinutes();
-    const formatoMes = mes < 10 ? `0${mes}` : mes;
-    const formatoDia = dia < 10 ? `0${dia}` : dia;
-    return `${hoy.getFullYear()}-${formatoMes}-${formatoDia}`;
+    this.resetOrderBy();
   }
 
   applyFilters() {
     const finicio = this.filtersForm.value.finicio;
     const ffin = this.filtersForm.value.ffin;
     const ubicacion = this.filtersForm.value.ubicacion;
+    const categorias = this.filtersForm.value.categorias;
 
-    if (finicio && ffin && !ubicacion) {
-      this.eventService.getEventsByDateFilter(finicio, ffin).subscribe(
-        (data) => {
-          this.events = data.content;
-          this.currentPage = data.pageable.pageNumber;
+    this.eventService
+      .getFilteredEvents(finicio, ffin, ubicacion, categorias)
+      .subscribe(
+        (data: any) => {
+          this.updateContent(data);
         },
         (error) => {
           console.error('Error fetching events:', error);
         }
-      )
-    } else if (ubicacion && !finicio && !ffin) {
-      this.eventService.getEventsByLocationFilter(this.filtersForm.value.ubicacion).subscribe(
-        (data) => {
-          this.events = data.content;
-          this.currentPage = data.pageable.pageNumber;
-        },
-        (error) => {
-          console.error('Error fetching events:', error);
-        }
-      )
-    } else if (finicio && ffin && ubicacion) {
-      this.eventService.getEventByDateAndLocationFilter(finicio, ffin, ubicacion).subscribe(
-        (data) => {
-          this.events = data.content;
-          this.currentPage = data.pageable.pageNumber;
-        },
-        (error) => {
-          console.error('Error fetching events:', error);
-        }
-      )
-    }
+      );
+    this.resetOrderBy();
   }
 
   filterEventsBySearch(search: string) {
     if (search) {
       this.eventService.getEventsBySearchQuery(search).subscribe(
         (data) => {
-          this.events = data.content;
-          this.currentPage = data.pageable.pageNumber;
+          this.updateContent(data);
         },
         (error) => {
           console.error('Error fetching events:', error);
         }
       );
     } else {
-      this.eventService.getEventsByState("disponible").subscribe(
+      this.eventService.getEventsByState('disponible').subscribe(
         (data) => {
-          this.events = data.content;
-          this.currentPage = data.pageable.pageNumber;
+          this.updateContent(data);
         },
         (error) => {
           console.error('Error fetching events:', error);
@@ -161,9 +152,9 @@ export class HomeComponent implements OnInit {
   }
 
   goToPage(page: number) {
-    this.eventService.getEventsByState("disponible", page).subscribe(
+    this.eventService.getEventsByState('disponible', page).subscribe(
       (data) => {
-        this.events = data.content;
+        this.updateContent(data);
         this.currentPage = data.pageable.pageNumber;
       },
       (error) => {
@@ -173,14 +164,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.eventService.getEventsByState("disponible").subscribe(
+    this.eventService.getEventsByState('disponible').subscribe(
       (data) => {
-        this.events = data.content;
-        console.log(this.events);
-        for (let i = 0; i < data.totalPages; i++) {
-          this.pages.push(i + 1);
-        }
-        this.currentPage = data.pageable.pageNumber;
+        this.updateContent(data);
       },
       (error) => {
         console.error('Error fetching events:', error);

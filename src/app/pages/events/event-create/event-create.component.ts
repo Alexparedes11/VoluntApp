@@ -1,6 +1,11 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { FooterComponent } from '../../../components/footer/footer.component';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { EventService } from '../../../services/event.service';
@@ -10,22 +15,39 @@ import { UserDTO } from '../../../models/dto/UserDTO';
 import { InstitutionService } from '../../../services/institution.service';
 import { Institution } from '../../../models/Institution';
 import { Router } from '@angular/router';
+import { TagsService } from '../../../services/tags.service';
 
 interface AddressInfo {
   place_name: string;
   center: number[];
 }
 
+interface PredictionData {
+  outputs: { [tag: string]: number };
+  truncated: boolean;
+}
+
 @Component({
   selector: 'app-event-create',
   standalone: true,
-  providers: [EventService, UserService, InstitutionService, MapboxService],
-  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule, NgIf, NgClass],
+  providers: [
+    TagsService,
+    EventService,
+    UserService,
+    InstitutionService,
+    MapboxService,
+  ],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    ReactiveFormsModule,
+    NgIf,
+    NgClass,
+  ],
   templateUrl: './event-create.component.html',
-  styleUrls: ['./event-create.component.scss']
+  styleUrls: ['./event-create.component.scss'],
 })
 export class EventCreateComponent {
-
   userId: number = -1;
   user: UserDTO = {} as UserDTO;
   institution: Institution = {} as Institution;
@@ -35,12 +57,19 @@ export class EventCreateComponent {
   addresses: AddressInfo[] = [];
   selectedAddressName: string | null = null;
   selectedAddress: AddressInfo | null = null;
-  tipo: string = "";
+  tipo: string = '';
   createdSuccessfully: boolean | null = null;
-  errorMessage: string = "";
+  errorMessage: string = '';
   showAlert: boolean = false;
 
-  constructor(private eventService: EventService, private userService: UserService, private mapboxService: MapboxService, private institutionService: InstitutionService, private router: Router) {
+  constructor(
+    private tagsService: TagsService,
+    private eventService: EventService,
+    private userService: UserService,
+    private mapboxService: MapboxService,
+    private institutionService: InstitutionService,
+    private router: Router
+  ) {
     this.inputFecha = document.getElementById('finicio') as HTMLInputElement;
 
     if (this.inputFecha) {
@@ -59,7 +88,7 @@ export class EventCreateComponent {
     this.userId = this.userService.getUserIdFromToken();
     this.tipo = this.userService.getUserTypeFromToken();
 
-    if (this.tipo == "Usuario") {
+    if (this.tipo == 'Usuario') {
       this.userService.getUserById(this.userId).subscribe(
         (data) => {
           this.user = data;
@@ -69,7 +98,7 @@ export class EventCreateComponent {
           console.error('Error fetching events:', error);
         }
       );
-    } else if (this.tipo == "Institucion") {
+    } else if (this.tipo == 'Institucion') {
       this.institutionService.getInstitucionById(this.userId).subscribe(
         (data) => {
           this.institution = data;
@@ -98,16 +127,19 @@ export class EventCreateComponent {
       usuarioId: new FormControl(this.userId),
       institucionNombre: new FormControl(null),
       maxVoluntarios: new FormControl('', Validators.required),
+      tags: new FormControl(null),
     });
 
-    if (this.tipo == "Usuario") {
+    if (this.tipo == 'Usuario') {
       if (this.eventForm) {
         this.eventForm.get('usuarioNombre')?.setValue(this.user.nombre);
         this.eventForm.get('usuarioId')?.setValue(this.user.id);
       }
-    } else if (this.tipo == "Institucion") {
+    } else if (this.tipo == 'Institucion') {
       if (this.eventForm) {
-        this.eventForm.get('institucionNombre')?.setValue(this.institution.nombre);
+        this.eventForm
+          .get('institucionNombre')
+          ?.setValue(this.institution.nombre);
       }
     }
   }
@@ -129,7 +161,7 @@ export class EventCreateComponent {
       const fechaFin = new Date(ffin.value);
 
       if (fechaFin < fechaInicio) {
-        ffin.setErrors({ 'fechaInvalida': true });
+        ffin.setErrors({ fechaInvalida: true });
       } else {
         ffin.setErrors(null);
       }
@@ -164,7 +196,10 @@ export class EventCreateComponent {
     const searchTerm = event.target.value.toLowerCase();
     if (searchTerm && searchTerm.length > 0) {
       this.mapboxService.searchWord(searchTerm).subscribe((features: any[]) => {
-        this.addresses = features.map(feat => ({ place_name: feat.place_name, center: feat.center }));
+        this.addresses = features.map((feat) => ({
+          place_name: feat.place_name,
+          center: feat.center,
+        }));
       });
     } else {
       this.addresses = [];
@@ -175,11 +210,13 @@ export class EventCreateComponent {
     this.selectedAddress = address;
     this.selectedAddressName = address.place_name;
     this.eventForm.patchValue({
-      nombreUbicacion: address.place_name
+      nombreUbicacion: address.place_name,
     });
-    const searchLocationInput = document.getElementById('searchLocationInput') as HTMLInputElement;
+    const searchLocationInput = document.getElementById(
+      'searchLocationInput'
+    ) as HTMLInputElement;
     if (searchLocationInput) {
-      searchLocationInput.value = "";
+      searchLocationInput.value = '';
     }
     this.addresses = [];
   }
@@ -192,26 +229,55 @@ export class EventCreateComponent {
       formValue.lon = this.selectedAddress?.center[1];
       formValue.imagen = this.selectedImage;
 
-      this.eventService.createEvent(formValue).subscribe(
-        (data: any) => {
-          if (this.tipo === "Usuario") {
-            this.eventService.addUserToEvent(this.userId, Number(data.id)).subscribe();
-          } else if (this.tipo === "Institucion") {
-            this.eventService.addInstitutionToEvent(this.userId, Number(data.id)).subscribe();
+      this.tagsService
+        .getPredictions(
+          `Título: ${this.eventForm.get('titulo')?.value} Descripción: ${
+            this.eventForm.get('descripcion')?.value
+          }`
+        )
+        .subscribe(
+          (data: PredictionData) => {
+            const threshold = 0.93;
+            const tags: string[] = Object.entries(data.outputs)
+              .filter(([_, value]: [string, number]) => value > threshold)
+              .map(([tag, _]) => tag);
+
+            formValue.tags = tags;
+
+            this.createEvent(formValue);
+          },
+          (error) => {
+            this.createdSuccessfully = false;
+            this.errorMessage = error.error;
           }
-          this.createdSuccessfully = true;
-        },
-        (error) => {
-          this.createdSuccessfully = false;
-          this.errorMessage = error.error;
-        },
-        () => {
-          this.eventForm.reset();
-          this.initializeForm();
-          this.selectedImage = null;
-          this.showAlert = true;
-        }
-      );
+        );
     }
+  }
+
+  private createEvent(formValue: any) {
+    this.eventService.createEvent(formValue).subscribe(
+      (data: any) => {
+        if (this.tipo === 'Usuario') {
+          this.eventService
+            .addUserToEvent(this.userId, Number(data.id))
+            .subscribe();
+        } else if (this.tipo === 'Institucion') {
+          this.eventService
+            .addInstitutionToEvent(this.userId, Number(data.id))
+            .subscribe();
+        }
+        this.createdSuccessfully = true;
+      },
+      (error) => {
+        this.createdSuccessfully = false;
+        this.errorMessage = error.error;
+      },
+      () => {
+        this.eventForm.reset();
+        this.initializeForm();
+        this.selectedImage = null;
+        this.showAlert = true;
+      }
+    );
   }
 }

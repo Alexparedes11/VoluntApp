@@ -14,4 +14,14 @@ export class ContactService {
         const url = `${this.baseUrl}/contacto/enviarCorreo`;
         return this.http.post(url, consulta);
     }
+
+    sendDeleteRequest(consulta: any): Observable<any> {
+        const url = `${this.baseUrl}/contacto/enviarSolicitud`;
+        return this.http.post(url, consulta);
+      }
+    
+      sendDeniedRequest(consulta: any): Observable<any> {
+        const url = `${this.baseUrl}/contacto/enviarRespuestaDenegada`;
+        return this.http.post(url, consulta);
+      } 
 }

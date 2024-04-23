@@ -5,13 +5,12 @@ import { environment } from '../../environments/environments';
 import { EventDTO } from '../models/dto/EventDTO';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventService {
-
   private baseUrl = environment.server.ip + ':' + environment.server.port;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   createEvent(data: EventDTO) {
     return this.http.post(`${this.baseUrl}/eventos`, data);
@@ -34,11 +33,13 @@ export class EventService {
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
-    return this.http.get(`${this.baseUrl}/eventos/buscar/${query}`, { params }).pipe(
-      map((data: any) => {
-        return data;
-      })
-    );
+    return this.http
+      .get(`${this.baseUrl}/eventos/buscar/${query}`, { params })
+      .pipe(
+        map((data: any) => {
+          return data;
+        })
+      );
   }
 
   getEventsByState(state: string, page?: number) {
@@ -46,66 +47,34 @@ export class EventService {
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
-    return this.http.get<EventDTO>(`${this.baseUrl}/eventos/buscaporestado/${state}`, { params }).pipe(
-      map((data: any) => {
-        console.log(data);
-        return data;
+    return this.http
+      .get<EventDTO>(`${this.baseUrl}/eventos/buscaporestado/${state}`, {
+        params,
       })
-    );
+      .pipe(
+        map((data: any) => {
+          return data;
+        })
+      );
   }
   getEventsOrderByDate(page?: number) {
     let params = new HttpParams();
     if (page !== undefined) {
       params = params.set('page', page.toString());
     }
-    return this.http.get(`${this.baseUrl}/eventos/ordenarporfecha`, { params }).pipe(
-      map((data: any) => {
-        return data;
-      })
-    );
-  }
-
-  getEventsByDateFilter(finicio: string, ffin: string, page?: number) {
-    let params = new HttpParams();
-    if (page !== undefined) {
-      params = params.set('page', page.toString());
-    }
-    return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas/${finicio}T00:00/${ffin}T00:00`, { params }).pipe(
-      map((data: any) => {
-        return data;
-      })
-    );
-  }
-
-  getEventsByLocationFilter(location: string, page?: number) {
-    let params = new HttpParams();
-    if (page !== undefined) {
-      params = params.set('page', page.toString());
-    }
-    return this.http.get(`${this.baseUrl}/eventos/ubicacion/disponibles/${location}`, { params }).pipe(
-      map((data: any) => {
-        return data;
-      })
-    );
-  }
-
-  getEventByDateAndLocationFilter(finicio: string, ffin: string, location: string, page?: number) {
-    let params = new HttpParams();
-    if (page !== undefined) {
-      params = params.set('page', page.toString());
-    }
-    return this.http.get(`${this.baseUrl}/eventos/disponibles-entre-fechas-y-ubicacion/${finicio}T00:00/${ffin}T00:00/${location}`, { params }).pipe(
-      map((data: any) => {
-        return data;
-      })
-    );
+    return this.http
+      .get(`${this.baseUrl}/eventos/ordenarporfecha`, { params })
+      .pipe(
+        map((data: any) => {
+          return data;
+        })
+      );
   }
 
   updateEventState(id: number, newState: string) {
-    const body = newState ;
+    const body = newState;
     return this.http.put(`${this.baseUrl}/eventos/${id}/estado`, body);
   }
-
 
   getEventsByUser(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/usuario/${id}`).pipe(
@@ -132,11 +101,13 @@ export class EventService {
   }
 
   getEventsCreatedByInstitution(id: number) {
-    return this.http.get(`${this.baseUrl}/eventos/creadoPorInstitucion/${id}`).pipe(
-      map((data: any) => {
-        return data;
-      })
-    );
+    return this.http
+      .get(`${this.baseUrl}/eventos/creadoPorInstitucion/${id}`)
+      .pipe(
+        map((data: any) => {
+          return data;
+        })
+      );
   }
 
   getEventById(id: number) {
@@ -158,7 +129,7 @@ export class EventService {
   isUserInEvent(idUser: number, idEvent: number) {
     const body = {
       id_usuario: idUser,
-      id_evento: idEvent
+      id_evento: idEvent,
     };
     return this.http.post(`${this.baseUrl}/eventos/isUserInEvento`, body).pipe(
       map((data: any) => {
@@ -170,28 +141,35 @@ export class EventService {
   isInstitucionInEvent(idInstitution: number, idEvent: number) {
     const body = {
       id_institucion: idInstitution,
-      id_evento: idEvent
+      id_evento: idEvent,
     };
-    return this.http.post(`${this.baseUrl}/eventos/isInstitutionInEvento`, body).pipe(
-      map((data: any) => {
-        return data;
-      })
-    ); 
+    return this.http
+      .post(`${this.baseUrl}/eventos/isInstitutionInEvento`, body)
+      .pipe(
+        map((data: any) => {
+          return data;
+        })
+      );
   }
 
   addUserToEvent(idUser: number, idEvent: number) {
     const body = {
       id_usuario: idUser,
-      id_evento: idEvent
+      id_evento: idEvent,
     };
     return this.http.post(`${this.baseUrl}/eventos/apuntar-usuario`, body);
   }
 
   addInstitutionToEvent(idInstitution: number, idEvent: number) {
-    console.log("La id del evento es la siguiente: " + idEvent + " y la de la institucion: " + idInstitution);
+    console.log(
+      'La id del evento es la siguiente: ' +
+        idEvent +
+        ' y la de la institucion: ' +
+        idInstitution
+    );
     const body = {
       id_institucion: idInstitution,
-      id_evento: idEvent
+      id_evento: idEvent,
     };
     return this.http.post(`${this.baseUrl}/eventos/apuntar-institucion`, body);
   }
@@ -199,33 +177,27 @@ export class EventService {
   removeUserFromEvent(idUser: number, idEvent: number) {
     const body = {
       id_usuario: idUser,
-      id_evento: idEvent
+      id_evento: idEvent,
     };
     return this.http.post(`${this.baseUrl}/eventos/desapuntar-usuario`, body);
   }
-  
+
   removeInstitutionFromEvent(idInstitution: number, idEvent: number) {
     const body = {
       id_institucion: idInstitution,
-      id_evento: idEvent
+      id_evento: idEvent,
     };
-    return this.http.post(`${this.baseUrl}/eventos/desapuntar-institucion`, body);
+    return this.http.post(
+      `${this.baseUrl}/eventos/desapuntar-institucion`,
+      body
+    );
   }
 
   isUserCreator(idUser: number, idEvent: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/eventos/esCreador/${idUser}/${idEvent}`);
+    return this.http.get<boolean>(
+      `${this.baseUrl}/eventos/esCreador/${idUser}/${idEvent}`
+    );
   }
-
-
-  sendDeleteRequest(consulta: any): Observable<any> {
-    const url = `${this.baseUrl}/contacto/enviarSolicitud`;
-    return this.http.post(url, consulta);
-  }
-
-  sendDeniedRequest(consulta: any): Observable<any> {
-    const url = `${this.baseUrl}/contacto/enviarRespuestaDenegada`;
-    return this.http.post(url, consulta);
-  } 
 
   obtenerEventosPerfil(id: number) {
     return this.http.get(`${this.baseUrl}/eventos/profile/${id}`).pipe(
@@ -243,5 +215,30 @@ export class EventService {
   }
   ordenarporfechaAntigua() {
     return this.http.get(`${this.baseUrl}/eventos/ordenarporfechaAntigua`);
+  }
+
+  getFilteredEvents(
+    finicio?: string,
+    ffin?: string,
+    ubicacion?: string,
+    categorias?: string[]
+  ) {
+    let params = new HttpParams();
+    if (finicio) {
+      params = params.append('finicio', finicio);
+    }
+    if (ffin) {
+      params = params.append('ffin', ffin);
+    }
+    if (ubicacion) {
+      params = params.append('ubicacion', ubicacion);
+    }
+    if (categorias && categorias.length > 0) {
+      categorias.forEach((categoria) => {
+        params = params.append('categorias', categoria);
+      });
+    }
+
+    return this.http.get(`${this.baseUrl}/eventos/filtrar`, { params });
   }
 }

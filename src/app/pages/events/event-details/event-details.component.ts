@@ -9,18 +9,19 @@ import { MapComponent } from '../../../components/map/map.component';
 import { UserDTO } from '../../../models/dto/UserDTO';
 import { Router } from '@angular/router';
 import { Event } from '../../../models/Event';
+import { ContactService } from '../../../services/contact.service';
 
 @Component({
   selector: 'app-event-details',
   standalone: true,
-  providers: [EventService, UserService],
+  providers: [ContactService, EventService, UserService],
   imports: [HeaderComponent, FooterComponent, HeaderComponent, FooterComponent, DatePipe, MapComponent],
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.scss'
 })
 export class EventDetailsComponent implements OnInit {
 
-  constructor(private eventService: EventService, private userService: UserService, private router: Router) { }
+  constructor(private eventService: EventService, private contactService: ContactService, private userService: UserService, private router: Router) { }
 
   @Input("id") eventId: number = -1;
   tipo: string = "";
@@ -187,7 +188,7 @@ export class EventDetailsComponent implements OnInit {
         // Enviar los motivos de eliminación
 
 
-        this.eventService.sendDeleteRequest({
+        this.contactService.sendDeleteRequest({
           email: user.email,
           asunto: "Motivos de eliminacion: ",
           mensaje: motivosEliminacion + " - Evento: " + this.eventId
@@ -224,7 +225,7 @@ export class EventDetailsComponent implements OnInit {
       (data: Event) => {
         console.log(data);
         const emailRecibidor = data.creadoPorUsuarios.username;
-        this.eventService.sendDeniedRequest({
+        this.contactService.sendDeniedRequest({
           email: emailRecibidor,
           asunto: '¡Evento aprobado! 🎉',
           mensaje: `Tu event ${data.titulo} ha sido aprobado. ¡Felicidades!`
@@ -258,7 +259,7 @@ export class EventDetailsComponent implements OnInit {
       (data: Event) => {
         console.log(data);
         const emailRecibidor = data.creadoPorUsuarios.username;
-        this.eventService.sendDeniedRequest({
+        this.contactService.sendDeniedRequest({
           email: emailRecibidor,
           asunto: "Evento rechazado ❌",
           mensaje: "El evento " + data.titulo + " ha sido rechazado por los siguientes motivos : " + motivos
@@ -284,7 +285,7 @@ export class EventDetailsComponent implements OnInit {
       (data: Event) => {
         console.log(data);
         const emailRecibidor = data.creadoPorUsuarios.username;
-        this.eventService.sendDeniedRequest({
+        this.contactService.sendDeniedRequest({
           email: emailRecibidor,
           asunto: 'Eliminación aceptada ✔️',
           mensaje: `Hemos aceptado tu solicitud de eliminación. Tu evento ${data.titulo} ha sido eliminado.`
@@ -315,7 +316,7 @@ export class EventDetailsComponent implements OnInit {
       (data: Event) => {
         console.log(data);
         const emailRecibidor = data.creadoPorUsuarios.username;
-        this.eventService.sendDeniedRequest({
+        this.contactService.sendDeniedRequest({
           email: emailRecibidor,
           asunto: "Eliminación rechazada ❌",
           mensaje: "El evento " + data.titulo + " no puede ser eliminado por los siguientes motivos : " + motivos
