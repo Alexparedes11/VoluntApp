@@ -1,23 +1,19 @@
 <app-header></app-header>
 
-<main class="container text-white py-4">
-  <div class="d-flex flex-column gap-4 mb-3">
-    <h1 class="fw-bold">Validaciones de Instituciones</h1>
+<main class="container p-4 text-white">
+  <h1 class="fw-bold">Validaciones de Instituciones</h1>
 
-  </div>
-  
   <div *ngIf="institutions.length !== 0">
     <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <div class="col" *ngFor="let institution of institutions">
-        <article class="card shadow-sm border-0">
+        <article class="card shadow-sm border-0 bg-black-light">
           <div class="card-body">
-            <h1 class="fw-bold fs-4">{{institution.nombre}}</h1>
-            <p>Persona a cargo: {{institution.personaCargo}}</p>
-            <p>CIF: {{institution.cif}}</p>
-            <!-- Botones de aprobación y rechazo -->
+            <h1 class="fw-bold fs-4 d-flex align-items-center gap-3 text-white-dark ">{{institution.nombre}}</h1>
+            <p class="text-white-dark ">Persona a cargo: {{institution.personaCargo}}</p>
+            <p class="text-white-dark">CIF: {{institution.cif}}</p>
             <div class="d-flex justify-content-between">
-              <button (click)="updateState(institution.id, 'validado')" class="btn btn-success">Aprobar</button>
-              <button (click)="updateState(institution.id, 'rechazado')" class="btn btn-danger">Rechazar</button>
+              <button (click)="updateState(institution.id, 'validado')" class="btn bg-success-dark text-white w-100">Aprobar</button>
+              <button (click)="updateState(institution.id, 'rechazado')" class="btn bg-error-dark text-white w-100">Rechazar</button>
             </div>
           </div>
         </article>
@@ -26,7 +22,7 @@
   </div>
 
   <div *ngIf="institutions.length === 0">
-    <h1 class="text-center text-white fw-bold mt-5">No hay instituciones por validar</h1>
+    <h3 class="text-center text-white fw-bold mt-5">No hay instituciones por validar</h3>
   </div>
 </main>
 
