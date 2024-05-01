@@ -1,4 +1,5 @@
 export interface InstitucionDTO {
+    estado: string;
     id: number;
     nombre: string;
     personaCargo: string;

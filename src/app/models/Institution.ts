@@ -7,5 +7,5 @@ export interface Institution {
     cif: string;
     personaCargo: string;
     eventosNombre: string;
-
+    estado: string;
 }

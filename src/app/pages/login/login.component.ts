@@ -40,7 +40,11 @@ export class LoginComponent {
       },
       (error: any) => {
         console.error('Error al iniciar sesión:', error);
-        this.errorMensaje = 'Error al iniciar sesión. Por favor, verifica tus credenciales.';
+        if (error.status === 403) {
+          this.errorMensaje = 'La institución está en revisión. Espere a que el administrador valide su cuenta.';
+        } else {
+          this.errorMensaje = 'Error al iniciar sesión. Por favor, verifica tus credenciales.';
+        }
       }
     );
   }

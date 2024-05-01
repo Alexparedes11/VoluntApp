@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { UserDTO } from '../models/dto/UserDTO';
+import { InstitucionDTO } from '../models/dto/InstitucionDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -59,8 +60,8 @@ export class UserService {
   }
 
   getUserByIdInstitucion(id: number) {
-    return this.http.get<UserDTO>(`${this.baseUrl}/instituciones/${id}`).pipe(
-      map((data: UserDTO) => {
+    return this.http.get<InstitucionDTO>(`${this.baseUrl}/instituciones/${id}`).pipe(
+      map((data: InstitucionDTO) => {
         return data;
       })
     );
