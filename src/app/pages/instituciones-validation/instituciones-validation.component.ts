@@ -3,7 +3,6 @@ import { InstitucionDTO } from '../../models/dto/InstitucionDTO';
 import { InstitutionService } from '../../services/institution.service';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { CommonModule } from '@angular/common';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
@@ -13,11 +12,10 @@ import { NgFor, NgIf } from '@angular/common';
   providers: [InstitutionService],
   styleUrls: ['./instituciones-validation.component.scss'],
   imports: [HeaderComponent, FooterComponent, NgIf, NgFor]
-})
-export class InstitucionesValidationComponent implements OnInit {
+})export class InstitucionesValidationComponent implements OnInit {
   institutions: InstitucionDTO[] = [];
 
-  constructor(private institutionService: InstitutionService) { }
+  constructor(private institutionService: InstitutionService) {}
 
   handleChange(e: any) {
     const searchStatus = e.target.value;
@@ -26,7 +24,7 @@ export class InstitucionesValidationComponent implements OnInit {
 
   actualizarInstituciones(estado: string) {
     this.institutionService.getInstitutionsByState(estado).subscribe(
-      (data) => {
+      (data: any) => {
         this.institutions = data.content;
       },
       (error) => {
@@ -36,10 +34,10 @@ export class InstitucionesValidationComponent implements OnInit {
   }
 
   updateState(id: number, newState: string) {
+
     this.institutionService.updateInstitucionState(id, newState).subscribe(
       () => {
-        // Actualizar la lista de instituciones después de actualizar el estado
-        this.actualizarInstituciones("revision"); // O actualiza la lista según el estado actual
+        this.actualizarInstituciones('revision');
       },
       (error) => {
         console.error('Error updating institution state:', error);
@@ -48,6 +46,6 @@ export class InstitucionesValidationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.actualizarInstituciones("revision");
+    this.actualizarInstituciones('revision');
   }
 }

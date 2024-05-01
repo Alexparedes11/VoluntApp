@@ -40,6 +40,6 @@ export class InstitutionService {
   }
   updateInstitucionState(id: number, newState: string) {
     const body = newState ;
-    return this.http.put(`${this.baseUrl}/institucion/${id}/estado`, body);
+    return this.http.put(`${this.baseUrl}/instituciones/${id}/estado`, body);
   }
 }
