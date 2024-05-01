@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environments';
@@ -240,5 +240,25 @@ export class EventService {
     }
 
     return this.http.get(`${this.baseUrl}/eventos/filtrar`, { params });
+  }
+
+  validateEvent(eventInformation: string) {
+    const url = 'https://text-moderator.p.rapidapi.com/api/v1/moderate';
+
+    const headers = new HttpHeaders({
+      'content-type': 'application/json',
+      'X-RapidAPI-Key': '54ca8a2c07mshcb6fd65d5016682p129e38jsnfcbe09ed04a0',
+      'X-RapidAPI-Host': 'text-moderator.p.rapidapi.com',
+    });
+
+    const options = {
+      headers: headers,
+    };
+
+    const body = {
+      input: eventInformation,
+    };
+
+    return this.http.post(url, body, options);
   }
 }

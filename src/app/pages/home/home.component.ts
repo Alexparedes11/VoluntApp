@@ -11,6 +11,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { EventDTO } from '../../models/dto/EventDTO';
 import { EventService } from '../../services/event.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TAGS_CATEGORIES } from '../../utils/constants';
 
 @Component({
   selector: 'app-home',
@@ -33,17 +34,7 @@ export class HomeComponent implements OnInit {
   currentPage: number = 0;
 
   muestraFiltros: boolean = false;
-  categorias: Array<string> = [
-    'Solidaridad',
-    'Ayuda',
-    'Niños',
-    'Mascotas',
-    'Medio Ambiente',
-    'Mayores',
-    'Alimentación',
-    'Salud',
-    'Deporte',
-  ];
+  categorias: Array<string> = TAGS_CATEGORIES;
 
   filtersForm: FormGroup = new FormGroup({
     finicio: new FormControl(''),

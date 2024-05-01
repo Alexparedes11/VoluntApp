@@ -228,30 +228,58 @@ export class EventCreateComponent {
       formValue.lat = this.selectedAddress?.center[0];
       formValue.lon = this.selectedAddress?.center[1];
       formValue.imagen = this.selectedImage;
+      const eventInformation = `Título: ${
+        this.eventForm.get('titulo')?.value
+      } Descripción: ${this.eventForm.get('descripcion')?.value}`;
 
-      this.tagsService
-        .getPredictions(
-          `Título: ${this.eventForm.get('titulo')?.value} Descripción: ${
-            this.eventForm.get('descripcion')?.value
-          }`
-        )
-        .subscribe(
-          (data: PredictionData) => {
-            const threshold = 0.93;
-            const tags: string[] = Object.entries(data.outputs)
-              .filter(([_, value]: [string, number]) => value > threshold)
-              .map(([tag, _]) => tag);
-
-            formValue.tags = tags;
-
-            this.createEvent(formValue);
-          },
-          (error) => {
+      this.eventService.validateEvent(eventInformation).subscribe(
+        (data: any) => {
+          console.log(data);
+          const threshold = 0.4;
+          const { toxic, indecent, threat, offensive, erotic } = data;
+          if (
+            toxic > threshold ||
+            indecent > threshold ||
+            threat > threshold ||
+            offensive > threshold ||
+            erotic > threshold
+          ) {
             this.createdSuccessfully = false;
-            this.errorMessage = error.error;
+            this.errorMessage =
+              'El evento contiene palabras inapropiadas. Por favor, modifica el evento.';
+            this.showAlert = true;
+          } else {
+            this.getPredictionsAndCreateEvent(formValue, eventInformation);
           }
-        );
+        },
+        (error) => {
+          this.createdSuccessfully = false;
+          this.errorMessage = error.error;
+        }
+      );
     }
+  }
+
+  private getPredictionsAndCreateEvent(
+    formValue: any,
+    eventInformation: string
+  ) {
+    this.tagsService.getPredictions(eventInformation).subscribe(
+      (data: PredictionData) => {
+        const threshold = 0.93;
+        const tags: string[] = Object.entries(data.outputs)
+          .filter(([_, value]: [string, number]) => value > threshold)
+          .map(([tag, _]) => tag);
+
+        formValue.tags = tags;
+
+        this.createEvent(formValue);
+      },
+      (error) => {
+        this.createdSuccessfully = false;
+        this.errorMessage = error.error;
+      }
+    );
   }
 
   private createEvent(formValue: any) {
