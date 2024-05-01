@@ -1,0 +1,32 @@
+<app-header></app-header>
+
+<main class="container text-white py-4">
+  <div class="d-flex flex-column gap-4 mb-3">
+    <h1 class="fw-bold">Validaciones de Instituciones</h1>
+  </div>
+  
+  <div *ngIf="institutions.length !== 0">
+    <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="col" *ngFor="let institution of institutions">
+        <article class="card shadow-sm border-0">
+          <div class="card-body">
+            <h1 class="fw-bold fs-4">{{institution.nombre}}</h1>
+            <p>Persona a cargo: {{institution.personaCargo}}</p>
+            <p>CIF: {{institution.cif}}</p>
+            <!-- Botones de aprobación y rechazo -->
+            <div class="d-flex justify-content-between">
+              <button (click)="updateState(institution.id, 'validado')" class="btn btn-success">Aprobar</button>
+              <button (click)="updateState(institution.id, 'rechazado')" class="btn btn-danger">Rechazar</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <div *ngIf="institutions.length === 0">
+    <h1 class="text-center text-white fw-bold mt-5">No hay instituciones por validar</h1>
+  </div>
+</main>
+
+<app-footer></app-footer>
