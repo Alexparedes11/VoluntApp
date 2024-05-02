@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  NgModel,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { EventCardComponent } from '../../components/event-card/event-card.component';

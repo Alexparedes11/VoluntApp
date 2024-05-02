@@ -6,6 +6,7 @@ export interface Event {
     id: number;
     titulo: string;
     descripcion: string;
+    descripcionResumida: string;
     ubicacion: Location;
     maxVoluntarios: number;
     estado: string;

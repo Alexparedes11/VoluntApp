@@ -6,6 +6,7 @@ export interface EventDTO {
     creadoPorInstitucion: string;
     creadoPorUsuario: string;
     descripcion: string;
+    descripcionResumida: string;
     finicio: Date;
     ffin: Date;
     imagen: string;

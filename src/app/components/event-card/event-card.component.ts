@@ -12,6 +12,7 @@ export class EventCardComponent {
   @Input() id: number | null = null;
   @Input() image: string | null = null;
   @Input() title: string | null = null;
+  @Input() descriptionSummary: string | null = null;
   @Input() startDate: Date | null = null;
   @Input() endDate: Date | null = null;
   @Input() location: string | null = null;

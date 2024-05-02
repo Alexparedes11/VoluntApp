@@ -16,6 +16,7 @@ import { InstitutionService } from '../../../services/institution.service';
 import { Institution } from '../../../models/Institution';
 import { Router } from '@angular/router';
 import { TagsService } from '../../../services/tags.service';
+import { OllamaService } from '../../../services/ollama.service';
 
 interface AddressInfo {
   place_name: string;
@@ -36,6 +37,7 @@ interface PredictionData {
     UserService,
     InstitutionService,
     MapboxService,
+    OllamaService,
   ],
   imports: [
     HeaderComponent,
@@ -68,6 +70,7 @@ export class EventCreateComponent {
     private userService: UserService,
     private mapboxService: MapboxService,
     private institutionService: InstitutionService,
+    private ollamaService: OllamaService,
     private router: Router
   ) {
     this.inputFecha = document.getElementById('finicio') as HTMLInputElement;
@@ -118,6 +121,7 @@ export class EventCreateComponent {
       ffin: new FormControl('', Validators.required),
       titulo: new FormControl('', Validators.required),
       descripcion: new FormControl('', Validators.required),
+      descripcionResumida: new FormControl(''),
       nombreUbicacion: new FormControl('', Validators.required),
       lat: new FormControl(''),
       lon: new FormControl(''),
@@ -265,13 +269,20 @@ export class EventCreateComponent {
     eventInformation: string
   ) {
     this.tagsService.getPredictions(eventInformation).subscribe(
-      (data: PredictionData) => {
+      async (data: PredictionData) => {
         const threshold = 0.93;
         const tags: string[] = Object.entries(data.outputs)
           .filter(([_, value]: [string, number]) => value > threshold)
           .map(([tag, _]) => tag);
 
         formValue.tags = tags;
+
+        const resumen = await this.ollamaService.generateEventSummary(
+          eventInformation,
+          50
+        );
+
+        formValue.descripcionResumida = resumen;
 
         this.createEvent(formValue);
       },
