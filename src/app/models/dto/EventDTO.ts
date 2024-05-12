@@ -1,4 +1,5 @@
 import { Location } from "../Location";
+import { UserDTO } from "./UserDTO";
 
 export interface EventDTO {
     id: number;
@@ -13,5 +14,6 @@ export interface EventDTO {
     maxVoluntarios: number;
     numVoluntarios: number;
     ubicacion: Location;
-    nombreInstituciones: Array<string>; // Para no crear un modelo de instituciones
+    nombreInstituciones: Array<string>;
+    usuarios: UserDTO[];
 }

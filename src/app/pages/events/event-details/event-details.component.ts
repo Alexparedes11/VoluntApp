@@ -9,6 +9,7 @@ import { MapComponent } from '../../../components/map/map.component';
 import { UserDTO } from '../../../models/dto/UserDTO';
 import { Router } from '@angular/router';
 import { Event } from '../../../models/Event';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-event-details',
@@ -35,6 +36,8 @@ export class EventDetailsComponent implements OnInit {
   errorMessage: string = "";
   desapuntarseUsuario: boolean | null = null;
   desapuntarseInstitucion: boolean | null = null;
+  listaParticipantes: any = [];
+
 
   event: EventDTO = {} as EventDTO;
 
@@ -79,6 +82,7 @@ export class EventDetailsComponent implements OnInit {
     );
 
   }
+
 
   removeUserFromEvent() {
     this.eventService.removeUserFromEvent(this.userId, this.eventId).subscribe(
@@ -341,7 +345,11 @@ export class EventDetailsComponent implements OnInit {
     this.userId = this.userService.getUserIdFromToken();
     this.tipo = this.userService.getUserTypeFromToken();
 
-    console.log(this.tipo);
+    this.eventService.obtenerListaParticipantes(this.eventId).subscribe(
+      (data) => {
+        this.listaParticipantes = data;
+      }
+    );
 
     this.eventService.getEventDTOById(this.eventId).subscribe(
       (data) => {
@@ -391,4 +399,44 @@ export class EventDetailsComponent implements OnInit {
       }
     }
   }
+  
+
+  generatePDF() {
+    const doc = new jsPDF();
+    // Título del evento
+    doc.text(this.event.titulo, 10, 10);
+
+    // Lista de participantes
+    let userList = 'Lista de Participantes:\n';
+
+    if (this.listaParticipantes.length > 0) {
+      this.listaParticipantes.forEach((user:string) => {
+        userList += user + `\n` ;
+      });
+
+    } else {
+      userList += 'No hay participantes registrados.';
+    }
+  
+    doc.text(userList, 10, 30);
+
+    // Información adicional (fecha, lugar)
+    const info = `Fecha: ${this.event.finicio} - ${this.event.ffin}\nLugar: ${this.event.ubicacion.nombre}`;
+    doc.text(info, 10, 60);
+
+    // Organizador
+    let organizador = '';
+    if (this.event.creadoPorUsuario) {
+      organizador = `Organizador: ${this.event.creadoPorUsuario}`;
+    } else if (this.event.creadoPorInstitucion) {
+      organizador = `Organizador: ${this.event.creadoPorInstitucion}`;
+    }
+    doc.text(organizador, 10, 80);
+    let img = document.getElementById("imageEvent") as HTMLImageElement;
+    doc.addImage(img, "webp", 10, 100, 100, 100);
+    doc.save('InformeEvento.pdf');
+  }
+
 }
+
+

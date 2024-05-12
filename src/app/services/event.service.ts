@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { EventDTO } from '../models/dto/EventDTO';
+import { UserDTO } from '../models/dto/UserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -244,4 +245,13 @@ export class EventService {
   ordenarporfechaAntigua() {
     return this.http.get(`${this.baseUrl}/eventos/ordenarporfechaAntigua`);
   }
+
+  obtenerListaParticipantes(id: number) {
+    return this.http.get(`${this.baseUrl}/eventos/${id}/listaParticipantes`).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
+  }
+
 }

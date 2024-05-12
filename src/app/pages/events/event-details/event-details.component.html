@@ -11,7 +11,7 @@
     </h1>
     <section class="grid-container">
         <div class="area1">
-            <img class="rounded w-100" [src]="event.imagen" alt="">
+            <img id="imageEvent" class="rounded w-100" [src]="event.imagen" alt="">
         </div>
         <div class="area2">
             @if (event.ubicacion) {
@@ -75,8 +75,13 @@
                     }
                     @if (isInstitucionInEvent) {
                         <button (click)="removeInstitucionFromEvent()" class="btn bg-error-light text-white w-100">Dejar de apoyar</button>
+                        <button (click)="generatePDF()">Descargar Informe</button>
+                       
+
                     } @else if (tipo == "Institucion") {
                         <button (click)="addInstitucionToEvent()" class="btn bg-secondary text-white w-100">Apoyar Evento</button>
+                        
+
                     }
                 } @else {
                     <a href="/login" class="btn bg-secondary text-white w-100">Inicia sesión para apuntarte</a>
