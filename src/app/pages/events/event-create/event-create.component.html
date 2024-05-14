@@ -89,9 +89,28 @@
                     </div>
                     <img [src]="selectedImage" *ngIf="selectedImage" alt="Imagen seleccionada">
                 </div>
+                <hr>
+                <div class="d-grid mb-3 filaods">
+                    <div class="filaods">
+                        <input type="text" class="form-control" placeholder="ODS Relacionada al evento" formControlName="ods">
+                        <button class="btn btn-primary odsbutton" [disabled]="camposVaciosODS()" (click)="generarODS()">Generar ODS</button>
+                    </div>
+                </div>
+                <hr>
             </div>
-            <div class="card-footer text-end">
+            <div class="card-footer text-end ">
+                <button class="btn btn-primary mt-4 me-3" [disabled]="camposVaciosDescripcion()" (click)="generarDescripcion()">Mejorar descripcion con IA</button>
                 <button class="btn btn-secondary mt-4" [disabled]="eventForm.invalid">Crear</button>
+            </div>
+
+            <div *ngIf="isLoading" class="loading-overlay">
+                <div class="loading-text"></div>
+                <div class="text">Generando descripcion</div>
+            </div>
+
+            <div *ngIf="isLoadingODS" class="loading-overlay">
+                <div class="loading-text"></div>
+                <div class="text">Generando ODS</div>
             </div>
         </form>
     </div>

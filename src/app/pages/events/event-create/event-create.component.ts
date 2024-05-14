@@ -5,6 +5,8 @@ import { FooterComponent } from '../../../components/footer/footer.component';
 import { HeaderComponent } from '../../../components/header/header.component';
 import { EventService } from '../../../services/event.service';
 import { MapboxService } from '../../../services/mapbox.service';
+import { OllamaDescriptionService } from '../../../services/ollama.description.service';
+import { OllamaODSService } from '../../../services/ollama.ods.service';
 import { UserService } from '../../../services/user.service';
 import { UserDTO } from '../../../models/dto/UserDTO';
 import { InstitutionService } from '../../../services/institution.service';
@@ -19,13 +21,15 @@ interface AddressInfo {
 @Component({
   selector: 'app-event-create',
   standalone: true,
-  providers: [EventService, UserService, InstitutionService, MapboxService],
+  providers: [EventService, UserService, InstitutionService, MapboxService, OllamaDescriptionService, OllamaODSService ],
   imports: [HeaderComponent, FooterComponent, ReactiveFormsModule, NgIf, NgClass],
   templateUrl: './event-create.component.html',
   styleUrls: ['./event-create.component.scss']
 })
 export class EventCreateComponent {
 
+  isLoading: boolean = false;
+  isLoadingODS: boolean = false;
   userId: number = -1;
   user: UserDTO = {} as UserDTO;
   institution: Institution = {} as Institution;
@@ -40,7 +44,7 @@ export class EventCreateComponent {
   errorMessage: string = "";
   showAlert: boolean = false;
 
-  constructor(private eventService: EventService, private userService: UserService, private mapboxService: MapboxService, private institutionService: InstitutionService, private router: Router) {
+  constructor(private eventService: EventService, private userService: UserService, private mapboxService: MapboxService, private institutionService: InstitutionService, private router: Router, private ollamaDescriptionService: OllamaDescriptionService, private ollamaODSService: OllamaODSService) {
     this.inputFecha = document.getElementById('finicio') as HTMLInputElement;
 
     if (this.inputFecha) {
@@ -83,13 +87,14 @@ export class EventCreateComponent {
   }
 
   initializeForm(): void {
-    this.eventForm = new FormGroup({
+      this.eventForm = new FormGroup({
       id: new FormControl(''),
       finicio: new FormControl('', Validators.required),
       ffin: new FormControl('', Validators.required),
       titulo: new FormControl('', Validators.required),
       descripcion: new FormControl('', Validators.required),
       nombreUbicacion: new FormControl('', Validators.required),
+      ods: new FormControl('', Validators.required),
       lat: new FormControl(''),
       lon: new FormControl(''),
       imagen: new FormControl(null, Validators.required),
@@ -149,6 +154,53 @@ export class EventCreateComponent {
     return `${hoy.getFullYear()}-${formatoMes}-${formatoDia}T${formatoHoras}:${formatoMinutos}`;
   }
 
+  camposVaciosODS(): boolean {
+    const titulo = this.eventForm?.get('titulo')?.value;
+    const descripcion = this.eventForm?.get('descripcion')?.value;
+  
+    return (typeof titulo === 'string' && titulo.trim() === '') || (typeof descripcion === 'string' && descripcion.trim() === '');
+  }
+
+  camposVaciosDescripcion(): boolean {
+    const titulo = this.eventForm?.get('titulo')?.value;
+    const ubicacion = this.eventForm?.get('nombreUbicacion')?.value;
+    const finicio = this.eventForm?.get('finicio')?.value;
+    const ffin = this.eventForm?.get('ffin')?.value;
+    const maxVoluntarios = this.eventForm?.get('maxVoluntarios')?.value;
+  
+    return (typeof titulo === 'string' && titulo.trim() === '') || (typeof ubicacion === 'string' && ubicacion.trim() === '') || (typeof finicio === 'string' && finicio.trim() === '') || (typeof ffin === 'string' && ffin.trim() === '') || (typeof maxVoluntarios === 'string' && maxVoluntarios.trim() === '');
+  }
+
+  async generarDescripcion() {
+    const titulo = this.eventForm.get('titulo')?.value;
+    const ubicacion = this.eventForm.get('nombreUbicacion')?.value;
+    const finicio = this.eventForm.get('finicio')?.value;
+    const ffin = this.eventForm.get('ffin')?.value;
+    const maxVoluntarios = this.eventForm.get('maxVoluntarios')?.value;
+    this.isLoading = true;
+
+    await this.ollamaDescriptionService.generateEventSummary(titulo, ubicacion ,finicio, ffin, maxVoluntarios).then((response) => {
+      this.eventForm.patchValue({
+        descripcion: response
+      });
+      this.isLoading = false;
+      console.log(response);
+    });
+  }
+
+  async generarODS() {
+    const titulo = this.eventForm.get('titulo')?.value;
+    const descripcion = this.eventForm.get('descripcion')?.value;
+    this.isLoadingODS = true;
+
+    await this.ollamaODSService.generateEventSummary(descripcion, titulo).then((response) => {
+      this.eventForm.patchValue({
+        ods: response
+      });
+      this.isLoadingODS = false;
+      console.log(response);
+    });
+  }
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {

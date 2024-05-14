@@ -11,6 +11,7 @@ export interface Event {
     imagen: string;
     creadoPorUsuarios: User;
     creadoPorInstituciones: any; // Podría ser un tipo específico si tienes un modelo para instituciones
+    ods: string;
     ffin: string;
     finicio: string;
   }

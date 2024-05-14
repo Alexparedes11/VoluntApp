@@ -10,6 +10,7 @@ export interface EventDTO {
     ffin: Date;
     imagen: string;
     estado: string;
+    ods: string;
     maxVoluntarios: number;
     numVoluntarios: number;
     ubicacion: Location;

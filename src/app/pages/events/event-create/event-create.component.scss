@@ -10,3 +10,49 @@ is-invalid {
 li {
     cursor: pointer;
 }
+
+.filaods {
+    display: flex;
+    text-align: center;
+    height: 30px;
+}
+
+.odsbutton {
+    width: 15%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loading-text::after {
+    content: "⚫⚫⚫⚫⚫";
+    animation: dots 1s infinite;
+}
+
+@keyframes dots {
+    0% {
+        content: "⚫⚫🟣⚫⚫";
+    }
+
+    33% {
+        content: "⚫🟣🟣🟣⚫";
+    }
+
+    66% {
+        content: "🟣🟣🟣🟣🟣";
+    }
+}
