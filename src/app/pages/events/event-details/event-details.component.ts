@@ -399,12 +399,22 @@ export class EventDetailsComponent implements OnInit {
       }
     }
   }
-  
+
 
   generatePDF() {
     const doc = new jsPDF();
+
+    // Imagen en Base64 (reemplaza esto con tu propio Base64)
+    const imgData = '../../../assets/banner.png';  // Asegúrate de que tu base64 sea correcto y completo.
+
+    // Añadir imagen
+    doc.addImage(imgData, 'PNG', 10, 10, 75, 20);  // Ajusta las coordenadas y el tamaño según sea necesario
+
+    // Ajustar la posición del texto después de la imagen
+    const startY = 40;  // Desplazar un poco el texto hacia abajo
+
     // Título del evento
-    doc.text(this.event.titulo, 10, 10);
+    doc.text(this.event.titulo, 10, startY);
 
     // Lista de participantes
     let userList = 'Lista de Participantes:\n';
@@ -417,12 +427,12 @@ export class EventDetailsComponent implements OnInit {
     } else {
       userList += 'No hay participantes registrados.';
     }
-  
-    doc.text(userList, 10, 30);
+
+    doc.text(userList, 10, startY + 20);
 
     // Información adicional (fecha, lugar)
     const info = `Fecha: ${this.event.finicio} - ${this.event.ffin}\nLugar: ${this.event.ubicacion.nombre}`;
-    doc.text(info, 10, 60);
+    doc.text(info, 10, startY + 50);
 
     // Organizador
     let organizador = '';
@@ -431,12 +441,7 @@ export class EventDetailsComponent implements OnInit {
     } else if (this.event.creadoPorInstitucion) {
       organizador = `Organizador: ${this.event.creadoPorInstitucion}`;
     }
-    doc.text(organizador, 10, 80);
-    let img = document.getElementById("imageEvent") as HTMLImageElement;
-    doc.addImage(img, "webp", 10, 100, 100, 100);
+    doc.text(organizador, 10, startY + 70);
     doc.save('InformeEvento.pdf');
-  }
-
 }
-
-
+}

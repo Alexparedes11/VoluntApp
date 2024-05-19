@@ -74,8 +74,11 @@
                             <button (click)="addUserToEvent()" class="btn bg-secondary text-white w-100">Apúntate</button>
                     }
                     @if (isInstitucionInEvent) {
-                        <button (click)="removeInstitucionFromEvent()" class="btn bg-error-light text-white w-100">Dejar de apoyar</button>
-                        <button (click)="generatePDF()">Descargar Informe</button>
+                        <div class="d-flex align-items-center gap-2">
+                            <button (click)="removeInstitucionFromEvent()" class="btn bg-error-light text-white w-100">Dejar de apoyar</button>
+                        <button (click)="generatePDF()" class="btn bg-primary text-white w-50">Descargar Informe</button>
+                        </div>
+                        
                        
 
                     } @else if (tipo == "Institucion") {
