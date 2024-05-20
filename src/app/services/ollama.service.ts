@@ -12,9 +12,9 @@ export class OllamaService {
     baseUrl: 'http://127.0.0.1:11434',
   });
 
-  async generateEventSummary(eventDescription: string, words: number) {
+  async generateEventSummary(eventDescription: string, wordCount: number) {
     const response = await this.model.invoke(
-      `Genera un resumen del siguiente evento, usando ${words.toString()} palabras. Escribe únicamente el resumen sin nada más. Texto a resumir: ${eventDescription}`
+      `Genera un resumen de este evento en ${wordCount} palabras. Solo escribe el resumen, sin información adicional. Texto del evento: ${eventDescription}`
     );
     return response;
   }
