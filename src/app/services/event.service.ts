@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { environment } from '../../environments/environments';
 import { EventDTO } from '../models/dto/EventDTO';
 
@@ -240,6 +240,20 @@ export class EventService {
     }
 
     return this.http.get(`${this.baseUrl}/eventos/filtrar`, { params });
+  }
+
+  shareEvent(longUrl: string): Observable<string> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = JSON.stringify({ url: longUrl });
+
+    return this.http.post<{ shortUrl: string }>(`${this.baseUrl}/enlaces/acortar`, body, { headers })
+      .pipe(
+        map(response => response.shortUrl),
+        catchError(error => {
+          console.error('Error shortening URL:', error);
+          throw error;
+        })
+      );
   }
 
   validateEvent(eventInformation: string) {

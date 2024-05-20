@@ -43,45 +43,47 @@
                     }
                 </section>
             </article>
-            @if (isAdmin) {
-            @if (event.estado === 'revision') {
-            <div class="d-flex align-items-center gap-2">
-                <button (click)="acceptEvent()" class="btn bg-success-dark text-white w-50">Aprobar</button>
-                <button (click)="declineEvent()" class="btn bg-error-dark text-white w-50">Rechazar</button>
-            </div>
-            }
-            @else if(event.estado=='en-eliminacion'){
-            <div class="d-flex align-items-center gap-2">
-                <button (click)="declineElimination()" class="btn bg-success-dark text-white w-100">Mantener</button>
-                <button (click)="acceptElimination()" class="btn bg-error-dark text-white w-100">Eliminar</button>
-            </div>
-            }
-
-            } @else {
-                @if (isLogged) {
-                    @if (isUserInEvent) {
-                        @if (isCreator && tipo == "Usuario" || tipo == "Admin") {
-                            @if (event.estado === 'disponible') {
-                            <button (click)="requestEventElimination()" class="btn bg-error-dark text-white w-100">Solicitar
-                                eliminación</button>
-                            } @else if (event.estado === 'revision') {
-                            <button (click)="deleteEvent()" class="btn bg-error-dark text-white w-100">Eliminar</button>
+            <div>
+                @if (isAdmin) {
+                @if (event.estado === 'revision') {
+                <div class="d-flex align-items-center gap-2">
+                    <button (click)="acceptEvent()" class="btn bg-success-dark text-white w-50">Aprobar</button>
+                    <button (click)="declineEvent()" class="btn bg-error-dark text-white w-50">Rechazar</button>
+                </div>
+                }
+                @else if(event.estado=='en-eliminacion'){
+                <div class="d-flex align-items-center gap-2">
+                    <button (click)="declineElimination()" class="btn bg-success-dark text-white w-100">Mantener</button>
+                    <button (click)="acceptElimination()" class="btn bg-error-dark text-white w-100">Eliminar</button>
+                </div>
+                }
+                } @else {
+                    @if (isLogged) {
+                        @if (isUserInEvent) {
+                            @if (isCreator && tipo == "Usuario" || tipo == "Admin") {
+                                @if (event.estado === 'disponible') {
+                                <button (click)="requestEventElimination()" class="btn bg-error-dark text-white w-100">Solicitar
+                                    eliminación</button>
+                                } @else if (event.estado === 'revision') {
+                                <button (click)="deleteEvent()" class="btn bg-error-dark text-white w-100">Eliminar</button>
+                                }
+                            } @else if (tipo == "Usuario") {
+                                <button (click)="removeUserFromEvent()" class="btn bg-error-light text-white w-100">Desapuntarse</button>
                             }
                         } @else if (tipo == "Usuario") {
-                            <button (click)="removeUserFromEvent()" class="btn bg-error-light text-white w-100">Desapuntarse</button>
+                                <button (click)="addUserToEvent()" class="btn bg-secondary text-white w-100">Apúntate</button>
                         }
-                    } @else if (tipo == "Usuario") {
-                            <button (click)="addUserToEvent()" class="btn bg-secondary text-white w-100">Apúntate</button>
+                        @if (isInstitucionInEvent) {
+                            <button (click)="removeInstitucionFromEvent()" class="btn bg-error-light text-white w-100">Dejar de apoyar</button>
+                        } @else if (tipo == "Institucion") {
+                            <button (click)="addInstitucionToEvent()" class="btn bg-secondary text-white w-100">Apoyar Evento</button>
+                        }
+                    } @else {
+                        <a href="/login" class="btn bg-secondary text-white w-100">Inicia sesión para apuntarte</a>
                     }
-                    @if (isInstitucionInEvent) {
-                        <button (click)="removeInstitucionFromEvent()" class="btn bg-error-light text-white w-100">Dejar de apoyar</button>
-                    } @else if (tipo == "Institucion") {
-                        <button (click)="addInstitucionToEvent()" class="btn bg-secondary text-white w-100">Apoyar Evento</button>
-                    }
-                } @else {
-                    <a href="/login" class="btn bg-secondary text-white w-100">Inicia sesión para apuntarte</a>
                 }
-            }
+                <button (click)="shareEvent()" class="btn bg-primary text-white w-100 mt-2">Compartir evento</button>
+            </div>
         </div>
     </section>
 </main>
@@ -99,6 +101,8 @@
                             Has dejado de apoyar al evento 😞
                         } @else if (createdSuccessfully === false){
                             Error al unirte al evento ❌
+                        } @else {
+                            URL copiada al portapapeles 📋
                         }
                     </h1>
                     <button (click)="closeAlert()" type="button" class="btn-close" aria-label="Close"></button>
@@ -111,6 +115,8 @@
                     }@else if (desapuntarseUsuario === false && desapuntarseInstitucion === true) {
                     Has dejado de formar parte del evento correctamente.
                     } @else if (createdSuccessfully === false) {
+                    {{errorMessage}}
+                    } @else {
                     {{errorMessage}}
                     }
                 </div>
