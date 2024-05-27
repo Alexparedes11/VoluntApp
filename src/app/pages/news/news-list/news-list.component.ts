@@ -21,9 +21,6 @@ export class NewsListComponent {
   news: NewsDTO[] = [];
   news2: NewsDTO[] = [];
 
-
-  counter = 0;
-
   ngOnInit(): void {
     // Obtener noticias de la api de nuestra aplicación
     this.newsService.getNews().subscribe(

@@ -216,6 +216,10 @@ export class EventService {
     return this.http.get<boolean>(`${this.baseUrl}/eventos/esCreador/${idUser}/${idEvent}`);
   }
 
+  isInstitutionCreator(idUser: number, idEvent: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/eventos/esCreadorInstitucion/${idUser}/${idEvent}`);
+  }
+
 
   sendDeleteRequest(consulta: any): Observable<any> {
     const url = `${this.baseUrl}/contacto/enviarSolicitud`;

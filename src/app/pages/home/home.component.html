@@ -161,17 +161,17 @@
         </li>
         } @else {
         <li class="page-item">
-          <a (click)="goToPage(currentPage - 1)" class="page-link" href="#"
+          <a (click)="goToPage(currentPage - 1)" class="page-link" href="#voluntariados"
             >Anterior</a
           >
         </li>
         } @for (page of pages; track $index) { @if ($index === currentPage) {
         <li class="page-item active">
-          <a class="page-link" href="#">{{ page }}</a>
+          <a class="page-link" href="#voluntariados">{{ page }}</a>
         </li>
         } @else {
         <li (click)="goToPage(page - 1)" class="page-item">
-          <a class="page-link" href="#">{{ page }}</a>
+          <a class="page-link" href="#voluntariados">{{ page }}</a>
         </li>
         } } @if (currentPage === pages.length - 1) {
         <li class="page-item disabled">

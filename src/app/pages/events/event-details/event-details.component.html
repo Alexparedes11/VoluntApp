@@ -61,23 +61,31 @@
                 @if (isLogged) {
                     @if (isUserInEvent) {
                         @if (isCreator && tipo == "Usuario" || tipo == "Admin") {
-                            @if (event.estado === 'disponible') {
-                            <button (click)="requestEventElimination()" class="btn bg-error-dark text-white w-100">Solicitar
-                                eliminación</button>
+                            @if (event.estado === 'disponible' ) {
+                                <button (click)="requestEventElimination()" class="btn bg-error-dark text-white w-100">Solicitar eliminación</button>
                             } @else if (event.estado === 'revision') {
-                            <button (click)="deleteEvent()" class="btn bg-error-dark text-white w-100">Eliminar</button>
+                                <button (click)="deleteEvent()" class="btn bg-error-dark text-white w-100">Eliminar</button>
                             }
-                        } @else if (tipo == "Usuario") {
+                        } @else if (tipo == "Usuario" && isUserInEvent) {
                             <button (click)="removeUserFromEvent()" class="btn bg-error-light text-white w-100">Desapuntarse</button>
                         }
-                    } @else if (tipo == "Usuario") {
-                            <button (click)="addUserToEvent()" class="btn bg-secondary text-white w-100">Apúntate</button>
-                    }
+                    }  @else if (tipo == "Usuario") {
+                        <button (click)="addUserToEvent()" class="btn bg-secondary text-white w-100">Apúntate</button>
+                    } 
+
                     @if (isInstitucionInEvent) {
-                        <button (click)="removeInstitucionFromEvent()" class="btn bg-error-light text-white w-100">Dejar de apoyar</button>
+                        @if (isCreator && tipo == "Institucion" || tipo == "Admin") {
+                            @if (event.estado === 'disponible' ) {
+                                <button (click)="requestEventElimination()" class="btn bg-error-dark text-white w-100">Solicitar eliminación</button>
+                            } @else if (event.estado === 'revision') {
+                                <button (click)="deleteEvent()" class="btn bg-error-dark text-white w-100">Eliminar</button>
+                            }
+                        } @else if (tipo == "Institucion" && isInstitucionInEvent) {
+                            <button (click)="removeInstitucionFromEvent()" class="btn bg-error-light text-white w-100">Dejar de apoyar</button>
+                        } 
                     } @else if (tipo == "Institucion") {
                         <button (click)="addInstitucionToEvent()" class="btn bg-secondary text-white w-100">Apoyar Evento</button>
-                    }
+                    } 
                 } @else {
                     <a href="/login" class="btn bg-secondary text-white w-100">Inicia sesión para apuntarte</a>
                 }

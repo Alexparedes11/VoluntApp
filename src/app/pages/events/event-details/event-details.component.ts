@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { HeaderComponent } from '../../../components/header/header.component';
-import { FooterComponent } from '../../../components/footer/footer.component';
-import { EventService } from '../../../services/event.service';
-import { EventDTO } from '../../../models/dto/EventDTO';
-import { UserService } from '../../../services/user.service';
 import { DatePipe } from '@angular/common';
-import { MapComponent } from '../../../components/map/map.component';
-import { UserDTO } from '../../../models/dto/UserDTO';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FooterComponent } from '../../../components/footer/footer.component';
+import { HeaderComponent } from '../../../components/header/header.component';
+import { MapComponent } from '../../../components/map/map.component';
 import { Event } from '../../../models/Event';
+import { EventDTO } from '../../../models/dto/EventDTO';
+import { UserDTO } from '../../../models/dto/UserDTO';
+import { EventService } from '../../../services/event.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-event-details',
@@ -93,6 +93,7 @@ export class EventDetailsComponent implements OnInit {
         this.desapuntarseInstitucion = false;
         this.desapuntarseUsuario = true;
         this.isUserInEvent = false;
+        this.isInstitucionInEvent = false;
         this.showAlert = true;
       }
     );
@@ -185,8 +186,8 @@ export class EventDetailsComponent implements OnInit {
       this.userService.getUserById(this.userId).subscribe((userData) => {
         user = userData;
         // Enviar los motivos de eliminación
-
-
+        
+        
         this.eventService.sendDeleteRequest({
           email: user.email,
           asunto: "Motivos de eliminacion: ",
@@ -342,10 +343,14 @@ export class EventDetailsComponent implements OnInit {
     this.tipo = this.userService.getUserTypeFromToken();
 
     console.log(this.tipo);
+    console.log("User id: "+this.userId);
+
+    
 
     this.eventService.getEventDTOById(this.eventId).subscribe(
       (data) => {
         this.event = data;
+        console.log(this.event);
       },
       (error) => {
         console.error('Error fetching events:', error);
@@ -368,17 +373,23 @@ export class EventDetailsComponent implements OnInit {
 
         );
 
-        this.eventService.isUserCreator(this.userId, this.eventId).subscribe(
-          (boolean) => {
-            if (boolean == true) {
-              this.isCreator = true;
-            }
-          },
-          (error) => {
-            console.error('Error fetching events:', error);
-          }
-        )
+        // Si el creador es un usuario
+        if (this.tipo == 'Usuario') {
 
+          this.eventService.isUserCreator(this.userId, this.eventId).subscribe(
+            (boolean) => {
+              if (boolean == true) {
+                this.isCreator = true;
+                console.log("Boolean: " +this.isCreator);
+                console.log("-------------");
+              }
+            },
+            (error) => {
+              console.error('Error fetching events:', error);
+            }
+          )
+        }
+          
       } else {
         this.eventService.isInstitucionInEvent(this.userId, this.eventId).subscribe(
           (data) => {
@@ -387,7 +398,22 @@ export class EventDetailsComponent implements OnInit {
           (error) => {
             console.log('Error fetching events: ', error);
           }
-        )
+        );
+
+        if (this.tipo == 'Institucion') {
+          this.eventService.isInstitutionCreator(this.userId, this.eventId).subscribe(
+            (boolean) => {
+              if (boolean == true) {
+                this.isCreator = true;
+                console.log("Boolean: " +this.isCreator);
+                console.log("-------------");
+              }
+            },
+            (error) => {
+              console.error('Error fetching events:', error);
+            }
+          )
+        } 
       }
     }
   }
