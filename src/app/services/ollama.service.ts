@@ -14,8 +14,9 @@ export class OllamaService {
 
   async generateEventSummary(eventDescription: string, wordCount: number) {
     const response = await this.model.invoke(
-      `Genera un resumen de este evento en ${wordCount} palabras. Solo escribe el resumen, sin información adicional. Texto del evento: ${eventDescription}`
+      `Genera un resumen de este evento en ${wordCount} palabras. Asegúrate de que el resumen no incluya un título ni encabezado, solo escribe el resumen del evento. Texto del evento: ${eventDescription}`
     );
+    console.log(response)
     return response;
   }
 }
