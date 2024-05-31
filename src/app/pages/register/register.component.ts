@@ -1,15 +1,18 @@
+import { Location, NgClass, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
-import { UserService } from '../../services/user.service';
-import { InstitutionService } from '../../services/institution.service';
 import { Router } from '@angular/router';
-import { NgClass, NgIf } from '@angular/common';
+import { Ollama } from '@langchain/community/llms/ollama';
+import { InstitutionService } from '../../services/institution.service';
+import { NewsService } from '../../services/news.service';
+
+import { NewsDTO } from '../../models/dto/NewsDTO';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  providers: [UserService, InstitutionService],
+  providers: [UserService, InstitutionService, NewsService],
   imports: [ReactiveFormsModule, NgIf, NgClass],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -21,8 +24,16 @@ export class RegisterComponent {
   contrasenaConfirmadaInvalida: boolean = false;
   institucion: boolean = false;
 
+  newsForm = new FormGroup({
+    titulo: new FormControl(''),
+    contenido: new FormControl(''),
+    imagen: new FormControl('https://voluntapp.blob.core.windows.net/images/eventos/45437ba9-1023-4ca9-86d9-6c85cef81631'),
+    fecha: new FormControl(new Date()),
+    autor: new FormControl('VoluntApp')
+  });
 
-  constructor(private userService: UserService, private institucionService: InstitutionService, private location: Location, private router: Router) { }
+
+  constructor(private userService: UserService, private institucionService: InstitutionService, private location: Location, private router: Router, private newsService: NewsService) { }
 
   back() {
     this.location.back();
@@ -117,7 +128,6 @@ export class RegisterComponent {
   handleSubmit() {
     if (this.institucion) {
       this.crearInstitucion();
-      this.router.navigate(['/login']);
     } else {
       this.crearUsuario();
       this.router.navigate(['/login']);
@@ -141,6 +151,32 @@ export class RegisterComponent {
 
   crearInstitucion() {
     console.log(this.formInstitucion.value);
+    this.crearNoticiaInstitucion()
     this.institucionService.register(this.formInstitucion.value).subscribe();
+  }
+
+  // Crear noticias generadas mediante Ollama
+  async crearNoticiaInstitucion() {
+
+    this.newsForm.value.titulo = `¡Bienvenido ${this.formInstitucion.value.nombre}!`;
+
+    const ollama = new Ollama({
+      baseUrl: "http://localhost:11434",
+      model: "llama3",
+    });
+
+    const answer: string = await ollama.invoke(`Describe ${this.formInstitucion.value.nombre} como institución en una aplicación destinada a voluntariados llamada VoluntApp en castellano de 65 palabras`);
+
+    this.newsForm.value.contenido = answer;
+
+    this.newsService.createNewsInstitution(this.newsForm.value as NewsDTO).subscribe(
+      (data: NewsDTO) => {
+        console.log('Noticia creada:', data);
+        this.router.navigate(['/login']);
+      },
+      (error: any) => {
+        console.error('Error al crear noticia:', error);
+      }
+    );
   }
 }

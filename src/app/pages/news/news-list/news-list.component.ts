@@ -16,12 +16,13 @@ import { NewsService } from '../../../services/news.service';
 export class NewsListComponent {
 
   constructor(private newsService: NewsService) { }
-
+  
   // Creamos dos objetos NewsDTO
   news: NewsDTO[] = [];
   news2: NewsDTO[] = [];
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
     // Obtener noticias de la api de nuestra aplicación
     this.newsService.getNews().subscribe(
       (data) => {
@@ -70,7 +71,6 @@ export class NewsListComponent {
     } else {
         return [];
     }
-  
   }
 
   

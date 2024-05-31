@@ -32,6 +32,14 @@ import { environment } from '../../environments/environments';
       );
     }
 
+    createNewsInstitution(news: any) {
+      return this.http.post(`${this.baseUrl}/noticias/crearNoticiaInstitucion`, news).pipe(
+        map((data: any) => {
+          return data;
+        })
+      );
+    }
+
     getNewByTitle(title: string) {
       return this.http.get(`${this.baseUrl}/noticias/${title}`).pipe(
         map((data: any) => {
@@ -61,7 +69,7 @@ import { environment } from '../../environments/environments';
   
     private handleError(error: any): Observable<any> {
       console.error('Ocurrió un error al obtener el feed RSS:', error);
-      throw error; // Puedes manejar el error de otra manera si lo deseas
+      throw error;
     }
   
     parseXMLData(xmlData: string): Observable<any> {
