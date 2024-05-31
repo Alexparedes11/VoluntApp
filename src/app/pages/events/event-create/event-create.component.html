@@ -91,7 +91,14 @@
                 </div>
             </div>
             <div class="card-footer text-end">
-                <button class="btn btn-secondary mt-4" [disabled]="eventForm.invalid">Crear</button>
+                @if (!loading) {
+                    <button class="btn btn-secondary mt-4" [disabled]="eventForm.invalid">Crear</button>
+                } @else {
+                    <span class="fw-bold">Subiendo evento...</span>
+                    <span class="d-block">Tiempo aproximado de ~20 segundos</span>
+                    <div class="spinner-border text-secondary mt-4 ms-4" role="status">
+                    </div>
+                }
             </div>
         </form>
     </div>

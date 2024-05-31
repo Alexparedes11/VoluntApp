@@ -63,6 +63,7 @@ export class EventCreateComponent {
   createdSuccessfully: boolean | null = null;
   errorMessage: string = '';
   showAlert: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private tagsService: TagsService,
@@ -227,36 +228,30 @@ export class EventCreateComponent {
 
   submitEvent() {
     if (this.eventForm.valid) {
+      this.loading = true; // Mostrar loader
       const formValue = this.eventForm.value;
       formValue.nombreUbicacion = this.selectedAddress?.place_name;
       formValue.lat = this.selectedAddress?.center[0];
       formValue.lon = this.selectedAddress?.center[1];
       formValue.imagen = this.selectedImage;
-      const eventInformation = `Título: ${
-        this.eventForm.get('titulo')?.value
-      } Descripción: ${this.eventForm.get('descripcion')?.value}`;
+      const eventInformation = `Título: ${this.eventForm.get('titulo')?.value} Descripción: ${this.eventForm.get('descripcion')?.value}`;
 
       this.eventService.validateEvent(eventInformation).subscribe(
         (data: any) => {
           console.log(data);
           const threshold = 0.4;
           const { toxic, indecent, threat, offensive, erotic } = data;
-          if (
-            toxic > threshold ||
-            indecent > threshold ||
-            threat > threshold ||
-            offensive > threshold ||
-            erotic > threshold
-          ) {
+          if (toxic > threshold || indecent > threshold || threat > threshold || offensive > threshold || erotic > threshold) {
+            this.loading = false;  // Ocultar loader
             this.createdSuccessfully = false;
-            this.errorMessage =
-              'El evento contiene palabras inapropiadas. Por favor, modifica el evento.';
+            this.errorMessage = 'El evento contiene palabras inapropiadas. Por favor, modifica el evento.';
             this.showAlert = true;
           } else {
             this.getPredictionsAndCreateEvent(formValue, eventInformation);
           }
         },
         (error) => {
+          this.loading = false;  // Ocultar loader
           this.createdSuccessfully = false;
           this.errorMessage = error.error;
         }
@@ -279,7 +274,7 @@ export class EventCreateComponent {
 
         const resumen = await this.ollamaService.generateEventSummary(
           eventInformation,
-          50
+          30
         );
 
         formValue.descripcionResumida = resumen;
@@ -287,6 +282,7 @@ export class EventCreateComponent {
         this.createEvent(formValue);
       },
       (error) => {
+        this.loading = false;  // Ocultar loader
         this.createdSuccessfully = false;
         this.errorMessage = error.error;
       }
@@ -305,9 +301,11 @@ export class EventCreateComponent {
             .addInstitutionToEvent(this.userId, Number(data.id))
             .subscribe();
         }
+        this.loading = false;  // Ocultar loader
         this.createdSuccessfully = true;
       },
       (error) => {
+        this.loading = false;  // Ocultar loader
         this.createdSuccessfully = false;
         this.errorMessage = error.error;
       },
